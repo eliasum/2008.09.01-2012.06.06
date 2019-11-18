@@ -1,0 +1,295 @@
+BL51 BANKED LINKER/LOCATER V5.12                                                        09/24/2009  11:36:55  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.12, INVOKED BY:
+D:\WORK\KEIL51\C51\BIN\BL51.EXE Main.obj, StartUp.obj TO GetXY IXREF RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  Main.obj (MAIN)
+  StartUp.obj (?C_STARTUP)
+  D:\WORK\KEIL51\C51\LIB\C51S.LIB (?C?ULDIV)
+
+
+LINK MAP OF MODULE:  GetXY (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     002AH     UNIT         ?DT?MAIN
+            DATA    0032H     0001H     UNIT         _DATA_GROUP_
+            IDATA   0033H     00C8H     UNIT         ?ID?MAIN
+            IDATA   00FBH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0274H     UNIT         ?PR?MAIN?MAIN
+            CODE    0277H     00CEH     UNIT         ?C?LIB_CODE
+            CODE    0345H     006CH     UNIT         ?PR?MEAS_XY?MAIN
+            CODE    03B1H     0035H     UNIT         ?PR?TX_MEANS?MAIN
+            CODE    03E6H     000DH     UNIT         ?PR?_TX_BYTE?MAIN
+            CODE    03F3H     0006H     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   GetXY (MAIN)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN                  -----    -----
+  +--> ?PR?MEAS_XY?MAIN
+  +--> ?PR?TX_MEANS?MAIN
+
+?PR?TX_MEANS?MAIN              0032H    0001H
+  +--> ?PR?_TX_BYTE?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  GetXY (MAIN)
+
+  VALUE           TYPE          NAME
+BL51 BANKED LINKER/LOCATER V5.12                                                      09/24/2009  11:36:55  PAGE 2
+
+
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  I:0033H         PUBLIC        Buff
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  B:0098H.1       PUBLIC        TI
+  D:0008H         PUBLIC        n1
+  D:000AH         PUBLIC        n2
+  D:00E8H         PUBLIC        I2CCON
+  D:000CH         PUBLIC        n3
+  D:000EH         PUBLIC        n4
+  D:00CBH         PUBLIC        RCAP2H
+  D:0010H         PUBLIC        s1
+  D:0014H         PUBLIC        s2
+  D:00E8H         PUBLIC        DCON
+  D:0018H         PUBLIC        s3
+  D:00CAH         PUBLIC        RCAP2L
+  C:0003H         PUBLIC        main
+  D:001CH         PUBLIC        s4
+  B:0090H.0       PUBLIC        P10
+  D:0099H         PUBLIC        SBUF
+  B:0090H.1       PUBLIC        P11
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0020H         PUBLIC        one
+  C:03EBH         PUBLIC        _Tx_byte
+  C:03B1H         PUBLIC        Tx_means
+  B:00C0H.0       PUBLIC        WDWR
+  D:00D7H         PUBLIC        PLLCON
+  D:008CH         PUBLIC        TH0
+  D:00CDH         PUBLIC        TH2
+  D:008AH         PUBLIC        TL0
+  D:00CCH         PUBLIC        TL2
+  B:0088H.4       PUBLIC        TR0
+  B:00C8H.2       PUBLIC        TR2
+  D:0028H         PUBLIC        Z
+  B:00C0H.1       PUBLIC        WDE
+  D:0030H         PUBLIC        get_one
+  D:00C8H         PUBLIC        T2CON
+  D:0031H         PUBLIC        i
+  C:0345H         PUBLIC        meas_xy
+  D:00C0H         PUBLIC        WDCON
+  -------         PROC          MAIN
+  C:0003H         LINE#         43
+  C:0003H         LINE#         44
+  C:0003H         LINE#         45
+  C:0006H         LINE#         48
+  C:0009H         LINE#         51
+  C:000BH         LINE#         52
+  C:000EH         LINE#         55
+  C:0011H         LINE#         58
+  C:0014H         LINE#         61
+  C:0017H         LINE#         62
+  C:001AH         LINE#         63
+  C:001DH         LINE#         64
+BL51 BANKED LINKER/LOCATER V5.12                                                      09/24/2009  11:36:55  PAGE 3
+
+
+  C:0020H         LINE#         65
+  C:0023H         LINE#         66
+  C:0025H         LINE#         68
+  C:0031H         LINE#         69
+  C:003DH         LINE#         70
+  C:0049H         LINE#         71
+  C:0055H         LINE#         73
+  C:0064H         LINE#         74
+  C:0071H         LINE#         75
+  C:007EH         LINE#         76
+  C:0092H         LINE#         77
+  C:0092H         LINE#         78
+  C:0092H         LINE#         79
+  C:0095H         LINE#         83
+  C:00BCH         LINE#         84
+  C:00D5H         LINE#         85
+  C:00E3H         LINE#         86
+  C:00EBH         LINE#         87
+  C:00F5H         LINE#         88
+  C:010AH         LINE#         90
+  C:0131H         LINE#         91
+  C:014AH         LINE#         92
+  C:0158H         LINE#         93
+  C:0160H         LINE#         94
+  C:016AH         LINE#         95
+  C:017FH         LINE#         97
+  C:01A6H         LINE#         98
+  C:01BFH         LINE#         99
+  C:01CDH         LINE#         100
+  C:01D5H         LINE#         101
+  C:01DFH         LINE#         102
+  C:01F4H         LINE#         104
+  C:021BH         LINE#         105
+  C:0234H         LINE#         106
+  C:0242H         LINE#         107
+  C:024AH         LINE#         108
+  C:0254H         LINE#         109
+  C:0269H         LINE#         111
+  C:026CH         LINE#         114
+  C:026EH         LINE#         115
+  C:0270H         LINE#         116
+  C:0272H         LINE#         117
+  C:0274H         LINE#         118
+  -------         ENDPROC       MAIN
+  -------         PROC          MEAS_XY
+  C:0345H         LINE#         121
+  C:0345H         LINE#         122
+  C:0345H         LINE#         125
+  C:034AH         LINE#         126
+  C:034DH         LINE#         127
+  C:0350H         LINE#         128
+  C:0352H         LINE#         130
+  C:0355H         LINE#         131
+  C:0357H         LINE#         132
+  C:035AH         LINE#         133
+  C:035DH         LINE#         134
+  C:0362H         LINE#         136
+BL51 BANKED LINKER/LOCATER V5.12                                                      09/24/2009  11:36:55  PAGE 4
+
+
+  C:0365H         LINE#         137
+  C:0368H         LINE#         138
+  C:036AH         LINE#         140
+  C:036DH         LINE#         141
+  C:0370H         LINE#         142
+  C:0372H         LINE#         143
+  C:0375H         LINE#         144
+  C:0378H         LINE#         148
+  C:037DH         LINE#         149
+  C:0380H         LINE#         150
+  C:0383H         LINE#         151
+  C:0385H         LINE#         153
+  C:0388H         LINE#         154
+  C:038AH         LINE#         155
+  C:038DH         LINE#         156
+  C:0390H         LINE#         157
+  C:0395H         LINE#         159
+  C:0398H         LINE#         160
+  C:039BH         LINE#         161
+  C:039DH         LINE#         163
+  C:03A0H         LINE#         164
+  C:03A3H         LINE#         165
+  C:03A5H         LINE#         166
+  C:03A8H         LINE#         167
+  C:03ABH         LINE#         168
+  C:03B0H         LINE#         169
+  -------         ENDPROC       MEAS_XY
+  -------         PROC          TX_MEANS
+  -------         DO            
+  D:0007H         SYMBOL        d
+  D:0032H         SYMBOL        cc
+  -------         ENDDO         
+  C:03B1H         LINE#         171
+  C:03B1H         LINE#         172
+  C:03B1H         LINE#         175
+  C:03B4H         LINE#         176
+  C:03B9H         LINE#         178
+  C:03BEH         LINE#         179
+  C:03C3H         LINE#         180
+  C:03C8H         LINE#         181
+  C:03CDH         LINE#         183
+  C:03D2H         LINE#         184
+  C:03D7H         LINE#         185
+  C:03DCH         LINE#         186
+  C:03E1H         LINE#         188
+  -------         ENDPROC       TX_MEANS
+  C:03E6H         SYMBOL        L?0049
+  -------         PROC          L?0048
+  -------         ENDPROC       L?0048
+  C:03E6H         SYMBOL        L?0049
+  -------         PROC          _TX_BYTE
+  D:0007H         SYMBOL        outbyte
+  C:03EBH         LINE#         191
+  C:03EBH         LINE#         192
+  C:03EBH         LINE#         193
+  C:03EDH         LINE#         194
+  C:03F0H         LINE#         195
+BL51 BANKED LINKER/LOCATER V5.12                                                      09/24/2009  11:36:55  PAGE 5
+
+
+  C:03F2H         LINE#         196
+  -------         ENDPROC       _TX_BYTE
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        ?C_STARTUP
+  C:03F3H         SEGMENT       ?C_C51STARTUP
+  I:00FBH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:0081H         SYMBOL        SP
+  C:03F3H         SYMBOL        STARTUP1
+  C:0000H         LINE#         19
+  C:03F3H         LINE#         24
+  C:03F6H         LINE#         25
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        ?C?ULDIV
+  C:02B3H         PUBLIC        ?C?ULDIV
+  -------         ENDMOD        ?C?ULDIV
+
+
+
+INTER-MODULE CROSS-REFERENCE LISTING
+------------------------------------
+
+
+NAME . . . . USAGE    MODULE NAMES
+----------------------------------
+
+?C?ULDIV . . CODE;    ?C?ULDIV  MAIN  
+?C_START . . CODE;    ** L51 GENERATED **  ?C_STARTUP  
+?C_STARTUP . CODE;    ?C_STARTUP  MAIN  
+BUFF . . . . IDATA;   MAIN  
+GET_ONE. . . DATA;    MAIN  
+I. . . . . . DATA;    MAIN  
+MAIN . . . . CODE;    MAIN  
+MEAS_XY. . . CODE;    MAIN  
+N1 . . . . . DATA;    MAIN  
+N2 . . . . . DATA;    MAIN  
+N3 . . . . . DATA;    MAIN  
+N4 . . . . . DATA;    MAIN  
+ONE. . . . . DATA;    MAIN  
+S1 . . . . . DATA;    MAIN  
+S2 . . . . . DATA;    MAIN  
+S3 . . . . . DATA;    MAIN  
+S4 . . . . . DATA;    MAIN  
+TX_MEANS . . CODE;    MAIN  
+Z. . . . . . DATA;    MAIN  
+_TX_BYTE . . CODE;    MAIN  
+
+Program Size: data=252.0 xdata=0 code=1017
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

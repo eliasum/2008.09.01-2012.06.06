@@ -1,0 +1,4 @@
+".\Dbg\ts_main.obj",
+".\Dbg\STARTUP.obj" 
+TO ".\Dbg\TSens_814-3-01-485" 
+PRINT(".\Dbg\TSens_814-3-01-485.m51") RAMSIZE(256) 

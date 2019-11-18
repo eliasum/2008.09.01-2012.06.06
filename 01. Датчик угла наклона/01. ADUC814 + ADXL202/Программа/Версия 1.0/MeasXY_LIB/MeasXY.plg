@@ -1,0 +1,18 @@
+<html>
+<body>
+<pre>
+<h1>µVision3 Build Log</h1>
+<h2>Project:</h2>
+D:\Work\XXX.XX.XX.XX\_Инклинометр\Прога_Си_ассемблер\GetXY\MeasXY_LIB\MeasXY.uv2
+Project File Date:  06/26/2009
+
+<h2>Output:</h2>
+Build target 'Библиотека 1'
+assembling meas_xy.a51...
+creating library MeasXY.LIB...
+TRANSFER
+"meas_xy.obj" 
+TO "MeasXY.LIB"
+LIB51 LIBRARY MANAGER V4.24
+COPYRIGHT KEIL ELEKTRONIK GmbH 1987 - 2002
+"MeasXY.LIB" - 0 Error(s), 0 Warning(s).

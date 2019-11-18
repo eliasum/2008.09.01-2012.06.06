@@ -1,0 +1,849 @@
+
+meas_xy.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000058c  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .bss          000000f1  00800100  00800100  00000600  2**0
+                  ALLOC
+  2 .debug_aranges 00000020  00000000  00000000  00000600  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_pubnames 00000095  00000000  00000000  00000620  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   00000346  00000000  00000000  000006b5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 0000015f  00000000  00000000  000009fb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   00000462  00000000  00000000  00000b5a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  00000050  00000000  00000000  00000fbc  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    000000b4  00000000  00000000  0000100c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    00000089  00000000  00000000  000010c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000018  00000000  00000000  00001149  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+   8:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+   c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  10:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  14:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  18:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  1c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  20:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  24:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  28:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  2c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  30:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  34:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  38:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  3c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  40:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  44:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  48:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  4c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  50:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  54:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  58:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  5c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  60:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  64:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d4 e0       	ldi	r29, 0x04	; 4
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+
+00000074 <__do_clear_bss>:
+  74:	11 e0       	ldi	r17, 0x01	; 1
+  76:	a0 e0       	ldi	r26, 0x00	; 0
+  78:	b1 e0       	ldi	r27, 0x01	; 1
+  7a:	01 c0       	rjmp	.+2      	; 0x7e <.do_clear_bss_start>
+
+0000007c <.do_clear_bss_loop>:
+  7c:	1d 92       	st	X+, r1
+
+0000007e <.do_clear_bss_start>:
+  7e:	a1 3f       	cpi	r26, 0xF1	; 241
+  80:	b1 07       	cpc	r27, r17
+  82:	e1 f7       	brne	.-8      	; 0x7c <.do_clear_bss_loop>
+  84:	0e 94 ff 00 	call	0x1fe	; 0x1fe <main>
+  88:	0c 94 c4 02 	jmp	0x588	; 0x588 <_exit>
+
+0000008c <__bad_interrupt>:
+  8c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000090 <meas_xy>:
+
+void meas_xy(void)
+{
+// измерение длительности и периода импульсов с выхода 'Xout' -------= X =--------
+
+  TCNT1H = 0; TCNT1L = 0;                  // сброс Т/С1
+  90:	10 92 85 00 	sts	0x0085, r1
+  94:	10 92 84 00 	sts	0x0084, r1
+  loop_until_bit_is_clear(PIND,XOUT);      // корректировка расчета длительности импульсов с выхода 'Xout'
+  98:	4b 99       	sbic	0x09, 3	; 9
+  9a:	fe cf       	rjmp	.-4      	; 0x98 <meas_xy+0x8>
+  loop_until_bit_is_set(PIND,XOUT);        // ожидание фронта 1-го импульса с выхода 'Xout'
+  9c:	4b 9b       	sbis	0x09, 3	; 9
+  9e:	fe cf       	rjmp	.-4      	; 0x9c <meas_xy+0xc>
+  TCCR1B = 0x02;                           // запуск Т/С1 с тактовой частотой CLK_io/8
+  a0:	82 e0       	ldi	r24, 0x02	; 2
+  a2:	80 93 81 00 	sts	0x0081, r24
+
+  loop_until_bit_is_clear(PIND,XOUT);      // ожидание спада 1-го импульса с выхода 'Xout'
+  a6:	4b 99       	sbic	0x09, 3	; 9
+  a8:	fe cf       	rjmp	.-4      	; 0xa6 <meas_xy+0x16>
+  TCCR1B = 0x00;                           // останов Т/С1
+  aa:	10 92 81 00 	sts	0x0081, r1
+  one.T1X.du_c[0] = TCNT1L;
+  ae:	80 91 84 00 	lds	r24, 0x0084
+  b2:	80 93 e3 01 	sts	0x01E3, r24
+  one.T1X.du_c[1] = TCNT1H;                // -= ДЛИТЕЛЬНОСТЬ ИМПУЛЬСА 'X' =-    
+  b6:	80 91 85 00 	lds	r24, 0x0085
+  ba:	80 93 e4 01 	sts	0x01E4, r24
+  TCNT1H = 0; TCNT1L = 0;                  // сброс Т/С1
+  be:	10 92 85 00 	sts	0x0085, r1
+  c2:	10 92 84 00 	sts	0x0084, r1
+
+  loop_until_bit_is_clear(PIND,XOUT);      // корректировка расчета периода импульсов с выхода 'Xout'
+  c6:	4b 99       	sbic	0x09, 3	; 9
+  c8:	fe cf       	rjmp	.-4      	; 0xc6 <meas_xy+0x36>
+  loop_until_bit_is_set(PIND,XOUT);        // ожидание фронта 2-го импульса с выхода 'Xout'
+  ca:	4b 9b       	sbis	0x09, 3	; 9
+  cc:	fe cf       	rjmp	.-4      	; 0xca <meas_xy+0x3a>
+  TCCR1B = 0x02;                           // запуск Т/С1 с тактовой частотой CLK_io/8
+  ce:	82 e0       	ldi	r24, 0x02	; 2
+  d0:	80 93 81 00 	sts	0x0081, r24
+
+  loop_until_bit_is_clear(PIND,XOUT);      // ожидание спада 2-го импульса с выхода 'Xout'
+  d4:	4b 99       	sbic	0x09, 3	; 9
+  d6:	fe cf       	rjmp	.-4      	; 0xd4 <meas_xy+0x44>
+  loop_until_bit_is_set(PIND,XOUT);        // ожидание фронта 3-го импульса с выхода 'Xout'
+  d8:	4b 9b       	sbis	0x09, 3	; 9
+  da:	fe cf       	rjmp	.-4      	; 0xd8 <meas_xy+0x48>
+  TCCR1B = 0x00;                           // останов Т/С1
+  dc:	10 92 81 00 	sts	0x0081, r1
+  one.T2X.du_c[0] = TCNT1L;
+  e0:	80 91 84 00 	lds	r24, 0x0084
+  e4:	80 93 e5 01 	sts	0x01E5, r24
+  one.T2X.du_c[1] = TCNT1H;                // -= ПЕРИОД ИМПУЛЬСА 'X' =-          
+  e8:	80 91 85 00 	lds	r24, 0x0085
+  ec:	80 93 e6 01 	sts	0x01E6, r24
+
+// измерение длительности и периода импульсов с выхода 'Yout' -------= 'Y' =------
+
+  TCNT1H = 0; TCNT1L = 0;                  // сброс Т/С1
+  f0:	10 92 85 00 	sts	0x0085, r1
+  f4:	10 92 84 00 	sts	0x0084, r1
+  loop_until_bit_is_clear(PIND,YOUT);      // корректировка расчета длительности импульсов с выхода 'Yout'
+  f8:	4c 99       	sbic	0x09, 4	; 9
+  fa:	fe cf       	rjmp	.-4      	; 0xf8 <meas_xy+0x68>
+  loop_until_bit_is_set(PIND,YOUT);        // ожидание фронта 1-го импульса с выхода 'Yout'
+  fc:	4c 9b       	sbis	0x09, 4	; 9
+  fe:	fe cf       	rjmp	.-4      	; 0xfc <meas_xy+0x6c>
+  TCCR1B = 0x02;                           // запуск Т/С1 с тактовой частотой CLK_io/8
+ 100:	82 e0       	ldi	r24, 0x02	; 2
+ 102:	80 93 81 00 	sts	0x0081, r24
+
+  loop_until_bit_is_clear(PIND,YOUT);      // ожидание спада 1-го импульса с выхода 'Yout'
+ 106:	4c 99       	sbic	0x09, 4	; 9
+ 108:	fe cf       	rjmp	.-4      	; 0x106 <meas_xy+0x76>
+  TCCR1B = 0x00;                           // останов Т/С1
+ 10a:	10 92 81 00 	sts	0x0081, r1
+  one.T1Y.du_c[0] = TCNT1L;
+ 10e:	80 91 84 00 	lds	r24, 0x0084
+ 112:	80 93 e7 01 	sts	0x01E7, r24
+  one.T1Y.du_c[1] = TCNT1H;                // -= ДЛИТЕЛЬНОСТЬ ИМПУЛЬСА 'Y' =-    
+ 116:	80 91 85 00 	lds	r24, 0x0085
+ 11a:	80 93 e8 01 	sts	0x01E8, r24
+  TCNT1H = 0; TCNT1L = 0;                  // сброс Т/С1
+ 11e:	10 92 85 00 	sts	0x0085, r1
+ 122:	10 92 84 00 	sts	0x0084, r1
+
+  loop_until_bit_is_clear(PIND,YOUT);      // корректировка расчета периода импульсов с выхода 'Yout'
+ 126:	4c 99       	sbic	0x09, 4	; 9
+ 128:	fe cf       	rjmp	.-4      	; 0x126 <meas_xy+0x96>
+  loop_until_bit_is_set(PIND,YOUT);        // ожидание фронта 2-го импульса с выхода 'Yout'
+ 12a:	4c 9b       	sbis	0x09, 4	; 9
+ 12c:	fe cf       	rjmp	.-4      	; 0x12a <meas_xy+0x9a>
+  TCCR1B = 0x02;                           // запуск Т/С1 с тактовой частотой CLK_io/8
+ 12e:	82 e0       	ldi	r24, 0x02	; 2
+ 130:	80 93 81 00 	sts	0x0081, r24
+
+  loop_until_bit_is_clear(PIND,YOUT);      // ожидание спада 2-го импульса с выхода 'Yout'
+ 134:	4c 99       	sbic	0x09, 4	; 9
+ 136:	fe cf       	rjmp	.-4      	; 0x134 <meas_xy+0xa4>
+  loop_until_bit_is_set(PIND,YOUT);        // ожидание фронта 3-го импульса с выхода 'Yout'
+ 138:	4c 9b       	sbis	0x09, 4	; 9
+ 13a:	fe cf       	rjmp	.-4      	; 0x138 <meas_xy+0xa8>
+  TCCR1B = 0x00;                           // останов Т/С1
+ 13c:	10 92 81 00 	sts	0x0081, r1
+  one.T2Y.du_c[0] = TCNT1L;
+ 140:	80 91 84 00 	lds	r24, 0x0084
+ 144:	80 93 e9 01 	sts	0x01E9, r24
+  one.T2Y.du_c[1] = TCNT1H;                // -= ПЕРИОД ИМПУЛЬСА 'Y' =- 
+ 148:	80 91 85 00 	lds	r24, 0x0085
+ 14c:	80 93 ea 01 	sts	0x01EA, r24
+}
+ 150:	08 95       	ret
+
+00000152 <Tx_means>:
+}
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+ 152:	80 91 c0 00 	lds	r24, 0x00C0
+ 156:	85 ff       	sbrs	r24, 5
+ 158:	fc cf       	rjmp	.-8      	; 0x152 <Tx_means>
+  UDR0 = outbyte;                          // загрузить младший байт данных                                           // в буфер, начать передачу
+ 15a:	8a e5       	ldi	r24, 0x5A	; 90
+ 15c:	80 93 c6 00 	sts	0x00C6, r24
+  unsigned char d, cc;                     // и выводим в 'USART'
+
+  cc = 0x05a;
+  Tx_byte(cc);
+
+  d = Z.T1X.du_c[0]; cc += d; Tx_byte(d);
+ 160:	90 91 db 01 	lds	r25, 0x01DB
+}
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+ 164:	80 91 c0 00 	lds	r24, 0x00C0
+ 168:	85 ff       	sbrs	r24, 5
+ 16a:	fc cf       	rjmp	.-8      	; 0x164 <Tx_means+0x12>
+  UDR0 = outbyte;                          // загрузить младший байт данных                                           // в буфер, начать передачу
+ 16c:	90 93 c6 00 	sts	0x00C6, r25
+
+  cc = 0x05a;
+  Tx_byte(cc);
+
+  d = Z.T1X.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T1X.du_c[1]; cc += d; Tx_byte(d);
+ 170:	e0 91 dc 01 	lds	r30, 0x01DC
+}
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+ 174:	80 91 c0 00 	lds	r24, 0x00C0
+ 178:	85 ff       	sbrs	r24, 5
+ 17a:	fc cf       	rjmp	.-8      	; 0x174 <Tx_means+0x22>
+  UDR0 = outbyte;                          // загрузить младший байт данных                                           // в буфер, начать передачу
+ 17c:	e0 93 c6 00 	sts	0x00C6, r30
+  cc = 0x05a;
+  Tx_byte(cc);
+
+  d = Z.T1X.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T1X.du_c[1]; cc += d; Tx_byte(d);
+  d = Z.T2X.du_c[0]; cc += d; Tx_byte(d);
+ 180:	70 91 dd 01 	lds	r23, 0x01DD
+}
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+ 184:	80 91 c0 00 	lds	r24, 0x00C0
+ 188:	85 ff       	sbrs	r24, 5
+ 18a:	fc cf       	rjmp	.-8      	; 0x184 <Tx_means+0x32>
+  UDR0 = outbyte;                          // загрузить младший байт данных                                           // в буфер, начать передачу
+ 18c:	70 93 c6 00 	sts	0x00C6, r23
+  Tx_byte(cc);
+
+  d = Z.T1X.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T1X.du_c[1]; cc += d; Tx_byte(d);
+  d = Z.T2X.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T2X.du_c[1]; cc += d; Tx_byte(d);
+ 190:	60 91 de 01 	lds	r22, 0x01DE
+}
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+ 194:	80 91 c0 00 	lds	r24, 0x00C0
+ 198:	85 ff       	sbrs	r24, 5
+ 19a:	fc cf       	rjmp	.-8      	; 0x194 <Tx_means+0x42>
+  UDR0 = outbyte;                          // загрузить младший байт данных                                           // в буфер, начать передачу
+ 19c:	60 93 c6 00 	sts	0x00C6, r22
+  d = Z.T1X.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T1X.du_c[1]; cc += d; Tx_byte(d);
+  d = Z.T2X.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T2X.du_c[1]; cc += d; Tx_byte(d);
+
+  d = Z.T1Y.du_c[0]; cc += d; Tx_byte(d);
+ 1a0:	50 91 df 01 	lds	r21, 0x01DF
+}
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+ 1a4:	80 91 c0 00 	lds	r24, 0x00C0
+ 1a8:	85 ff       	sbrs	r24, 5
+ 1aa:	fc cf       	rjmp	.-8      	; 0x1a4 <Tx_means+0x52>
+  UDR0 = outbyte;                          // загрузить младший байт данных                                           // в буфер, начать передачу
+ 1ac:	50 93 c6 00 	sts	0x00C6, r21
+  d = Z.T1X.du_c[1]; cc += d; Tx_byte(d);
+  d = Z.T2X.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T2X.du_c[1]; cc += d; Tx_byte(d);
+
+  d = Z.T1Y.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T1Y.du_c[1]; cc += d; Tx_byte(d);
+ 1b0:	40 91 e0 01 	lds	r20, 0x01E0
+}
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+ 1b4:	80 91 c0 00 	lds	r24, 0x00C0
+ 1b8:	85 ff       	sbrs	r24, 5
+ 1ba:	fc cf       	rjmp	.-8      	; 0x1b4 <Tx_means+0x62>
+  UDR0 = outbyte;                          // загрузить младший байт данных                                           // в буфер, начать передачу
+ 1bc:	40 93 c6 00 	sts	0x00C6, r20
+  d = Z.T2X.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T2X.du_c[1]; cc += d; Tx_byte(d);
+
+  d = Z.T1Y.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T1Y.du_c[1]; cc += d; Tx_byte(d);
+  d = Z.T2Y.du_c[0]; cc += d; Tx_byte(d);
+ 1c0:	30 91 e1 01 	lds	r19, 0x01E1
+}
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+ 1c4:	80 91 c0 00 	lds	r24, 0x00C0
+ 1c8:	85 ff       	sbrs	r24, 5
+ 1ca:	fc cf       	rjmp	.-8      	; 0x1c4 <Tx_means+0x72>
+  UDR0 = outbyte;                          // загрузить младший байт данных                                           // в буфер, начать передачу
+ 1cc:	30 93 c6 00 	sts	0x00C6, r19
+  d = Z.T2X.du_c[1]; cc += d; Tx_byte(d);
+
+  d = Z.T1Y.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T1Y.du_c[1]; cc += d; Tx_byte(d);
+  d = Z.T2Y.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T2Y.du_c[1]; cc += d; Tx_byte(d);
+ 1d0:	20 91 e2 01 	lds	r18, 0x01E2
+}
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+ 1d4:	80 91 c0 00 	lds	r24, 0x00C0
+ 1d8:	85 ff       	sbrs	r24, 5
+ 1da:	fc cf       	rjmp	.-8      	; 0x1d4 <Tx_means+0x82>
+  UDR0 = outbyte;                          // загрузить младший байт данных                                           // в буфер, начать передачу
+ 1dc:	20 93 c6 00 	sts	0x00C6, r18
+}
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+ 1e0:	80 91 c0 00 	lds	r24, 0x00C0
+ 1e4:	85 ff       	sbrs	r24, 5
+ 1e6:	fc cf       	rjmp	.-8      	; 0x1e0 <Tx_means+0x8e>
+  unsigned char d, cc;                     // и выводим в 'USART'
+
+  cc = 0x05a;
+  Tx_byte(cc);
+
+  d = Z.T1X.du_c[0]; cc += d; Tx_byte(d);
+ 1e8:	9e 0f       	add	r25, r30
+  d = Z.T1X.du_c[1]; cc += d; Tx_byte(d);
+ 1ea:	96 5a       	subi	r25, 0xA6	; 166
+  d = Z.T2X.du_c[0]; cc += d; Tx_byte(d);
+ 1ec:	97 0f       	add	r25, r23
+  d = Z.T2X.du_c[1]; cc += d; Tx_byte(d);
+ 1ee:	96 0f       	add	r25, r22
+
+  d = Z.T1Y.du_c[0]; cc += d; Tx_byte(d);
+ 1f0:	95 0f       	add	r25, r21
+  d = Z.T1Y.du_c[1]; cc += d; Tx_byte(d);
+ 1f2:	94 0f       	add	r25, r20
+  d = Z.T2Y.du_c[0]; cc += d; Tx_byte(d);
+ 1f4:	93 0f       	add	r25, r19
+  d = Z.T2Y.du_c[1]; cc += d; Tx_byte(d);
+ 1f6:	92 0f       	add	r25, r18
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+  UDR0 = outbyte;                          // загрузить младший байт данных                                           // в буфер, начать передачу
+ 1f8:	90 93 c6 00 	sts	0x00C6, r25
+  d = Z.T1Y.du_c[1]; cc += d; Tx_byte(d);
+  d = Z.T2Y.du_c[0]; cc += d; Tx_byte(d);
+  d = Z.T2Y.du_c[1]; cc += d; Tx_byte(d);
+
+  Tx_byte(cc);
+}
+ 1fc:	08 95       	ret
+
+000001fe <main>:
+/*                                                                              */
+/*                         Главная функция программы.                           */
+/*                                                                              */
+/*==============================================================================*/
+int main(void)
+{
+ 1fe:	ef 92       	push	r14
+ 200:	ff 92       	push	r15
+ 202:	0f 93       	push	r16
+ 204:	1f 93       	push	r17
+
+// инициализация USART (9600)         
+  UCSR0A = 0x00;                           // запрет на время установки скорости        
+ 206:	10 92 c0 00 	sts	0x00C0, r1
+  UCSR0B = 0x00;                           // передачи настроек USART          
+ 20a:	10 92 c1 00 	sts	0x00C1, r1
+  UCSR0C = 0x06;                           // размер слова данных 8 бит           
+ 20e:	86 e0       	ldi	r24, 0x06	; 6
+ 210:	80 93 c2 00 	sts	0x00C2, r24
+  UBRR0L = (unsigned char)UBBR_UART;       // задание скорости 9600
+ 214:	87 e4       	ldi	r24, 0x47	; 71
+ 216:	80 93 c4 00 	sts	0x00C4, r24
+  UBRR0H = (unsigned char)(UBBR_UART>>8);  // или 2400 бод
+ 21a:	10 92 c5 00 	sts	0x00C5, r1
+  UCSR0B = 0x08;                           // разрешение передачи
+ 21e:	88 e0       	ldi	r24, 0x08	; 8
+ 220:	80 93 c1 00 	sts	0x00C1, r24
+
+// инициализация ИСПОЛЬЗУЕМЫХ портов ввода/вывода
+  PORTD = 0b11111111;
+ 224:	8f ef       	ldi	r24, 0xFF	; 255
+ 226:	8b b9       	out	0x0b, r24	; 11
+  DDRD  = 0b11000010;
+ 228:	82 ec       	ldi	r24, 0xC2	; 194
+ 22a:	8a b9       	out	0x0a, r24	; 10
+  PORTB = 0b00000101;
+ 22c:	85 e0       	ldi	r24, 0x05	; 5
+ 22e:	85 b9       	out	0x05, r24	; 5
+  DDRB  = 0b00000111;
+ 230:	87 e0       	ldi	r24, 0x07	; 7
+ 232:	84 b9       	out	0x04, r24	; 4
+
+// настройка Т/С1
+  TCCR1B = 0x00;                           // останов Т/С1
+ 234:	10 92 81 00 	sts	0x0081, r1
+  TCNT1H = 0x00;
+ 238:	10 92 85 00 	sts	0x0085, r1
+  TCNT1L = 0x00;                           // сброс Т/С1
+ 23c:	10 92 84 00 	sts	0x0084, r1
+
+  s1=0; n1=0;
+ 240:	10 92 02 01 	sts	0x0102, r1
+ 244:	10 92 03 01 	sts	0x0103, r1
+ 248:	10 92 04 01 	sts	0x0104, r1
+ 24c:	10 92 05 01 	sts	0x0105, r1
+ 250:	10 92 d0 01 	sts	0x01D0, r1
+ 254:	10 92 cf 01 	sts	0x01CF, r1
+  s2=0; n2=0;
+ 258:	10 92 d7 01 	sts	0x01D7, r1
+ 25c:	10 92 d8 01 	sts	0x01D8, r1
+ 260:	10 92 d9 01 	sts	0x01D9, r1
+ 264:	10 92 da 01 	sts	0x01DA, r1
+ 268:	10 92 01 01 	sts	0x0101, r1
+ 26c:	10 92 00 01 	sts	0x0100, r1
+  s3=0; n3=0;
+ 270:	10 92 ed 01 	sts	0x01ED, r1
+ 274:	10 92 ee 01 	sts	0x01EE, r1
+ 278:	10 92 ef 01 	sts	0x01EF, r1
+ 27c:	10 92 f0 01 	sts	0x01F0, r1
+ 280:	10 92 ec 01 	sts	0x01EC, r1
+ 284:	10 92 eb 01 	sts	0x01EB, r1
+  s4=0; n4=0;
+ 288:	10 92 d3 01 	sts	0x01D3, r1
+ 28c:	10 92 d4 01 	sts	0x01D4, r1
+ 290:	10 92 d5 01 	sts	0x01D5, r1
+ 294:	10 92 d6 01 	sts	0x01D6, r1
+ 298:	10 92 d2 01 	sts	0x01D2, r1
+ 29c:	10 92 d1 01 	sts	0x01D1, r1
+
+  for (i=0; i<25; i++) {Buff[i].T1X.du_i=0; 
+ 2a0:	80 e0       	ldi	r24, 0x00	; 0
+ 2a2:	12 c0       	rjmp	.+36     	; 0x2c8 <main+0xca>
+ 2a4:	e8 2f       	mov	r30, r24
+ 2a6:	f0 e0       	ldi	r31, 0x00	; 0
+ 2a8:	a3 e0       	ldi	r26, 0x03	; 3
+ 2aa:	ee 0f       	add	r30, r30
+ 2ac:	ff 1f       	adc	r31, r31
+ 2ae:	aa 95       	dec	r26
+ 2b0:	e1 f7       	brne	.-8      	; 0x2aa <main+0xac>
+ 2b2:	e9 5f       	subi	r30, 0xF9	; 249
+ 2b4:	fe 4f       	sbci	r31, 0xFE	; 254
+ 2b6:	11 82       	std	Z+1, r1	; 0x01
+ 2b8:	10 82       	st	Z, r1
+                        Buff[i].T2X.du_i=0; 
+ 2ba:	13 82       	std	Z+3, r1	; 0x03
+ 2bc:	12 82       	std	Z+2, r1	; 0x02
+                        Buff[i].T1Y.du_i=0; 
+ 2be:	15 82       	std	Z+5, r1	; 0x05
+ 2c0:	14 82       	std	Z+4, r1	; 0x04
+                        Buff[i].T2Y.du_i=0;}
+ 2c2:	17 82       	std	Z+7, r1	; 0x07
+ 2c4:	16 82       	std	Z+6, r1	; 0x06
+ 2c6:	8f 5f       	subi	r24, 0xFF	; 255
+  s1=0; n1=0;
+  s2=0; n2=0;
+  s3=0; n3=0;
+  s4=0; n4=0;
+
+  for (i=0; i<25; i++) {Buff[i].T1X.du_i=0; 
+ 2c8:	89 31       	cpi	r24, 0x19	; 25
+ 2ca:	60 f3       	brcs	.-40     	; 0x2a4 <main+0xa6>
+ 2cc:	80 93 06 01 	sts	0x0106, r24
+                        Buff[i].T2X.du_i=0; 
+                        Buff[i].T1Y.du_i=0; 
+                        Buff[i].T2Y.du_i=0;}
+  for(;;)
+  {
+    meas_xy();                             // получаем один замер
+ 2d0:	0e 94 48 00 	call	0x90	; 0x90 <meas_xy>
+
+//  расчет "скользящего среднего":
+
+    s1 -= Buff[n1].T1X.du_i;
+ 2d4:	20 91 cf 01 	lds	r18, 0x01CF
+ 2d8:	30 91 d0 01 	lds	r19, 0x01D0
+    s1 += one.T1X.du_i;
+ 2dc:	40 91 e3 01 	lds	r20, 0x01E3
+ 2e0:	50 91 e4 01 	lds	r21, 0x01E4
+ 2e4:	7a 01       	movw	r14, r20
+ 2e6:	00 e0       	ldi	r16, 0x00	; 0
+ 2e8:	10 e0       	ldi	r17, 0x00	; 0
+ 2ea:	80 91 02 01 	lds	r24, 0x0102
+ 2ee:	90 91 03 01 	lds	r25, 0x0103
+ 2f2:	a0 91 04 01 	lds	r26, 0x0104
+ 2f6:	b0 91 05 01 	lds	r27, 0x0105
+ 2fa:	e8 0e       	add	r14, r24
+ 2fc:	f9 1e       	adc	r15, r25
+ 2fe:	0a 1f       	adc	r16, r26
+ 300:	1b 1f       	adc	r17, r27
+ 302:	f9 01       	movw	r30, r18
+ 304:	73 e0       	ldi	r23, 0x03	; 3
+ 306:	ee 0f       	add	r30, r30
+ 308:	ff 1f       	adc	r31, r31
+ 30a:	7a 95       	dec	r23
+ 30c:	e1 f7       	brne	.-8      	; 0x306 <main+0x108>
+ 30e:	e9 5f       	subi	r30, 0xF9	; 249
+ 310:	fe 4f       	sbci	r31, 0xFE	; 254
+ 312:	80 81       	ld	r24, Z
+ 314:	91 81       	ldd	r25, Z+1	; 0x01
+ 316:	a0 e0       	ldi	r26, 0x00	; 0
+ 318:	b0 e0       	ldi	r27, 0x00	; 0
+ 31a:	e8 1a       	sub	r14, r24
+ 31c:	f9 0a       	sbc	r15, r25
+ 31e:	0a 0b       	sbc	r16, r26
+ 320:	1b 0b       	sbc	r17, r27
+ 322:	e0 92 02 01 	sts	0x0102, r14
+ 326:	f0 92 03 01 	sts	0x0103, r15
+ 32a:	00 93 04 01 	sts	0x0104, r16
+ 32e:	10 93 05 01 	sts	0x0105, r17
+    Buff[n1].T1X.du_i=one.T1X.du_i;
+ 332:	51 83       	std	Z+1, r21	; 0x01
+ 334:	40 83       	st	Z, r20
+    n1++;
+ 336:	2f 5f       	subi	r18, 0xFF	; 255
+ 338:	3f 4f       	sbci	r19, 0xFF	; 255
+ 33a:	30 93 d0 01 	sts	0x01D0, r19
+ 33e:	20 93 cf 01 	sts	0x01CF, r18
+    if (n1==NSUM) n1=0;
+ 342:	29 31       	cpi	r18, 0x19	; 25
+ 344:	31 05       	cpc	r19, r1
+ 346:	21 f4       	brne	.+8      	; 0x350 <main+0x152>
+ 348:	10 92 d0 01 	sts	0x01D0, r1
+ 34c:	10 92 cf 01 	sts	0x01CF, r1
+    Z.T1X.du_i=s1/NSUM;
+ 350:	c8 01       	movw	r24, r16
+ 352:	b7 01       	movw	r22, r14
+ 354:	29 e1       	ldi	r18, 0x19	; 25
+ 356:	30 e0       	ldi	r19, 0x00	; 0
+ 358:	40 e0       	ldi	r20, 0x00	; 0
+ 35a:	50 e0       	ldi	r21, 0x00	; 0
+ 35c:	0e 94 a2 02 	call	0x544	; 0x544 <__udivmodsi4>
+ 360:	30 93 dc 01 	sts	0x01DC, r19
+ 364:	20 93 db 01 	sts	0x01DB, r18
+
+    s2 -= Buff[n2].T2X.du_i;
+ 368:	20 91 00 01 	lds	r18, 0x0100
+ 36c:	30 91 01 01 	lds	r19, 0x0101
+    s2 += one.T2X.du_i;
+ 370:	40 91 e5 01 	lds	r20, 0x01E5
+ 374:	50 91 e6 01 	lds	r21, 0x01E6
+ 378:	7a 01       	movw	r14, r20
+ 37a:	00 e0       	ldi	r16, 0x00	; 0
+ 37c:	10 e0       	ldi	r17, 0x00	; 0
+ 37e:	80 91 d7 01 	lds	r24, 0x01D7
+ 382:	90 91 d8 01 	lds	r25, 0x01D8
+ 386:	a0 91 d9 01 	lds	r26, 0x01D9
+ 38a:	b0 91 da 01 	lds	r27, 0x01DA
+ 38e:	e8 0e       	add	r14, r24
+ 390:	f9 1e       	adc	r15, r25
+ 392:	0a 1f       	adc	r16, r26
+ 394:	1b 1f       	adc	r17, r27
+ 396:	f9 01       	movw	r30, r18
+ 398:	63 e0       	ldi	r22, 0x03	; 3
+ 39a:	ee 0f       	add	r30, r30
+ 39c:	ff 1f       	adc	r31, r31
+ 39e:	6a 95       	dec	r22
+ 3a0:	e1 f7       	brne	.-8      	; 0x39a <main+0x19c>
+ 3a2:	e9 5f       	subi	r30, 0xF9	; 249
+ 3a4:	fe 4f       	sbci	r31, 0xFE	; 254
+ 3a6:	82 81       	ldd	r24, Z+2	; 0x02
+ 3a8:	93 81       	ldd	r25, Z+3	; 0x03
+ 3aa:	a0 e0       	ldi	r26, 0x00	; 0
+ 3ac:	b0 e0       	ldi	r27, 0x00	; 0
+ 3ae:	e8 1a       	sub	r14, r24
+ 3b0:	f9 0a       	sbc	r15, r25
+ 3b2:	0a 0b       	sbc	r16, r26
+ 3b4:	1b 0b       	sbc	r17, r27
+ 3b6:	e0 92 d7 01 	sts	0x01D7, r14
+ 3ba:	f0 92 d8 01 	sts	0x01D8, r15
+ 3be:	00 93 d9 01 	sts	0x01D9, r16
+ 3c2:	10 93 da 01 	sts	0x01DA, r17
+    Buff[n2].T2X.du_i=one.T2X.du_i;
+ 3c6:	53 83       	std	Z+3, r21	; 0x03
+ 3c8:	42 83       	std	Z+2, r20	; 0x02
+    n2++;
+ 3ca:	2f 5f       	subi	r18, 0xFF	; 255
+ 3cc:	3f 4f       	sbci	r19, 0xFF	; 255
+ 3ce:	30 93 01 01 	sts	0x0101, r19
+ 3d2:	20 93 00 01 	sts	0x0100, r18
+    if (n2==NSUM) n2=0;
+ 3d6:	29 31       	cpi	r18, 0x19	; 25
+ 3d8:	31 05       	cpc	r19, r1
+ 3da:	21 f4       	brne	.+8      	; 0x3e4 <main+0x1e6>
+ 3dc:	10 92 01 01 	sts	0x0101, r1
+ 3e0:	10 92 00 01 	sts	0x0100, r1
+    Z.T2X.du_i=s2/NSUM;
+ 3e4:	c8 01       	movw	r24, r16
+ 3e6:	b7 01       	movw	r22, r14
+ 3e8:	29 e1       	ldi	r18, 0x19	; 25
+ 3ea:	30 e0       	ldi	r19, 0x00	; 0
+ 3ec:	40 e0       	ldi	r20, 0x00	; 0
+ 3ee:	50 e0       	ldi	r21, 0x00	; 0
+ 3f0:	0e 94 a2 02 	call	0x544	; 0x544 <__udivmodsi4>
+ 3f4:	30 93 de 01 	sts	0x01DE, r19
+ 3f8:	20 93 dd 01 	sts	0x01DD, r18
+
+    s3 -= Buff[n3].T1Y.du_i;
+ 3fc:	20 91 eb 01 	lds	r18, 0x01EB
+ 400:	30 91 ec 01 	lds	r19, 0x01EC
+    s3 += one.T1Y.du_i;
+ 404:	40 91 e7 01 	lds	r20, 0x01E7
+ 408:	50 91 e8 01 	lds	r21, 0x01E8
+ 40c:	7a 01       	movw	r14, r20
+ 40e:	00 e0       	ldi	r16, 0x00	; 0
+ 410:	10 e0       	ldi	r17, 0x00	; 0
+ 412:	80 91 ed 01 	lds	r24, 0x01ED
+ 416:	90 91 ee 01 	lds	r25, 0x01EE
+ 41a:	a0 91 ef 01 	lds	r26, 0x01EF
+ 41e:	b0 91 f0 01 	lds	r27, 0x01F0
+ 422:	e8 0e       	add	r14, r24
+ 424:	f9 1e       	adc	r15, r25
+ 426:	0a 1f       	adc	r16, r26
+ 428:	1b 1f       	adc	r17, r27
+ 42a:	f9 01       	movw	r30, r18
+ 42c:	93 e0       	ldi	r25, 0x03	; 3
+ 42e:	ee 0f       	add	r30, r30
+ 430:	ff 1f       	adc	r31, r31
+ 432:	9a 95       	dec	r25
+ 434:	e1 f7       	brne	.-8      	; 0x42e <main+0x230>
+ 436:	e9 5f       	subi	r30, 0xF9	; 249
+ 438:	fe 4f       	sbci	r31, 0xFE	; 254
+ 43a:	84 81       	ldd	r24, Z+4	; 0x04
+ 43c:	95 81       	ldd	r25, Z+5	; 0x05
+ 43e:	a0 e0       	ldi	r26, 0x00	; 0
+ 440:	b0 e0       	ldi	r27, 0x00	; 0
+ 442:	e8 1a       	sub	r14, r24
+ 444:	f9 0a       	sbc	r15, r25
+ 446:	0a 0b       	sbc	r16, r26
+ 448:	1b 0b       	sbc	r17, r27
+ 44a:	e0 92 ed 01 	sts	0x01ED, r14
+ 44e:	f0 92 ee 01 	sts	0x01EE, r15
+ 452:	00 93 ef 01 	sts	0x01EF, r16
+ 456:	10 93 f0 01 	sts	0x01F0, r17
+    Buff[n3].T1Y.du_i=one.T1Y.du_i;
+ 45a:	55 83       	std	Z+5, r21	; 0x05
+ 45c:	44 83       	std	Z+4, r20	; 0x04
+    n3++;
+ 45e:	2f 5f       	subi	r18, 0xFF	; 255
+ 460:	3f 4f       	sbci	r19, 0xFF	; 255
+ 462:	30 93 ec 01 	sts	0x01EC, r19
+ 466:	20 93 eb 01 	sts	0x01EB, r18
+    if (n3==NSUM) n3=0;
+ 46a:	29 31       	cpi	r18, 0x19	; 25
+ 46c:	31 05       	cpc	r19, r1
+ 46e:	21 f4       	brne	.+8      	; 0x478 <main+0x27a>
+ 470:	10 92 ec 01 	sts	0x01EC, r1
+ 474:	10 92 eb 01 	sts	0x01EB, r1
+    Z.T1Y.du_i=s3/NSUM;
+ 478:	c8 01       	movw	r24, r16
+ 47a:	b7 01       	movw	r22, r14
+ 47c:	29 e1       	ldi	r18, 0x19	; 25
+ 47e:	30 e0       	ldi	r19, 0x00	; 0
+ 480:	40 e0       	ldi	r20, 0x00	; 0
+ 482:	50 e0       	ldi	r21, 0x00	; 0
+ 484:	0e 94 a2 02 	call	0x544	; 0x544 <__udivmodsi4>
+ 488:	30 93 e0 01 	sts	0x01E0, r19
+ 48c:	20 93 df 01 	sts	0x01DF, r18
+
+    s4 -= Buff[n4].T2Y.du_i;
+ 490:	20 91 d1 01 	lds	r18, 0x01D1
+ 494:	30 91 d2 01 	lds	r19, 0x01D2
+    s4 += one.T2Y.du_i;
+ 498:	40 91 e9 01 	lds	r20, 0x01E9
+ 49c:	50 91 ea 01 	lds	r21, 0x01EA
+ 4a0:	7a 01       	movw	r14, r20
+ 4a2:	00 e0       	ldi	r16, 0x00	; 0
+ 4a4:	10 e0       	ldi	r17, 0x00	; 0
+ 4a6:	80 91 d3 01 	lds	r24, 0x01D3
+ 4aa:	90 91 d4 01 	lds	r25, 0x01D4
+ 4ae:	a0 91 d5 01 	lds	r26, 0x01D5
+ 4b2:	b0 91 d6 01 	lds	r27, 0x01D6
+ 4b6:	e8 0e       	add	r14, r24
+ 4b8:	f9 1e       	adc	r15, r25
+ 4ba:	0a 1f       	adc	r16, r26
+ 4bc:	1b 1f       	adc	r17, r27
+ 4be:	f9 01       	movw	r30, r18
+ 4c0:	83 e0       	ldi	r24, 0x03	; 3
+ 4c2:	ee 0f       	add	r30, r30
+ 4c4:	ff 1f       	adc	r31, r31
+ 4c6:	8a 95       	dec	r24
+ 4c8:	e1 f7       	brne	.-8      	; 0x4c2 <main+0x2c4>
+ 4ca:	e9 5f       	subi	r30, 0xF9	; 249
+ 4cc:	fe 4f       	sbci	r31, 0xFE	; 254
+ 4ce:	86 81       	ldd	r24, Z+6	; 0x06
+ 4d0:	97 81       	ldd	r25, Z+7	; 0x07
+ 4d2:	a0 e0       	ldi	r26, 0x00	; 0
+ 4d4:	b0 e0       	ldi	r27, 0x00	; 0
+ 4d6:	e8 1a       	sub	r14, r24
+ 4d8:	f9 0a       	sbc	r15, r25
+ 4da:	0a 0b       	sbc	r16, r26
+ 4dc:	1b 0b       	sbc	r17, r27
+ 4de:	e0 92 d3 01 	sts	0x01D3, r14
+ 4e2:	f0 92 d4 01 	sts	0x01D4, r15
+ 4e6:	00 93 d5 01 	sts	0x01D5, r16
+ 4ea:	10 93 d6 01 	sts	0x01D6, r17
+    Buff[n4].T2Y.du_i=one.T2Y.du_i;
+ 4ee:	57 83       	std	Z+7, r21	; 0x07
+ 4f0:	46 83       	std	Z+6, r20	; 0x06
+    n4++;
+ 4f2:	2f 5f       	subi	r18, 0xFF	; 255
+ 4f4:	3f 4f       	sbci	r19, 0xFF	; 255
+ 4f6:	30 93 d2 01 	sts	0x01D2, r19
+ 4fa:	20 93 d1 01 	sts	0x01D1, r18
+    if (n4==NSUM) n4=0;
+ 4fe:	29 31       	cpi	r18, 0x19	; 25
+ 500:	31 05       	cpc	r19, r1
+ 502:	21 f4       	brne	.+8      	; 0x50c <__stack+0xd>
+ 504:	10 92 d2 01 	sts	0x01D2, r1
+ 508:	10 92 d1 01 	sts	0x01D1, r1
+    Z.T2Y.du_i=s4/NSUM;      
+ 50c:	c8 01       	movw	r24, r16
+ 50e:	b7 01       	movw	r22, r14
+ 510:	29 e1       	ldi	r18, 0x19	; 25
+ 512:	30 e0       	ldi	r19, 0x00	; 0
+ 514:	40 e0       	ldi	r20, 0x00	; 0
+ 516:	50 e0       	ldi	r21, 0x00	; 0
+ 518:	0e 94 a2 02 	call	0x544	; 0x544 <__udivmodsi4>
+ 51c:	30 93 e2 01 	sts	0x01E2, r19
+ 520:	20 93 e1 01 	sts	0x01E1, r18
+
+    Tx_means();                            // выводим "среднее" в 'USART'
+ 524:	0e 94 a9 00 	call	0x152	; 0x152 <Tx_means>
+
+    cpl(PORTB, STR);                       // cброс сторожевого таймера
+ 528:	2a 9b       	sbis	0x05, 2	; 5
+ 52a:	02 c0       	rjmp	.+4      	; 0x530 <__stack+0x31>
+ 52c:	2a 98       	cbi	0x05, 2	; 5
+ 52e:	d0 ce       	rjmp	.-608    	; 0x2d0 <main+0xd2>
+ 530:	2a 9a       	sbi	0x05, 2	; 5
+ 532:	ce ce       	rjmp	.-612    	; 0x2d0 <main+0xd2>
+
+00000534 <Tx_byte>:
+
+  Tx_byte(cc);
+}
+
+void Tx_byte(char outbyte)                 // вывод байта в 'USART'
+{
+ 534:	98 2f       	mov	r25, r24
+
+  loop_until_bit_is_set(UCSR0A,UDRE0);     // ждать очистки буфера передатчика
+ 536:	80 91 c0 00 	lds	r24, 0x00C0
+ 53a:	85 ff       	sbrs	r24, 5
+ 53c:	fc cf       	rjmp	.-8      	; 0x536 <Tx_byte+0x2>
+  UDR0 = outbyte;                          // загрузить младший байт данных                                           // в буфер, начать передачу
+ 53e:	90 93 c6 00 	sts	0x00C6, r25
+}
+ 542:	08 95       	ret
+
+00000544 <__udivmodsi4>:
+ 544:	a1 e2       	ldi	r26, 0x21	; 33
+ 546:	1a 2e       	mov	r1, r26
+ 548:	aa 1b       	sub	r26, r26
+ 54a:	bb 1b       	sub	r27, r27
+ 54c:	fd 01       	movw	r30, r26
+ 54e:	0d c0       	rjmp	.+26     	; 0x56a <__udivmodsi4_ep>
+
+00000550 <__udivmodsi4_loop>:
+ 550:	aa 1f       	adc	r26, r26
+ 552:	bb 1f       	adc	r27, r27
+ 554:	ee 1f       	adc	r30, r30
+ 556:	ff 1f       	adc	r31, r31
+ 558:	a2 17       	cp	r26, r18
+ 55a:	b3 07       	cpc	r27, r19
+ 55c:	e4 07       	cpc	r30, r20
+ 55e:	f5 07       	cpc	r31, r21
+ 560:	20 f0       	brcs	.+8      	; 0x56a <__udivmodsi4_ep>
+ 562:	a2 1b       	sub	r26, r18
+ 564:	b3 0b       	sbc	r27, r19
+ 566:	e4 0b       	sbc	r30, r20
+ 568:	f5 0b       	sbc	r31, r21
+
+0000056a <__udivmodsi4_ep>:
+ 56a:	66 1f       	adc	r22, r22
+ 56c:	77 1f       	adc	r23, r23
+ 56e:	88 1f       	adc	r24, r24
+ 570:	99 1f       	adc	r25, r25
+ 572:	1a 94       	dec	r1
+ 574:	69 f7       	brne	.-38     	; 0x550 <__udivmodsi4_loop>
+ 576:	60 95       	com	r22
+ 578:	70 95       	com	r23
+ 57a:	80 95       	com	r24
+ 57c:	90 95       	com	r25
+ 57e:	9b 01       	movw	r18, r22
+ 580:	ac 01       	movw	r20, r24
+ 582:	bd 01       	movw	r22, r26
+ 584:	cf 01       	movw	r24, r30
+ 586:	08 95       	ret
+
+00000588 <_exit>:
+ 588:	f8 94       	cli
+
+0000058a <__stop_program>:
+ 58a:	ff cf       	rjmp	.-2      	; 0x58a <__stop_program>

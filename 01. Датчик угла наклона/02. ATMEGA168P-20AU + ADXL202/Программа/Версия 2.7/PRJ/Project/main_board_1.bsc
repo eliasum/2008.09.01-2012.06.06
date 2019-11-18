@@ -1,0 +1,114 @@
+Sub Init
+
+  ST_Val_1.Caption = "ST_Val_1"
+  ST_Val_2.Caption = "ST_Val_2"
+  ST_Val_3.Caption = "ST_Val_3"
+  ST_Val_4.Caption = "ST_Val_4"
+  ST_Val_5.Caption = "ST_Val_5"
+  ST_Val_6.Caption = "ST_Val_6"
+  ST_Val_7.Caption = "ST_Val_7"
+
+  Timer_Ext.Interval=500 ' период в [мс]
+  Timer_Ext.Enabled=true  ' можно запретить -> false
+  CB_CBR.ItemIndex=3      '.., 3->9600, 4->19200.
+
+End Sub
+
+Sub Timer_Ex_On
+
+  ' Вызывается, если таймер разрешен (см.выше)
+  ' Например - обновление с интервалом 1 сек.
+  ST_Val_8.Caption=ST_Val_2.Caption
+  ' ST_Val_8.Caption="Обновлено"
+
+End Sub
+
+
+'------------------------------------------------------
+
+Sub ShowResult
+     
+  Dim val_1, val_2, val_3, val_4, val_5 As integer
+  Dim Toffx, Toffy, X1, X2, Y1, Y2, Sx, Sy, Ax, Ay, Teta_xy, Teta_yx, Lind As double
+
+  val_1 = StrToInt(ST_Val_1.Caption)
+  val_2 = StrToInt(ST_Val_2.Caption)
+  val_3 = StrToInt(ST_Val_3.Caption)
+  val_4 = StrToInt(ST_Val_4.Caption)
+
+  Toffx = 4095.1/8248        
+  Toffy = 4375.1/8248
+  X1 = 3022.1/8248
+  X2 = 5127.1/8248
+  Y1 = 3350.1/8248
+  Y2 = 5436.1/8248
+  Sx = (X2 - X1)/2
+  Sy = (Y2 - Y1)/2
+
+  Const pi = 3.14159265358979
+
+  Ax = (val_1/val_2-Toffx)/Sx
+  Ay = (val_3/val_4-Toffy)/Sy
+   
+  Axy = Ax/Ay
+  Ayx = Ay/Ax
+
+  Teta_xy = arctan(Axy)*180/pi
+  Teta_yx = arctan(Ayx)*180/pi
+
+
+IF ABS(Ay) > ABS(Ax)
+  THEN
+    IF Ay < 0
+      THEN    
+        IF Ax < 0     
+          THEN
+            Lind = -180 + Teta_xy
+          ELSE
+            Lind = 180 + Teta_xy
+        END IF
+      ELSE
+        IF Ay >= 0
+          THEN
+            Lind = Teta_xy      
+        END IF
+    END IF
+  ELSE                                    
+    IF ABS(Ay) <= ABS(Ax)
+      THEN
+        IF Ax < 0
+          THEN
+            Lind = -90 - Teta_yx     
+          ELSE
+            Lind = 90 - Teta_yx                 
+        END IF          
+    END IF
+END IF
+
+'------------------------------------------------------
+  ' Выводим значение угла:
+
+  ST_Val_5.Caption =  FloatToStrF(Ax, 2, 4, 2)
+  ST_Val_6.Caption =  FloatToStrF(Ay, 2, 4, 2)
+  ST_Val_7.Caption =  FloatToStrF(Lind, 2, 4, 2)
+ 
+  ' Ставим стрелку градусов:
+  arrow = 0
+
+  IF Lind > 0
+    THEN
+      IF Lind < 360
+        THEN
+          arrow = Lind
+      END IF
+    ELSE
+      IF Lind < 0
+        THEN
+          arrow = 360 + Lind
+      END IF
+  END IF
+
+  Grad_Scale.Heading=arrow
+
+end sub
+

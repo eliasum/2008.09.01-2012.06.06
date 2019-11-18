@@ -1,0 +1,58 @@
+A51 MACRO ASSEMBLER  STARTUP                                                              02/28/2011 11:09:39 PAGE     1
+
+
+MACRO ASSEMBLER A51 V7.10
+OBJECT MODULE PLACED IN .\Dbg\STARTUP.obj
+ASSEMBLER INVOKED BY: D:\Work\XXX.XX.XX.XX\03. Датчик угла и усилия\MVM\2011.02.28_05-18\Keil\Keil51\C51\BIN\A51.EXE Src
+                      \STARTUP.A51 SET(SMALL) DEBUG PRINT(.\Dbg\STARTUP.lst) OBJECT(.\Dbg\STARTUP.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;--------------------------------------------------------------------------------;
+                       2     ;                                                                                ;
+                       3     ;               Код, выполнемый сразу после сброса процессора.                  ;
+                       4     ;                                                                                ;
+                       5     ;--------------------------------------------------------------------------------;
+                       6     
+                       7                     NAME    ?C_STARTUP
+                       8     
+                       9     ?C_C51STARTUP   SEGMENT   CODE
+                      10     ?STACK          SEGMENT   IDATA
+                      11     
+----                  12                     RSEG    ?STACK
+0000                  13                     DS      1
+                      14     
+                      15                     EXTRN CODE (?C_START)
+                      16                     PUBLIC  ?C_STARTUP
+                      17     
+----                  18                     CSEG    AT      0
+0000 020000   F       19     ?C_STARTUP:     LJMP    STARTUP1
+                      20     
+----                  21                     RSEG    ?C_C51STARTUP
+                      22     
+0000                  23     STARTUP1:
+0000 758100   F       24                     MOV     SP,#?STACK-1
+0003 020000   F       25                     LJMP    ?C_START
+                      26     
+                      27                     END
+                             
+A51 MACRO ASSEMBLER  STARTUP                                                              02/28/2011 11:09:39 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+?C_C51STARTUP. . .  C SEG    0006H       REL=UNIT
+?C_START . . . . .  C ADDR   -----       EXT
+?C_STARTUP . . . .  C ADDR   0000H   A   
+?STACK . . . . . .  I SEG    0001H       REL=UNIT
+SP . . . . . . . .  D ADDR   0081H   A   
+STARTUP1 . . . . .  C ADDR   0000H   R   SEG=?C_C51STARTUP
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

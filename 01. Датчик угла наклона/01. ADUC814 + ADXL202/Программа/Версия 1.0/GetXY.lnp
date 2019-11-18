@@ -1,0 +1,6 @@
+"Main.obj",
+"StartUp.obj",
+".\MeasXY_LIB\MeasXY.LIB" 
+TO "GetXY" 
+IXREF 
+RAMSIZE(256) 

@@ -1,0 +1,1329 @@
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN Main.OBJ
+COMPILER INVOKED BY: D:\Work\Keil51\C51\BIN\C51.EXE Main.c BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS
+
+line level    source
+
+   1          /********************************************************************************/
+   2          /*                                                                              */
+   3          /*                       ”правл€юща€ программа дл€ 'ADXL202'                    */
+   4          /*                          ¬ерси€ 2.0 (15 июн€ 2009 г)                         */
+   5          /*                                                                              */
+   6          /********************************************************************************/
+   7          #include "main.h"
+   1      =1  /********************************************************************************/
+   2      =1  /*                                                                              */
+   3      =1  /*                 ‘айл определений дл€ управл€ющей программы                   */
+   4      =1  /*                                                                              */
+   5      =1  /********************************************************************************/
+   6      =1  
+   7      =1  #ifndef _MAIN_H
+   8      =1  #define _MAIN_H
+   9      =1  
+  10      =1  #include "Aduc814.h"
+   1      =2  /********************************************************************************/
+   2      =2  /*                                                                              */
+   3      =2  /*                 ќписание ресурсов микроконтроллера ADuC814xR.                */
+   4      =2  /*                                                                              */
+   5      =2  /********************************************************************************/
+   6      =2  #ifndef _REG_ADuC814
+   7      =2  #define _REG_ADuC814
+   8      =2  
+   9      =2  /*==============================================================================*/
+  10      =2  /*                 ќбъ€влени€ регистров специальных функций.                    */
+  11      =2  /*==============================================================================*/
+  12      =2  sfr   P0        = 0x80;
+  13      =2  sfr   SP        = 0x81;
+  14      =2  sfr   DPL       = 0x82;
+  15      =2  sfr   DPH       = 0x83;
+  16      =2  sfr   PCON      = 0x87;
+  17      =2  sfr   TCON      = 0x88;
+  18      =2  sfr   TMOD      = 0x89;
+  19      =2  sfr   TL0       = 0x8A;
+  20      =2  sfr   TL1       = 0x8B;
+  21      =2  sfr   TH0       = 0x8C;
+  22      =2  sfr   TH1       = 0x8D;
+  23      =2  sfr   P1        = 0x90;
+  24      =2  sfr   SCON      = 0x98;
+  25      =2  sfr   SBUF      = 0x99;
+  26      =2  sfr   I2CDAT    = 0x9A;
+  27      =2  sfr   I2CADD    = 0x9B;
+  28      =2  sfr   CFG814    = 0x9C;
+  29      =2  sfr   P2        = 0xA0;
+  30      =2  sfr   TIMECON   = 0xA1;
+  31      =2  sfr   HTHSEC    = 0xA2;
+  32      =2  sfr   SEC       = 0xA3;
+  33      =2  sfr   MIN       = 0xA4;
+  34      =2  sfr   HOUR      = 0xA5;
+  35      =2  sfr   INTVAL    = 0xA6;
+  36      =2  sfr   IE        = 0xA8;
+  37      =2  sfr   IEIP2     = 0xA9;
+  38      =2  sfr   P3        = 0xB0;
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 2   
+
+  39      =2  sfr   IP        = 0xB8;
+  40      =2  sfr   ECON      = 0xB9;
+  41      =2  sfr   ETIM1     = 0xBA;    //AR
+  42      =2  sfr   ETIM2     = 0xBB;
+  43      =2  sfr   EDATA1    = 0xBC;
+  44      =2  sfr   EDATA2    = 0xBD;
+  45      =2  sfr   EDATA3    = 0xBE;
+  46      =2  sfr   EDATA4    = 0xBF;
+  47      =2  sfr   WDCON     = 0xC0;
+  48      =2  sfr   CHIPID    = 0xC2;
+  49      =2  sfr   EADRL     = 0xC6;
+  50      =2  sfr   T2CON     = 0xC8;
+  51      =2  sfr   RCAP2L    = 0xCA;
+  52      =2  sfr   RCAP2H    = 0xCB;
+  53      =2  sfr   TL2       = 0xCC;
+  54      =2  sfr   TH2       = 0xCD;
+  55      =2  sfr   PSW       = 0xD0;
+  56      =2  sfr   PLLCON    = 0xD7;
+  57      =2  sfr   ADCCON2   = 0xD8;
+  58      =2  sfr   ADCDATAL  = 0xD9;
+  59      =2  sfr   ADCDATAH  = 0xDA;
+  60      =2  sfr   PSMCON    = 0xDF;
+  61      =2  sfr   ACC       = 0xE0;
+  62      =2  sfr   I2CCON    = 0xE8;    //
+  63      =2  sfr   DCON      = 0xE8;    //
+  64      =2  sfr   ADCCON1   = 0xEF;
+  65      =2  sfr   B         = 0xF0;
+  66      =2  sfr   ADCOFSL   = 0xF1;
+  67      =2  sfr   ADCOFSH   = 0xF2;
+  68      =2  sfr   ADCGAINL  = 0xF3;
+  69      =2  sfr   ADCGAINH  = 0xF4;
+  70      =2  sfr   ADCCON3   = 0xF5;
+  71      =2  sfr   SPIDAT    = 0xF7;
+  72      =2  sfr   SPICON    = 0xF8;
+  73      =2  sfr   DAC0L     = 0xF9;
+  74      =2  sfr   DAC0H     = 0xFA;
+  75      =2  sfr   DAC1L     = 0xFB;
+  76      =2  sfr   DAC1H     = 0xFC;
+  77      =2  sfr   DACCON    = 0xFD;
+  78      =2  
+  79      =2  /*------------------------------------------------------------------------------*/
+  80      =2  /* TCON - регистр управлени€.                                                   */
+  81      =2  /*------------------------------------------------------------------------------*/
+  82      =2  sbit  TF1       = 0x8F;
+  83      =2  sbit  TR1       = 0x8E;
+  84      =2  sbit  TF0       = 0x8D;
+  85      =2  sbit  TR0       = 0x8C;
+  86      =2  sbit  IE1       = 0x8B;
+  87      =2  sbit  IT1       = 0x8A;
+  88      =2  sbit  IE0       = 0x89;
+  89      =2  sbit  IT0       = 0x88;
+  90      =2  
+  91      =2  /*------------------------------------------------------------------------------*/
+  92      =2  /* P1 - биты параллельного порта 1.                                             */
+  93      =2  /*------------------------------------------------------------------------------*/
+  94      =2  sbit  T2EX      = 0x91;
+  95      =2  sbit  T2        = 0x90;
+  96      =2  
+  97      =2  /*------------------------------------------------------------------------------*/
+  98      =2  /* SCON - регистр управлени€ UART.                                              */
+  99      =2  /*------------------------------------------------------------------------------*/
+ 100      =2  sbit  SM0       = 0x9F;
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 3   
+
+ 101      =2  sbit  SM1       = 0x9E;
+ 102      =2  sbit  SM2       = 0x9D;
+ 103      =2  sbit  REN       = 0x9C;
+ 104      =2  sbit  TB8       = 0x9B;
+ 105      =2  sbit  RB8       = 0x9A;
+ 106      =2  sbit  TI        = 0x99;
+ 107      =2  sbit  RI        = 0x98;
+ 108      =2  
+ 109      =2  /*------------------------------------------------------------------------------*/
+ 110      =2  /* IE - регистр разрешени€ прерываний.                                          */
+ 111      =2  /*------------------------------------------------------------------------------*/
+ 112      =2  sbit  EA        = 0xAF;
+ 113      =2  sbit  EADC      = 0xAE;
+ 114      =2  sbit  ET2       = 0xAD;
+ 115      =2  sbit  ES        = 0xAC;
+ 116      =2  sbit  ET1       = 0xAB;
+ 117      =2  sbit  EX1       = 0xAA;
+ 118      =2  sbit  ET0       = 0xA9;
+ 119      =2  sbit  EX0       = 0xA8;
+ 120      =2  
+ 121      =2  /*------------------------------------------------------------------------------*/
+ 122      =2  /* P3 - биты параллельного порта 3.                                             */
+ 123      =2  /*------------------------------------------------------------------------------*/
+ 124      =2  sbit  RD        = 0xB7;
+ 125      =2  sbit  WR        = 0xB6;
+ 126      =2  sbit  T1        = 0xB5;
+ 127      =2  sbit  T0        = 0xB4;
+ 128      =2  sbit  INT1      = 0xB3;
+ 129      =2  sbit  INT0      = 0xB2;
+ 130      =2  sbit  TXD       = 0xB1;
+ 131      =2  sbit  RXD       = 0xB0;
+ 132      =2  
+ 133      =2  /*------------------------------------------------------------------------------*/
+ 134      =2  /* IP - регистр приоритетов прерываний.                                         */
+ 135      =2  /*------------------------------------------------------------------------------*/
+ 136      =2  sbit  PSI       = 0xBF;
+ 137      =2  sbit  PADC      = 0xBE;
+ 138      =2  sbit  PT2       = 0xBD;
+ 139      =2  sbit  PS        = 0xBC;
+ 140      =2  sbit  PT1       = 0xBB;
+ 141      =2  sbit  PX1       = 0xBA;
+ 142      =2  sbit  PT0       = 0xB9;
+ 143      =2  sbit  PX0       = 0xB8;
+ 144      =2  
+ 145      =2  /*------------------------------------------------------------------------------*/
+ 146      =2  /* WDCON - регистр управлени€ WatchDog таймером.                                */
+ 147      =2  /*------------------------------------------------------------------------------*/
+ 148      =2  sbit  PRE3      = 0xC7;
+ 149      =2  sbit  PRE2      = 0xC6;
+ 150      =2  sbit  PRE1      = 0xC5;
+ 151      =2  sbit  PRE0      = 0xC4;
+ 152      =2  sbit  WDIR      = 0xC3;
+ 153      =2  sbit  WDS       = 0xC2;
+ 154      =2  sbit  WDE       = 0xC1;
+ 155      =2  sbit  WDWR      = 0xC0;
+ 156      =2  
+ 157      =2  /*------------------------------------------------------------------------------*/
+ 158      =2  /* T2CON - дполнительный контрольный регистр.                                   */
+ 159      =2  /*------------------------------------------------------------------------------*/
+ 160      =2  sbit  TF2       = 0xCF;
+ 161      =2  sbit  EXF2      = 0xCE;
+ 162      =2  sbit  RCLK      = 0xCD;
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 4   
+
+ 163      =2  sbit  TCLK      = 0xCC;
+ 164      =2  sbit  EXEN2     = 0xCB;
+ 165      =2  sbit  TR2       = 0xCA;
+ 166      =2  sbit  CNT2      = 0xC9;
+ 167      =2  sbit  CAP2      = 0xC8;
+ 168      =2  
+ 169      =2  /*------------------------------------------------------------------------------*/
+ 170      =2  /* PSW - слово состо€ни€ программы.                                             */
+ 171      =2  /*------------------------------------------------------------------------------*/
+ 172      =2  sbit  CY        = 0xD7;
+ 173      =2  sbit  AC        = 0xD6;
+ 174      =2  sbit  F0        = 0xD5;
+ 175      =2  sbit  RS1       = 0xD4;
+ 176      =2  sbit  RS0       = 0xD3;
+ 177      =2  sbit  OV        = 0xD2;
+ 178      =2  sbit  F1        = 0xD1;
+ 179      =2  sbit  P         = 0xD0;
+ 180      =2  
+ 181      =2  /* ADCCON2 */
+ 182      =2  sbit  ADCI      = 0xDF;
+ 183      =2  sbit  ADCSPI    = 0xDE;
+ 184      =2  sbit  CCONV     = 0xDD;
+ 185      =2  sbit  SCONV     = 0xDC;
+ 186      =2  sbit  CS3       = 0xDB;
+ 187      =2  sbit  CS2       = 0xDA;
+ 188      =2  sbit  CS1       = 0xD9;
+ 189      =2  sbit  CS0       = 0xD8;
+ 190      =2  
+ 191      =2  /*  I2CCON  */
+ 192      =2  sbit  MDO       = I2CCON^7;
+ 193      =2  sbit  MDE       = I2CCON^6;
+ 194      =2  sbit  MCO       = I2CCON^5;
+ 195      =2  sbit  MDI       = I2CCON^4;
+ 196      =2  sbit  I2CM      = I2CCON^3;
+ 197      =2  sbit  I2CRS     = I2CCON^2;
+ 198      =2  sbit  I2CTX     = I2CCON^1;
+ 199      =2  sbit  I2CI      = I2CCON^0;
+ 200      =2  
+ 201      =2  /*  DCON  */
+ 202      =2  sbit  D1        = DCON^7;
+ 203      =2  sbit  D1EN      = DCON^6;
+ 204      =2  sbit  D0        = DCON^5;
+ 205      =2  sbit  D0EN      = DCON^3;
+ 206      =2  
+ 207      =2  /* SPICON */
+ 208      =2  sbit  ISPI      = 0xFF;
+ 209      =2  sbit  WCOL      = 0xFE;
+ 210      =2  sbit  SPE       = 0xFD;
+ 211      =2  sbit  SPIM      = 0xFC;
+ 212      =2  sbit  CPOL      = 0xFB;
+ 213      =2  sbit  CPHA      = 0xFA;
+ 214      =2  sbit  SPR1      = 0xF9;
+ 215      =2  sbit  SPR0      = 0xF8;
+ 216      =2  
+ 217      =2  /*------------------------------------------------------------------------------*/
+ 218      =2  /* P0..3 - биты параллельного порта 0...3                                       */
+ 219      =2  /*------------------------------------------------------------------------------*/
+ 220      =2  
+ 221      =2  sbit P17        = 0x97;
+ 222      =2  sbit P16        = 0x96;
+ 223      =2  sbit P15        = 0x95;
+ 224      =2  sbit P14        = 0x94;
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 5   
+
+ 225      =2  sbit P13        = 0x93;
+ 226      =2  sbit P12        = 0x92;
+ 227      =2  sbit P11        = 0x91;
+ 228      =2  sbit P10        = 0x90;
+ 229      =2  
+ 230      =2  sbit P37        = 0xB7;
+ 231      =2  sbit P36        = 0xB6;
+ 232      =2  sbit P35        = 0xB5;
+ 233      =2  sbit P34        = 0xB4;
+ 234      =2  sbit P33        = 0xB3;
+ 235      =2  sbit P32        = 0xB2;
+ 236      =2  sbit P31        = 0xB1;
+ 237      =2  sbit P30        = 0xB0;
+ 238      =2  
+ 239      =2  #define IDL     0x01            /* Ѕит переключени€ в режим холостого хода.     */
+ 240      =2  
+ 241      =2  /*------------------------------------------------------------------------------*/
+ 242      =2  /* ћакрокоманда перевода процессора в режим пониженного потреблени€.            */
+ 243      =2  /* ѕринимает:           Ќичего не принимает.                                    */
+ 244      =2  /* ¬озвращает:          Ќичего не возвращает.                                   */
+ 245      =2  /*------------------------------------------------------------------------------*/
+ 246      =2  #define IDLE()  PCON|=IDL
+ 247      =2  
+ 248      =2  #endif
+ 249      =2  
+  11      =1  
+  12      =1  #define XOUT P10
+  13      =1  #define YOUT P11
+  14      =1  
+  15      =1  #define BYTE_ONE 1
+  16      =1  #define BYTE_TWO 0
+  17      =1  
+  18      =1  // прототипы 'c'-функций в файле 'Main.c'
+  19      =1  unsigned char meas_xy(void);
+  20      =1  void Tx_means(void);
+  21      =1  void Tx_byte(char outbyte);
+  22      =1  
+  23      =1  #endif
+  24      =1  
+   8          // дл€ симул€ции в отладчике убрать "последий" '_'
+   9          #define SIMUL_DBG_
+  10          
+  11          // длина "очереди усреднени€" ( 1, 2, 4, 8 или 16 )
+  12          #define NSUM 16
+  13          
+  14          // число подтвеждений фронта ( < 256)
+  15          #define CNT_FRNT 256
+  16          
+  17          // сопоставл€ем соответствующий коэф.делени€
+  18          #if NSUM == 2
+                #define KDEL 1
+              #else
+  21            #if NSUM == 4
+                  #define KDEL 2
+                #else
+  24              #if NSUM == 8
+                    #define KDEL 3
+                  #else
+  27                #if NSUM == 16
+  28                  #define KDEL 4
+  29                #else
+                      #define KDEL 0
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 6   
+
+                    #endif
+  32              #endif
+  33            #endif
+  34          #endif
+  35          
+  36          /*==============================================================================*/
+  37          /*                                ќписание типов                                */
+  38          /*==============================================================================*/
+  39          union u_int                                 // дл€ 2-х байтовых данных
+  40            {
+  41             unsigned int  du_i;                      // data_union_int
+  42             unsigned char du_c[2];                   // data_union_char
+  43            };                                        // 256*[0] + [1]
+  44          
+  45          idata struct MEASURE {                      // описание структуры 1-го замера
+  46            union u_int T1X;
+  47            union u_int T2X;
+  48            union u_int T1Y;
+  49            union u_int T2Y;  };
+  50          /*==============================================================================*/
+  51          /*                      √лобальные переменные программы.                        */
+  52          /*==============================================================================*/
+  53          idata struct MEASURE Buff[NSUM];           // очередь замеров
+  54          data struct MEASURE one;                   // 1-н замер
+  55          
+  56          unsigned long s;                           // 0..0x0ffffffff
+  57          unsigned char i;                           // 0..0x0ff
+  58          unsigned char get_one;                     // номер замера
+  59          
+  60          /*==============================================================================*/
+  61          /*                                                                              */
+  62          /*                         √лавна€ функци€ программы.                           */
+  63          /*                                                                              */
+  64          /*==============================================================================*/
+  65          void main(void)
+  66          {
+  67   1      #ifdef SIMUL_DBG
+                for(i=0; i<NSUM; i++)
+                {
+                  Buff[i].T1X.du_i = 0;
+                  Buff[i].T2X.du_i = 0;
+                  Buff[i].T1Y.du_i = 0;
+                  Buff[i].T2Y.du_i = 0;
+                }
+              #endif
+  76   1      
+  77   1        IE = 0;                                  // все прерывани€ запрещены
+  78   1      
+  79   1      // настройка синтезатора
+  80   1        PLLCON = 0x001;                          // синтезатор рабочей частоты €дра
+  81   1                                                 // Core Clk = XTALL*256 = 32768*256 = 8388608 герц
+  82   1      // настройка сторожевого таймера
+  83   1        WDWR = 1;                                // разрешение записи в 'WDCON'
+  84   1        WDCON = 0x072;                           // запуск WDT с временным интервалом 2с
+  85   1      
+  86   1      // настройка UART:
+  87   1        SCON = 0x040;                            // настройка последовательного порта на 
+  88   1                                                 // асинхронный 8-битовый режим
+  89   1      // настройка “/—0:
+  90   1        TMOD = 0x001;                            // T/C0 - таймер
+  91   1      
+  92   1      // настройка “/—2:
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 7   
+
+  93   1        RCAP2H = 0x0FF;                          // задание скорости 9600 бод 
+  94   1        RCAP2L = 0x0E5;                          // (814code_asm)
+  95   1        TH2    = 0x0FF;       
+  96   1        TL2    = 0x0E5; 
+  97   1        T2CON  = 0x030;                          // установка “/—2 в качестве генератора скорости UART
+  98   1        TR2    = 1;                              // запуск генератора скорости 'UART'
+  99   1      
+ 100   1        for(;;)
+ 101   1        {
+ 102   2          if(meas_xy())                          // получаем один замер
+ 103   2          {
+ 104   3            //  расчет "скольз€щего среднего":
+ 105   3                                                 // сдвигаем "очередь" и задвигаем новый замер
+ 106   3            for(i=NSUM-1; i>0; i--) Buff[i]=Buff[i-1]; Buff[0]=one;
+ 107   3                                                 // считаем среднее из "очереди"
+ 108   3            s=0; for(i=0; i<NSUM; i++) s += Buff[i].T1X.du_i;
+ 109   3            s=s>>KDEL; one.T1X.du_i = (unsigned int)(0x0ffff & s); // T1.X'
+ 110   3            s=0; for(i=0; i<NSUM; i++) s += Buff[i].T2X.du_i;
+ 111   3            s=s>>KDEL; one.T2X.du_i = (unsigned int)(0x0ffff & s); // T2.X'
+ 112   3            s=0; for(i=0; i<NSUM; i++) s += Buff[i].T1Y.du_i;
+ 113   3            s=s>>KDEL; one.T1Y.du_i = (unsigned int)(0x0ffff & s); // T1.Y'
+ 114   3            s=0; for(i=0; i<NSUM; i++) s += Buff[i].T2Y.du_i;
+ 115   3            s=s>>KDEL; one.T2Y.du_i = (unsigned int)(0x0ffff & s); // T2.Y'
+ 116   3      
+ 117   3            Tx_means();                          // выводим "среднее" в 'UART'
+ 118   3      
+ 119   3            // сброс сторожевого таймера
+ 120   3            EA   = 0;
+ 121   3            WDWR = 1;
+ 122   3            WDE  = 1;
+ 123   3            EA   = 1;
+ 124   3          }
+ 125   2        }
+ 126   1      }
+ 127          
+ 128          #ifndef SIMUL_DBG
+ 129            unsigned char meas_xy(void)
+ 130            {
+ 131   1          unsigned char cnt;
+ 132   1      
+ 133   1          TR0 = 0;                                 // останов 'T0'
+ 134   1      
+ 135   1        // измерение длительности и периода импульсов с выхода 'Xout' -------= X =--------
+ 136   1        
+ 137   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 138   1          TH0 = 0; TL0 = 0;                        // сброс 'T0'
+ 139   1          while(XOUT);                             // сначапа должен быть '0'
+ 140   1      
+ 141   1          while(!XOUT && cnt) cnt--;               // действительно '0' подр€д 'CNT_FRNT' раз?
+ 142   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 143   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 144   1      
+ 145   1          while(!XOUT);                            // ожидание фронта 1-го импульса с выхода 'Xout'
+ 146   1          TR0 = 1;                                 // запуск 'T0'
+ 147   1      
+ 148   1          while(XOUT && cnt) cnt--;                // действительно '1' подр€д 'CNT_FRNT' раз?
+ 149   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 150   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 151   1      
+ 152   1          while(XOUT);                             // ожидание спада 1-го импульса с выхода 'Xout'
+ 153   1          TR0 = 0;                                 // останов 'T0'
+ 154   1      
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 8   
+
+ 155   1          while(!XOUT && cnt) cnt--;               // действительно '0' подр€д 'CNT_FRNT' раз?
+ 156   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 157   1      
+ 158   1          one.T1X.du_c[BYTE_ONE] = TL0;
+ 159   1          one.T1X.du_c[BYTE_TWO] = TH0;                   // -= ƒЋ»“≈Ћ№Ќќ—“№ »ћѕ”Ћ№—ј 'X' =-    *
+ 160   1      
+ 161   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 162   1          TH0 = 0; TL0 = 0;                        // сброс 'T0'
+ 163   1        
+ 164   1          while(!XOUT);                            // ожидание фронта 2-го импульса с выхода 'Xout'
+ 165   1          TR0 = 1;                                 // запуск 'T0'
+ 166   1      
+ 167   1          while(XOUT && cnt) cnt--;                // действительно '1' подр€д 'CNT_FRNT' раз?
+ 168   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 169   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 170   1      
+ 171   1          while(XOUT);                             // ожидание спада 2-го импульса с выхода 'Xout'
+ 172   1      
+ 173   1          while(!XOUT && cnt) cnt--;               // действительно '0' подр€д 'CNT_FRNT' раз?
+ 174   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 175   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 176   1      
+ 177   1          while(!XOUT);                            // ожидание фронта 3-го импульса с выхода 'Xout'
+ 178   1          TR0 = 0;                                 // останов 'T0'
+ 179   1      
+ 180   1          while(XOUT && cnt) cnt--;                // действительно '1' подр€д 'CNT_FRNT' раз?
+ 181   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 182   1      
+ 183   1          one.T2X.du_c[BYTE_ONE] = TL0;
+ 184   1          one.T2X.du_c[BYTE_TWO] = TH0;            // -= ѕ≈–»ќƒ »ћѕ”Ћ№—ј 'X' =-          *
+ 185   1        
+ 186   1        // измерение длительности и периода импульсов с выхода 'Yout' -------= 'Y' =------
+ 187   1        
+ 188   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 189   1          TH0 = 0; TL0 = 0;                        // сброс 'T0'
+ 190   1          while(YOUT);                             // сначапа должен быть '0'
+ 191   1      
+ 192   1          while(!YOUT && cnt) cnt--;               // действительно '0' подр€д 'CNT_FRNT' раз?
+ 193   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 194   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 195   1      
+ 196   1          while(!YOUT);                            // ожидание фронта 1-го импульса с выхода 'Yout'
+ 197   1          TR0 = 1;                                 // запуск 'T0'
+ 198   1      
+ 199   1          while(YOUT && cnt) cnt--;                // действительно '1' подр€д 'CNT_FRNT' раз?
+ 200   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 201   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 202   1      
+ 203   1          while(YOUT);                             // ожидание спада 1-го импульса с выхода 'Yout'
+ 204   1          TR0 = 0;                                 // останов 'T0'
+ 205   1      
+ 206   1          while(!YOUT && cnt) cnt--;               // действительно '0' подр€д 'CNT_FRNT' раз?
+ 207   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 208   1      
+ 209   1          one.T1Y.du_c[BYTE_ONE] = TL0;
+ 210   1          one.T1Y.du_c[BYTE_TWO] = TH0;            // -= ƒЋ»“≈Ћ№Ќќ—“№ »ћѕ”Ћ№—ј 'Y' =-    *
+ 211   1      
+ 212   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 213   1          TH0 = 0; TL0 = 0;                        // сброс 'T0'
+ 214   1        
+ 215   1          while(!YOUT);                            // ожидание фронта 2-го импульса с выхода 'Yout'
+ 216   1          TR0 = 1;                                 // запуск 'T0'
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 9   
+
+ 217   1      
+ 218   1          while(YOUT && cnt) cnt--;                // действительно '1' подр€д 'CNT_FRNT' раз?
+ 219   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 220   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 221   1      
+ 222   1          while(YOUT);                             // ожидание спада 2-го импульса с выхода 'Yout'
+ 223   1      
+ 224   1          while(!YOUT && cnt) cnt--;               // действительно '0' подр€д 'CNT_FRNT' раз?
+ 225   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 226   1          cnt = CNT_FRNT;                          // иниц-€ сч-ка подтвержнени€ фронта
+ 227   1      
+ 228   1          while(!YOUT);                            // ожидание фронта 3-го импульса с выхода 'Yout'
+ 229   1          TR0 = 0;                                 // останов 'T0'
+ 230   1      
+ 231   1          while(YOUT && cnt) cnt--;                // действительно '1' подр€д 'CNT_FRNT' раз?
+ 232   1          if(cnt) return(0);                       // возврат по ошибке ("помеха")
+ 233   1      
+ 234   1          one.T2Y.du_c[BYTE_ONE] = TL0;
+ 235   1          one.T2Y.du_c[BYTE_TWO] = TH0;            // -= ѕ≈–»ќƒ »ћѕ”Ћ№—ј 'Y' =-          *
+ 236   1      
+ 237   1          return(1);
+ 238   1        }
+ 239          #else                                        ///////////////////////////////////////
+                unsigned char meas_xy(void)
+                {
+                // измерение длительности и периода импульсов с выхода 'Xout' -------= X =--------
+                
+                  one.T1X.du_c[BYTE_ONE] = 0xd2;           // 1234
+                  one.T1X.du_c[BYTE_TWO] = 0x04;           // -= ƒЋ»“≈Ћ№Ќќ—“№ »ћѕ”Ћ№—ј 'X' =-    *
+                
+                  one.T2X.du_c[BYTE_ONE] = 0x2e;           // 5678
+                  one.T2X.du_c[BYTE_TWO] = 0x16;           // -= ѕ≈–»ќƒ »ћѕ”Ћ№—ј 'X' =-          *
+                
+                // измерение длительности и периода импульсов с выхода 'Yout' -------= 'Y' =------
+                
+                  one.T1Y.du_c[BYTE_ONE] = 0x3d;           // 8765
+                  one.T1Y.du_c[BYTE_TWO] = 0x22;            // -= ƒЋ»“≈Ћ№Ќќ—“№ »ћѕ”Ћ№—ј 'Y' =-    *
+                
+                  one.T2Y.du_c[BYTE_ONE] = 0xe1;           // 4321
+                  one.T2Y.du_c[BYTE_TWO] = 0x10;            // -= ѕ≈–»ќƒ »ћѕ”Ћ№—ј 'Y' =-          *
+              
+                  return(1);
+                }
+              #endif
+ 261          
+ 262          void Tx_means(void)
+ 263          {                                          // из пам€ти побайтно
+ 264   1        unsigned char d, cc;                     // и выводим в 'UART'
+ 265   1      
+ 266   1        cc = 0x05a;
+ 267   1        Tx_byte(cc);
+ 268   1      
+ 269   1        d = one.T1X.du_c[BYTE_ONE]; cc += d; Tx_byte(d);
+ 270   1        d = one.T1X.du_c[BYTE_TWO]; cc += d; Tx_byte(d);
+ 271   1        d = one.T2X.du_c[BYTE_ONE]; cc += d; Tx_byte(d);
+ 272   1        d = one.T2X.du_c[BYTE_TWO]; cc += d; Tx_byte(d);
+ 273   1      
+ 274   1        d = one.T1Y.du_c[BYTE_ONE]; cc += d; Tx_byte(d);
+ 275   1        d = one.T1Y.du_c[BYTE_TWO]; cc += d; Tx_byte(d);
+ 276   1        d = one.T2Y.du_c[BYTE_ONE]; cc += d; Tx_byte(d);
+ 277   1        d = one.T2Y.du_c[BYTE_TWO]; cc += d; Tx_byte(d);
+ 278   1      
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 10  
+
+ 279   1        Tx_byte(cc);
+ 280   1      }
+ 281          
+ 282          void Tx_byte(char outbyte)                 // вывод байта в 'UART'
+ 283          {
+ 284   1        SBUF = outbyte;
+ 285   1        while (!TI);
+ 286   1        TI = 0;
+ 287   1      }
+ 288          
+ 289          // ћинин :)                                // Ёто ‘сЄ !!! 3:40 2009.07.15
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 11  
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 65
+                                           ; SOURCE LINE # 66
+                                           ; SOURCE LINE # 77
+0000 E4                CLR     A
+0001 F5A8              MOV     IE,A
+                                           ; SOURCE LINE # 80
+0003 75D701            MOV     PLLCON,#01H
+                                           ; SOURCE LINE # 83
+0006 D2C0              SETB    WDWR
+                                           ; SOURCE LINE # 84
+0008 75C072            MOV     WDCON,#072H
+                                           ; SOURCE LINE # 87
+000B 759840            MOV     SCON,#040H
+                                           ; SOURCE LINE # 90
+000E 758901            MOV     TMOD,#01H
+                                           ; SOURCE LINE # 93
+0011 75CBFF            MOV     RCAP2H,#0FFH
+                                           ; SOURCE LINE # 94
+0014 75CAE5            MOV     RCAP2L,#0E5H
+                                           ; SOURCE LINE # 95
+0017 75CDFF            MOV     TH2,#0FFH
+                                           ; SOURCE LINE # 96
+001A 75CCE5            MOV     TL2,#0E5H
+                                           ; SOURCE LINE # 97
+001D 75C830            MOV     T2CON,#030H
+                                           ; SOURCE LINE # 98
+0020 D2CA              SETB    TR2
+                                           ; SOURCE LINE # 100
+0022         ?C0001:
+                                           ; SOURCE LINE # 101
+                                           ; SOURCE LINE # 102
+0022 120000      R     LCALL   meas_xy
+0025 EF                MOV     A,R7
+0026 60FA              JZ      ?C0001
+                                           ; SOURCE LINE # 103
+                                           ; SOURCE LINE # 106
+0028 75000F      R     MOV     i,#0FH
+002B         ?C0004:
+002B E500        R     MOV     A,i
+002D 75F008            MOV     B,#08H
+0030 A4                MUL     AB
+0031 FF                MOV     R7,A
+0032 2400        R     ADD     A,#LOW Buff+0FFF8H
+0034 F9                MOV     R1,A
+0035 E4                CLR     A
+0036 FA                MOV     R2,A
+0037 FB                MOV     R3,A
+0038 C001              PUSH    AR1
+003A 7400        R     MOV     A,#LOW Buff
+003C 2F                ADD     A,R7
+003D F9                MOV     R1,A
+003E E4                CLR     A
+003F A801              MOV     R0,AR1
+0041 FC                MOV     R4,A
+0042 FD                MOV     R5,A
+0043 D001              POP     AR1
+0045 FE                MOV     R6,A
+0046 7F08              MOV     R7,#08H
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 12  
+
+0048 120000      E     LCALL   ?C?COPY
+004B D500DD      R     DJNZ    i,?C0004
+004E         ?C0005:
+004E 7800        R     MOV     R0,#LOW Buff
+0050 7C00        R     MOV     R4,#HIGH Buff
+0052 7D00              MOV     R5,#00H
+0054 7B00              MOV     R3,#00H
+0056 7A00        R     MOV     R2,#HIGH one
+0058 7900        R     MOV     R1,#LOW one
+005A 7E00              MOV     R6,#00H
+005C 7F08              MOV     R7,#08H
+005E 120000      E     LCALL   ?C?COPY
+                                           ; SOURCE LINE # 108
+0061 E4                CLR     A
+0062 F500        R     MOV     s+03H,A
+0064 F500        R     MOV     s+02H,A
+0066 F500        R     MOV     s+01H,A
+0068 F500        R     MOV     s,A
+006A F500        R     MOV     i,A
+006C         ?C0007:
+006C E500        R     MOV     A,i
+006E 75F008            MOV     B,#08H
+0071 A4                MUL     AB
+0072 2400        R     ADD     A,#LOW Buff
+0074 F8                MOV     R0,A
+0075 E6                MOV     A,@R0
+0076 FE                MOV     R6,A
+0077 08                INC     R0
+0078 E6                MOV     A,@R0
+0079 FF                MOV     R7,A
+007A E4                CLR     A
+007B FC                MOV     R4,A
+007C FD                MOV     R5,A
+007D E500        R     MOV     A,s+03H
+007F 2F                ADD     A,R7
+0080 F500        R     MOV     s+03H,A
+0082 E500        R     MOV     A,s+02H
+0084 3E                ADDC    A,R6
+0085 F500        R     MOV     s+02H,A
+0087 ED                MOV     A,R5
+0088 3500        R     ADDC    A,s+01H
+008A F500        R     MOV     s+01H,A
+008C EC                MOV     A,R4
+008D 3500        R     ADDC    A,s
+008F F500        R     MOV     s,A
+0091 0500        R     INC     i
+0093 E500        R     MOV     A,i
+0095 B410D4            CJNE    A,#010H,?C0007
+0098         ?C0008:
+                                           ; SOURCE LINE # 109
+0098 AF00        R     MOV     R7,s+03H
+009A AE00        R     MOV     R6,s+02H
+009C AD00        R     MOV     R5,s+01H
+009E AC00        R     MOV     R4,s
+00A0 7804              MOV     R0,#04H
+00A2 120000      E     LCALL   ?C?ULSHR
+00A5 8F00        R     MOV     s+03H,R7
+00A7 8E00        R     MOV     s+02H,R6
+00A9 8D00        R     MOV     s+01H,R5
+00AB 8C00        R     MOV     s,R4
+00AD E4                CLR     A
+00AE 8E00        R     MOV     one,R6
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 13  
+
+00B0 8F00        R     MOV     one+01H,R7
+                                           ; SOURCE LINE # 110
+00B2 F500        R     MOV     s+03H,A
+00B4 F500        R     MOV     s+02H,A
+00B6 F500        R     MOV     s+01H,A
+00B8 F500        R     MOV     s,A
+00BA F500        R     MOV     i,A
+00BC         ?C0010:
+00BC E500        R     MOV     A,i
+00BE 75F008            MOV     B,#08H
+00C1 A4                MUL     AB
+00C2 2400        R     ADD     A,#LOW Buff+02H
+00C4 F8                MOV     R0,A
+00C5 E6                MOV     A,@R0
+00C6 FE                MOV     R6,A
+00C7 08                INC     R0
+00C8 E6                MOV     A,@R0
+00C9 FF                MOV     R7,A
+00CA E4                CLR     A
+00CB FC                MOV     R4,A
+00CC FD                MOV     R5,A
+00CD E500        R     MOV     A,s+03H
+00CF 2F                ADD     A,R7
+00D0 F500        R     MOV     s+03H,A
+00D2 E500        R     MOV     A,s+02H
+00D4 3E                ADDC    A,R6
+00D5 F500        R     MOV     s+02H,A
+00D7 ED                MOV     A,R5
+00D8 3500        R     ADDC    A,s+01H
+00DA F500        R     MOV     s+01H,A
+00DC EC                MOV     A,R4
+00DD 3500        R     ADDC    A,s
+00DF F500        R     MOV     s,A
+00E1 0500        R     INC     i
+00E3 E500        R     MOV     A,i
+00E5 B410D4            CJNE    A,#010H,?C0010
+00E8         ?C0011:
+                                           ; SOURCE LINE # 111
+00E8 AF00        R     MOV     R7,s+03H
+00EA AE00        R     MOV     R6,s+02H
+00EC AD00        R     MOV     R5,s+01H
+00EE AC00        R     MOV     R4,s
+00F0 7804              MOV     R0,#04H
+00F2 120000      E     LCALL   ?C?ULSHR
+00F5 8F00        R     MOV     s+03H,R7
+00F7 8E00        R     MOV     s+02H,R6
+00F9 8D00        R     MOV     s+01H,R5
+00FB 8C00        R     MOV     s,R4
+00FD E4                CLR     A
+00FE 8E00        R     MOV     one+02H,R6
+0100 8F00        R     MOV     one+03H,R7
+                                           ; SOURCE LINE # 112
+0102 F500        R     MOV     s+03H,A
+0104 F500        R     MOV     s+02H,A
+0106 F500        R     MOV     s+01H,A
+0108 F500        R     MOV     s,A
+010A F500        R     MOV     i,A
+010C         ?C0013:
+010C E500        R     MOV     A,i
+010E 75F008            MOV     B,#08H
+0111 A4                MUL     AB
+0112 2400        R     ADD     A,#LOW Buff+04H
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 14  
+
+0114 F8                MOV     R0,A
+0115 E6                MOV     A,@R0
+0116 FE                MOV     R6,A
+0117 08                INC     R0
+0118 E6                MOV     A,@R0
+0119 FF                MOV     R7,A
+011A E4                CLR     A
+011B FC                MOV     R4,A
+011C FD                MOV     R5,A
+011D E500        R     MOV     A,s+03H
+011F 2F                ADD     A,R7
+0120 F500        R     MOV     s+03H,A
+0122 E500        R     MOV     A,s+02H
+0124 3E                ADDC    A,R6
+0125 F500        R     MOV     s+02H,A
+0127 ED                MOV     A,R5
+0128 3500        R     ADDC    A,s+01H
+012A F500        R     MOV     s+01H,A
+012C EC                MOV     A,R4
+012D 3500        R     ADDC    A,s
+012F F500        R     MOV     s,A
+0131 0500        R     INC     i
+0133 E500        R     MOV     A,i
+0135 B410D4            CJNE    A,#010H,?C0013
+0138         ?C0014:
+                                           ; SOURCE LINE # 113
+0138 AF00        R     MOV     R7,s+03H
+013A AE00        R     MOV     R6,s+02H
+013C AD00        R     MOV     R5,s+01H
+013E AC00        R     MOV     R4,s
+0140 7804              MOV     R0,#04H
+0142 120000      E     LCALL   ?C?ULSHR
+0145 8F00        R     MOV     s+03H,R7
+0147 8E00        R     MOV     s+02H,R6
+0149 8D00        R     MOV     s+01H,R5
+014B 8C00        R     MOV     s,R4
+014D E4                CLR     A
+014E 8E00        R     MOV     one+04H,R6
+0150 8F00        R     MOV     one+05H,R7
+                                           ; SOURCE LINE # 114
+0152 F500        R     MOV     s+03H,A
+0154 F500        R     MOV     s+02H,A
+0156 F500        R     MOV     s+01H,A
+0158 F500        R     MOV     s,A
+015A F500        R     MOV     i,A
+015C         ?C0016:
+015C E500        R     MOV     A,i
+015E 75F008            MOV     B,#08H
+0161 A4                MUL     AB
+0162 2400        R     ADD     A,#LOW Buff+06H
+0164 F8                MOV     R0,A
+0165 E6                MOV     A,@R0
+0166 FE                MOV     R6,A
+0167 08                INC     R0
+0168 E6                MOV     A,@R0
+0169 FF                MOV     R7,A
+016A E4                CLR     A
+016B FC                MOV     R4,A
+016C FD                MOV     R5,A
+016D E500        R     MOV     A,s+03H
+016F 2F                ADD     A,R7
+0170 F500        R     MOV     s+03H,A
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 15  
+
+0172 E500        R     MOV     A,s+02H
+0174 3E                ADDC    A,R6
+0175 F500        R     MOV     s+02H,A
+0177 ED                MOV     A,R5
+0178 3500        R     ADDC    A,s+01H
+017A F500        R     MOV     s+01H,A
+017C EC                MOV     A,R4
+017D 3500        R     ADDC    A,s
+017F F500        R     MOV     s,A
+0181 0500        R     INC     i
+0183 E500        R     MOV     A,i
+0185 B410D4            CJNE    A,#010H,?C0016
+0188         ?C0017:
+                                           ; SOURCE LINE # 115
+0188 AF00        R     MOV     R7,s+03H
+018A AE00        R     MOV     R6,s+02H
+018C AD00        R     MOV     R5,s+01H
+018E AC00        R     MOV     R4,s
+0190 7804              MOV     R0,#04H
+0192 120000      E     LCALL   ?C?ULSHR
+0195 8F00        R     MOV     s+03H,R7
+0197 8E00        R     MOV     s+02H,R6
+0199 8D00        R     MOV     s+01H,R5
+019B 8C00        R     MOV     s,R4
+019D E4                CLR     A
+019E 8E00        R     MOV     one+06H,R6
+01A0 8F00        R     MOV     one+07H,R7
+                                           ; SOURCE LINE # 117
+01A2 120000      R     LCALL   Tx_means
+                                           ; SOURCE LINE # 120
+01A5 C2AF              CLR     EA
+                                           ; SOURCE LINE # 121
+01A7 D2C0              SETB    WDWR
+                                           ; SOURCE LINE # 122
+01A9 D2C1              SETB    WDE
+                                           ; SOURCE LINE # 123
+01AB D2AF              SETB    EA
+                                           ; SOURCE LINE # 124
+                                           ; SOURCE LINE # 125
+01AD 020000      R     LJMP    ?C0001
+             ; FUNCTION main (END)
+
+             ; FUNCTION meas_xy (BEGIN)
+                                           ; SOURCE LINE # 129
+                                           ; SOURCE LINE # 130
+                                           ; SOURCE LINE # 133
+0000 C28C              CLR     TR0
+                                           ; SOURCE LINE # 137
+;---- Variable 'cnt' assigned to Register 'R7' ----
+0002 E4                CLR     A
+0003 FF                MOV     R7,A
+                                           ; SOURCE LINE # 138
+0004 F58C              MOV     TH0,A
+0006 F58A              MOV     TL0,A
+0008         ?C0020:
+                                           ; SOURCE LINE # 139
+0008 2090FD            JB      P10,?C0020
+000B         ?C0022:
+                                           ; SOURCE LINE # 141
+000B 209006            JB      P10,?C0023
+000E EF                MOV     A,R7
+000F 6003              JZ      ?C0023
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 16  
+
+0011 1F                DEC     R7
+0012 80F7              SJMP    ?C0022
+0014         ?C0023:
+                                           ; SOURCE LINE # 142
+0014 EF                MOV     A,R7
+0015 6003              JZ      ?C0024
+0017 7F00              MOV     R7,#00H
+0019 22                RET     
+001A         ?C0024:
+                                           ; SOURCE LINE # 143
+001A E4                CLR     A
+001B FF                MOV     R7,A
+001C         ?C0026:
+                                           ; SOURCE LINE # 145
+001C 3090FD            JNB     P10,?C0026
+001F         ?C0027:
+                                           ; SOURCE LINE # 146
+001F D28C              SETB    TR0
+0021         ?C0028:
+                                           ; SOURCE LINE # 148
+0021 309006            JNB     P10,?C0029
+0024 EF                MOV     A,R7
+0025 6003              JZ      ?C0029
+0027 1F                DEC     R7
+0028 80F7              SJMP    ?C0028
+002A         ?C0029:
+                                           ; SOURCE LINE # 149
+002A EF                MOV     A,R7
+002B 6003              JZ      ?C0030
+002D 7F00              MOV     R7,#00H
+002F 22                RET     
+0030         ?C0030:
+                                           ; SOURCE LINE # 150
+0030 E4                CLR     A
+0031 FF                MOV     R7,A
+0032         ?C0031:
+                                           ; SOURCE LINE # 152
+0032 2090FD            JB      P10,?C0031
+0035         ?C0032:
+                                           ; SOURCE LINE # 153
+0035 C28C              CLR     TR0
+0037         ?C0033:
+                                           ; SOURCE LINE # 155
+0037 209006            JB      P10,?C0034
+003A EF                MOV     A,R7
+003B 6003              JZ      ?C0034
+003D 1F                DEC     R7
+003E 80F7              SJMP    ?C0033
+0040         ?C0034:
+                                           ; SOURCE LINE # 156
+0040 EF                MOV     A,R7
+0041 6003              JZ      ?C0035
+0043 7F00              MOV     R7,#00H
+0045 22                RET     
+0046         ?C0035:
+                                           ; SOURCE LINE # 158
+0046 858A00      R     MOV     one+01H,TL0
+                                           ; SOURCE LINE # 159
+0049 858C00      R     MOV     one,TH0
+                                           ; SOURCE LINE # 161
+004C E4                CLR     A
+004D FF                MOV     R7,A
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 17  
+
+                                           ; SOURCE LINE # 162
+004E F58C              MOV     TH0,A
+0050 F58A              MOV     TL0,A
+0052         ?C0036:
+                                           ; SOURCE LINE # 164
+0052 3090FD            JNB     P10,?C0036
+0055         ?C0037:
+                                           ; SOURCE LINE # 165
+0055 D28C              SETB    TR0
+0057         ?C0038:
+                                           ; SOURCE LINE # 167
+0057 309006            JNB     P10,?C0039
+005A EF                MOV     A,R7
+005B 6003              JZ      ?C0039
+005D 1F                DEC     R7
+005E 80F7              SJMP    ?C0038
+0060         ?C0039:
+                                           ; SOURCE LINE # 168
+0060 EF                MOV     A,R7
+0061 6003              JZ      ?C0040
+0063 7F00              MOV     R7,#00H
+0065 22                RET     
+0066         ?C0040:
+                                           ; SOURCE LINE # 169
+0066 E4                CLR     A
+0067 FF                MOV     R7,A
+0068         ?C0041:
+                                           ; SOURCE LINE # 171
+0068 2090FD            JB      P10,?C0041
+006B         ?C0043:
+                                           ; SOURCE LINE # 173
+006B 209006            JB      P10,?C0044
+006E EF                MOV     A,R7
+006F 6003              JZ      ?C0044
+0071 1F                DEC     R7
+0072 80F7              SJMP    ?C0043
+0074         ?C0044:
+                                           ; SOURCE LINE # 174
+0074 EF                MOV     A,R7
+0075 6003              JZ      ?C0045
+0077 7F00              MOV     R7,#00H
+0079 22                RET     
+007A         ?C0045:
+                                           ; SOURCE LINE # 175
+007A E4                CLR     A
+007B FF                MOV     R7,A
+007C         ?C0046:
+                                           ; SOURCE LINE # 177
+007C 3090FD            JNB     P10,?C0046
+007F         ?C0047:
+                                           ; SOURCE LINE # 178
+007F C28C              CLR     TR0
+0081         ?C0048:
+                                           ; SOURCE LINE # 180
+0081 309006            JNB     P10,?C0049
+0084 EF                MOV     A,R7
+0085 6003              JZ      ?C0049
+0087 1F                DEC     R7
+0088 80F7              SJMP    ?C0048
+008A         ?C0049:
+                                           ; SOURCE LINE # 181
+008A EF                MOV     A,R7
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 18  
+
+008B 6003              JZ      ?C0050
+008D 7F00              MOV     R7,#00H
+008F 22                RET     
+0090         ?C0050:
+                                           ; SOURCE LINE # 183
+0090 858A00      R     MOV     one+03H,TL0
+                                           ; SOURCE LINE # 184
+0093 858C00      R     MOV     one+02H,TH0
+                                           ; SOURCE LINE # 188
+0096 E4                CLR     A
+0097 FF                MOV     R7,A
+                                           ; SOURCE LINE # 189
+0098 F58C              MOV     TH0,A
+009A F58A              MOV     TL0,A
+009C         ?C0051:
+                                           ; SOURCE LINE # 190
+009C 2091FD            JB      P11,?C0051
+009F         ?C0053:
+                                           ; SOURCE LINE # 192
+009F 209106            JB      P11,?C0054
+00A2 EF                MOV     A,R7
+00A3 6003              JZ      ?C0054
+00A5 1F                DEC     R7
+00A6 80F7              SJMP    ?C0053
+00A8         ?C0054:
+                                           ; SOURCE LINE # 193
+00A8 EF                MOV     A,R7
+00A9 6003              JZ      ?C0055
+00AB 7F00              MOV     R7,#00H
+00AD 22                RET     
+00AE         ?C0055:
+                                           ; SOURCE LINE # 194
+00AE E4                CLR     A
+00AF FF                MOV     R7,A
+00B0         ?C0056:
+                                           ; SOURCE LINE # 196
+00B0 3091FD            JNB     P11,?C0056
+00B3         ?C0057:
+                                           ; SOURCE LINE # 197
+00B3 D28C              SETB    TR0
+00B5         ?C0058:
+                                           ; SOURCE LINE # 199
+00B5 309106            JNB     P11,?C0059
+00B8 EF                MOV     A,R7
+00B9 6003              JZ      ?C0059
+00BB 1F                DEC     R7
+00BC 80F7              SJMP    ?C0058
+00BE         ?C0059:
+                                           ; SOURCE LINE # 200
+00BE EF                MOV     A,R7
+00BF 6003              JZ      ?C0060
+00C1 7F00              MOV     R7,#00H
+00C3 22                RET     
+00C4         ?C0060:
+                                           ; SOURCE LINE # 201
+00C4 E4                CLR     A
+00C5 FF                MOV     R7,A
+00C6         ?C0061:
+                                           ; SOURCE LINE # 203
+00C6 2091FD            JB      P11,?C0061
+00C9         ?C0062:
+                                           ; SOURCE LINE # 204
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 19  
+
+00C9 C28C              CLR     TR0
+00CB         ?C0063:
+                                           ; SOURCE LINE # 206
+00CB 209106            JB      P11,?C0064
+00CE EF                MOV     A,R7
+00CF 6003              JZ      ?C0064
+00D1 1F                DEC     R7
+00D2 80F7              SJMP    ?C0063
+00D4         ?C0064:
+                                           ; SOURCE LINE # 207
+00D4 EF                MOV     A,R7
+00D5 6003              JZ      ?C0065
+00D7 7F00              MOV     R7,#00H
+00D9 22                RET     
+00DA         ?C0065:
+                                           ; SOURCE LINE # 209
+00DA 858A00      R     MOV     one+05H,TL0
+                                           ; SOURCE LINE # 210
+00DD 858C00      R     MOV     one+04H,TH0
+                                           ; SOURCE LINE # 212
+00E0 E4                CLR     A
+00E1 FF                MOV     R7,A
+                                           ; SOURCE LINE # 213
+00E2 F58C              MOV     TH0,A
+00E4 F58A              MOV     TL0,A
+00E6         ?C0066:
+                                           ; SOURCE LINE # 215
+00E6 3091FD            JNB     P11,?C0066
+00E9         ?C0067:
+                                           ; SOURCE LINE # 216
+00E9 D28C              SETB    TR0
+00EB         ?C0068:
+                                           ; SOURCE LINE # 218
+00EB 309106            JNB     P11,?C0069
+00EE EF                MOV     A,R7
+00EF 6003              JZ      ?C0069
+00F1 1F                DEC     R7
+00F2 80F7              SJMP    ?C0068
+00F4         ?C0069:
+                                           ; SOURCE LINE # 219
+00F4 EF                MOV     A,R7
+00F5 6003              JZ      ?C0070
+00F7 7F00              MOV     R7,#00H
+00F9 22                RET     
+00FA         ?C0070:
+                                           ; SOURCE LINE # 220
+00FA E4                CLR     A
+00FB FF                MOV     R7,A
+00FC         ?C0071:
+                                           ; SOURCE LINE # 222
+00FC 2091FD            JB      P11,?C0071
+00FF         ?C0073:
+                                           ; SOURCE LINE # 224
+00FF 209106            JB      P11,?C0074
+0102 EF                MOV     A,R7
+0103 6003              JZ      ?C0074
+0105 1F                DEC     R7
+0106 80F7              SJMP    ?C0073
+0108         ?C0074:
+                                           ; SOURCE LINE # 225
+0108 EF                MOV     A,R7
+0109 6003              JZ      ?C0075
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 20  
+
+010B 7F00              MOV     R7,#00H
+010D 22                RET     
+010E         ?C0075:
+                                           ; SOURCE LINE # 226
+010E E4                CLR     A
+010F FF                MOV     R7,A
+0110         ?C0076:
+                                           ; SOURCE LINE # 228
+0110 3091FD            JNB     P11,?C0076
+0113         ?C0077:
+                                           ; SOURCE LINE # 229
+0113 C28C              CLR     TR0
+0115         ?C0078:
+                                           ; SOURCE LINE # 231
+0115 309106            JNB     P11,?C0079
+0118 EF                MOV     A,R7
+0119 6003              JZ      ?C0079
+011B 1F                DEC     R7
+011C 80F7              SJMP    ?C0078
+011E         ?C0079:
+                                           ; SOURCE LINE # 232
+011E EF                MOV     A,R7
+011F 6003              JZ      ?C0080
+0121 7F00              MOV     R7,#00H
+0123 22                RET     
+0124         ?C0080:
+                                           ; SOURCE LINE # 234
+0124 858A00      R     MOV     one+07H,TL0
+                                           ; SOURCE LINE # 235
+0127 858C00      R     MOV     one+06H,TH0
+                                           ; SOURCE LINE # 237
+012A 7F01              MOV     R7,#01H
+                                           ; SOURCE LINE # 238
+012C         ?C0025:
+012C 22                RET     
+             ; FUNCTION meas_xy (END)
+
+             ; FUNCTION Tx_means (BEGIN)
+                                           ; SOURCE LINE # 262
+                                           ; SOURCE LINE # 263
+                                           ; SOURCE LINE # 266
+0000 75005A      R     MOV     cc,#05AH
+                                           ; SOURCE LINE # 267
+0003 AF00        R     MOV     R7,cc
+0005 120000      R     LCALL   _Tx_byte
+                                           ; SOURCE LINE # 269
+;---- Variable 'd' assigned to Register 'R7' ----
+0008 AF00        R     MOV     R7,one+01H
+000A 120000      R     LCALL   L?0085
+                                           ; SOURCE LINE # 270
+000D AF00        R     MOV     R7,one
+000F 120000      R     LCALL   L?0085
+                                           ; SOURCE LINE # 271
+0012 AF00        R     MOV     R7,one+03H
+0014 120000      R     LCALL   L?0086
+                                           ; SOURCE LINE # 272
+0017 AF00        R     MOV     R7,one+02H
+0019 120000      R     LCALL   L?0086
+                                           ; SOURCE LINE # 274
+001C AF00        R     MOV     R7,one+05H
+001E 120000      R     LCALL   L?0086
+                                           ; SOURCE LINE # 275
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 21  
+
+0021 AF00        R     MOV     R7,one+04H
+0023 120000      R     LCALL   L?0086
+                                           ; SOURCE LINE # 276
+0026 AF00        R     MOV     R7,one+07H
+0028 120000      R     LCALL   L?0086
+                                           ; SOURCE LINE # 277
+002B AF00        R     MOV     R7,one+06H
+002D 120000      R     LCALL   L?0086
+                                           ; SOURCE LINE # 279
+0030 AF00        R     MOV     R7,cc
+0032 020000      R     LJMP    _Tx_byte
+             ; FUNCTION Tx_means (END)
+
+             ; FUNCTION L?0085 (BEGIN)
+0000         L?0086:
+0000 EF                MOV     A,R7
+0001 2500        R     ADD     A,cc
+0003 F500        R     MOV     cc,A
+             ; FUNCTION _Tx_byte (BEGIN)
+                                           ; SOURCE LINE # 282
+;---- Variable 'outbyte' assigned to Register 'R7' ----
+                                           ; SOURCE LINE # 283
+                                           ; SOURCE LINE # 284
+0005 8F99              MOV     SBUF,R7
+0007         ?C0082:
+                                           ; SOURCE LINE # 285
+0007 3099FD            JNB     TI,?C0082
+000A         ?C0083:
+                                           ; SOURCE LINE # 286
+000A C299              CLR     TI
+                                           ; SOURCE LINE # 287
+000C 22                RET     
+             ; FUNCTION _Tx_byte (END)
+
+C51 COMPILER V7.50   MAIN                                                                  07/27/2009 10:05:18 PAGE 22  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+Buff . . . . . . . . . . . . . . . . .  PUBLIC   IDATA  ARRAY    0000H  128
+EA . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00AFH  1
+IE . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A8H  1
+MEASURE. . . . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  8
+  T1X. . . . . . . . . . . . . . . . .  MEMBER   -----  UNION    0000H  2
+  T2X. . . . . . . . . . . . . . . . .  MEMBER   -----  UNION    0002H  2
+  T1Y. . . . . . . . . . . . . . . . .  MEMBER   -----  UNION    0004H  2
+  T2Y. . . . . . . . . . . . . . . . .  MEMBER   -----  UNION    0006H  2
+TI . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0099H  1
+I2CCON . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E8H  1
+u_int. . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
+  du_i . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  du_c . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+RCAP2H . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CBH  1
+DCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E8H  1
+RCAP2L . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CAH  1
+main . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+P10. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0090H  1
+SBUF . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0099H  1
+P11. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0091H  1
+SCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
+TMOD . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0089H  1
+one. . . . . . . . . . . . . . . . . .  PUBLIC   DATA   STRUCT   0000H  8
+_Tx_byte . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0005H  -----
+  outbyte. . . . . . . . . . . . . . .  * REG *  DATA   CHAR     0007H  1
+Tx_means . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  d. . . . . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0007H  1
+  cc . . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0000H  1
+WDWR . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C0H  1
+PLLCON . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D7H  1
+TH0. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008CH  1
+TH2. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CDH  1
+TL0. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008AH  1
+TL2. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CCH  1
+TR0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008CH  1
+TR2. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CAH  1
+WDE. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C1H  1
+get_one. . . . . . . . . . . . . . . .  PUBLIC   DATA   U_CHAR   0008H  1
+T2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
+i. . . . . . . . . . . . . . . . . . .  PUBLIC   DATA   U_CHAR   0009H  1
+s. . . . . . . . . . . . . . . . . . .  PUBLIC   DATA   U_LONG   000AH  4
+meas_xy. . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  cnt. . . . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0007H  1
+WDCON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C0H  1
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    799    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14       1
+   IDATA SIZE       =    128    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

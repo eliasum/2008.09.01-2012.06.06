@@ -1,0 +1,325 @@
+A51 MACRO ASSEMBLER  MEAS_XY                                                              07/14/2009 14:26:55 PAGE     1
+
+
+MACRO ASSEMBLER A51 V7.10
+OBJECT MODULE PLACED IN meas_xy.OBJ
+ASSEMBLER INVOKED BY: D:\Work\Keil51\C51\BIN\A51.EXE meas_xy.a51 SET(SMALL) NOSYMBOLS EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     $nomod51                         ; "отключаем" стандартный '51'
+                       2     ;$include (ADuC814.inc)
+                +1     3     ;REV. 1.1   14 June 2002
+                +1     4     ;ADuC814   Apps, Analog Devices Inc. (GCK)
+  0080          +1     5     P0       DATA  080H  ;PORT 0 (not implemented on ADuC814)
+  0081          +1     6     SP       DATA  081H  ;STACK POINTER
+  0082          +1     7     DPL      DATA  082H  ;DATA POINTER - LOW BYTE
+  0083          +1     8     DPH      DATA  083H  ;DATA POINTER - HIGH BYTE
+  0087          +1     9     PCON     DATA  087H  ;POWER CONTROL
+  0088          +1    10     TCON     DATA  088H  ;TIMER CONTROL
+  0089          +1    11     TMOD     DATA  089H  ;TIMER MODE
+  008A          +1    12     TL0      DATA  08AH  ;TIMER 0 - LOW BYTE
+  008B          +1    13     TL1      DATA  08BH  ;TIMER 1 - LOW BYTE
+  008C          +1    14     TH0      DATA  08CH  ;TIMER 0 - HIGH BYTE
+  008D          +1    15     TH1      DATA  08DH  ;TIMER 1 - HIGH BYTE
+  0090          +1    16     P1       DATA  090H  ;PORT 1
+  0098          +1    17     SCON     DATA  098H  ;SERIAL PORT CONTROL
+  0099          +1    18     SBUF     DATA  099H  ;SERIAL PORT BUFFER
+  009A          +1    19     I2CDAT   DATA  09AH  ;I2C DATA BUFFER
+  009B          +1    20     I2CADD   DATA  09BH  ;I2C ADDRESS
+  009C          +1    21     CFG814   DATA  09CH  ;
+  00A0          +1    22     P2       DATA  0A0H  ;PORT 2 (not implemented on ADuC814)
+  00A1          +1    23     TIMECON  DATA  0A1H  ;TIC
+  00A2          +1    24     HTHSEC   DATA  0A2H  ;
+  00A3          +1    25     SEC      DATA  0A3H  ;
+  00A4          +1    26     MIN      DATA  0A4H  ;
+  00A5          +1    27     HOUR     DATA  0A5H  ;
+  00A6          +1    28     INTVAL   DATA  0A6H  ;
+  00A8          +1    29     IE       DATA  0A8H  ;INTERRUPT ENABLE 1
+  00A9          +1    30     IEIP2    DATA  0A9H  ;INTERRUPT PRIORITY/ENABLE 2
+  00B0          +1    31     P3       DATA  0B0H  ;PORT 3
+  00B8          +1    32     IP       DATA  0B8H  ;INTERRUPT PRIORITY
+  00B9          +1    33     ECON     DATA  0B9H  ;FLASH EEPROM CONTROL
+  00BA          +1    34     ETIM1    DATA  0BAH  ;FLASH EEPROM TIMING REGISTER 1
+  00BB          +1    35     ETIM2    DATA  0BBH  ;FLASH EEPROM TIMING REGISTER 2
+  00BC          +1    36     EDATA1   DATA  0BCH  ;FLASH EEPROM DATA1 
+  00BD          +1    37     EDATA2   DATA  0BDH  ;FLASH EEPROM DATA2 
+  00BE          +1    38     EDATA3   DATA  0BEH  ;FLASH EEPROM DATA3 
+  00BF          +1    39     EDATA4   DATA  0BFH  ;FLASH EEPROM DATA4 
+  00C0          +1    40     WDCON    DATA  0C0H  ;WATCHDOG TIMER CONTROL
+  00C2          +1    41     CHIPID   DATA  0C2H  ;CHIP ID
+  00C6          +1    42     EADRL    DATA  0C6H  ;FLASH EEPROM PAGE ADDRESS
+  00C8          +1    43     T2CON    DATA  0C8H  ;TIMER 2 CONTROL
+  00CA          +1    44     RCAP2L   DATA  0CAH  ;TIMER 2 CAPTURE REGISTER - LOW BYTE
+  00CB          +1    45     RCAP2H   DATA  0CBH  ;TIMER 2 CAPTURE REGISTER - HIGH BYTE
+  00CC          +1    46     TL2      DATA  0CCH  ;TIMER 2 - LOW BYTE
+  00CD          +1    47     TH2      DATA  0CDH  ;TIMER 2 - HIGH BYTE
+  00D0          +1    48     PSW      DATA  0D0H  ;PROGRAM STATUS WORD
+  00D7          +1    49     PLLCON   DATA  0D7H  ;PLL CONFIGURATION BYTE
+  00D8          +1    50     ADCCON2  DATA  0D8H  ;ADC CONTROL
+  00D9          +1    51     ADCDATAL DATA  0D9H  ;ADC DATA LOW BYTE
+  00DA          +1    52     ADCDATAH DATA  0DAH  ;ADC DATA HIGH BYTE
+  00DF          +1    53     PSMCON   DATA  0DFH  ;POWER SUPPLY MONITOR
+  00E0          +1    54     ACC      DATA  0E0H  ;ACCUMULATOR
+  00E8          +1    55     I2CCON   DATA  0E8H  ;I2C CONTROL
+  00E8          +1    56     DCON     DATA  0E8H  ;D0 & D1 CONTROL REGISTER
+  00EF          +1    57     ADCCON1  DATA  0EFH  ;ADC CONTROL
+  00F0          +1    58     B        DATA  0F0H  ;MULTIPLICATION REGISTER
+A51 MACRO ASSEMBLER  MEAS_XY                                                              07/14/2009 14:26:55 PAGE     2
+
+  00F1          +1    59     ADCOFSL  DATA  0F1H  ;ADC OFFSET LOW BYTE
+  00F2          +1    60     ADCOFSH  DATA  0F2H  ;ADC OFFSET HIGH BYTE
+  00F3          +1    61     ADCGAINL DATA  0F3H  ;ADC GAIN LOW BYTE
+  00F4          +1    62     ADCGAINH DATA  0F4H  ;ADC GAIN HIGH BYTE
+  00F5          +1    63     ADCCON3  DATA  0F5H  ;ADC CONTROL
+  00F7          +1    64     SPIDAT   DATA  0F7H  ;SPI DATA REGISTER
+  00F8          +1    65     SPICON   DATA  0F8H  ;SPI CONTROL REGISTER
+  00F9          +1    66     DAC0L    DATA  0F9H  ;DAC0 LOW BYTE
+  00FA          +1    67     DAC0H    DATA  0FAH  ;DAC0 HIGH BYTE
+  00FB          +1    68     DAC1L    DATA  0FBH  ;DAC1 LOW BYTE
+  00FC          +1    69     DAC1H    DATA  0FCH  ;DAC1 HIGH BYTE
+  00FD          +1    70     DACCON   DATA  0FDH  ;DAC CONTROL REGISTER
+  0088          +1    71     IT0      BIT   088H  ;TCON.0 - EXT. INTERRUPT 0 TYPE
+  0089          +1    72     IE0      BIT   089H  ;TCON.1 - EXT. INTERRUPT 0 EDGE FLAG
+  008A          +1    73     IT1      BIT   08AH  ;TCON.2 - EXT. INTERRUPT 1 TYPE
+  008B          +1    74     IE1      BIT   08BH  ;TCON.3 - EXT. INTERRUPT 1 EDGE FLAG
+  008C          +1    75     TR0      BIT   08CH  ;TCON.4 - TIMER 0 ON/OFF CONTROL
+  008D          +1    76     TF0      BIT   08DH  ;TCON.5 - TIMER 0 OVERFLOW FLAG
+  008E          +1    77     TR1      BIT   08EH  ;TCON.6 - TIMER 1 ON/OFF CONTROL
+  008F          +1    78     TF1      BIT   08FH  ;TCON.7 - TIMER 1 OVERFLOW FLAG
+  0090          +1    79     T2       BIT   090H  ;P1.0 - TIMER 2 TRIGGER INPUT
+  0091          +1    80     T2EX     BIT   091H  ;P1.1 - TIMER 2 COUNT INPUT
+  0098          +1    81     RI       BIT   098H  ;SCON.0 - RECEIVE INTERRUPT FLAG
+  0099          +1    82     TI       BIT   099H  ;SCON.1 - TRANSMIT INTERRUPT FLAG
+  009A          +1    83     RB8      BIT   09AH  ;SCON.2 - RECEIVE BIT 8
+  009B          +1    84     TB8      BIT   09BH  ;SCON.3 - TRANSMIT BIT 8
+  009C          +1    85     REN      BIT   09CH  ;SCON.4 - RECEIVE ENABLE
+  009D          +1    86     SM2      BIT   09DH  ;SCON.5 - SERIAL MODE CONTROL BIT 2
+  009E          +1    87     SM1      BIT   09EH  ;SCON.6 - SERIAL MODE CONTROL BIT 1
+  009F          +1    88     SM0      BIT   09FH  ;SCON.7 - SERIAL MODE CONTROL BIT 0
+  00A8          +1    89     EX0      BIT   0A8H  ;IE.0 - EXTERNAL INTERRUPT 0 ENABLE
+  00A9          +1    90     ET0      BIT   0A9H  ;IE.1 - TIMER 0 INTERRUPT ENABLE
+  00AA          +1    91     EX1      BIT   0AAH  ;IE.2 - EXTERNAL INTERRUPT 1 ENABLE
+  00AB          +1    92     ET1      BIT   0ABH  ;IE.3 - TIMER 1 INTERRUPT ENABLE
+  00AC          +1    93     ES       BIT   0ACH  ;IE.4 - SERIAL PORT INTERRUPT ENABLE
+  00AD          +1    94     ET2      BIT   0ADH  ;IE.5 - TIMER 2 INTERRUPT ENABLE
+  00AE          +1    95     EADC     BIT   0AEH  ;IE.6 - ENABLE ADC INTURRUPT
+  00AF          +1    96     EA       BIT   0AFH  ;IE.7 - GLOBAL INTERRUPT ENABLE
+  00B0          +1    97     RXD      BIT   0B0H  ;P3.0 - SERIAL PORT RECEIVE INPUT
+  00B1          +1    98     TXD      BIT   0B1H  ;P3.1 - SERIAL PORT TRANSMIT OUTPUT
+  00B2          +1    99     INT0     BIT   0B2H  ;P3.2 - EXTERNAL INTERRUPT 0 INPUT
+  00B3          +1   100     INT1     BIT   0B3H  ;P3.3 - EXTERNAL INTERRUPT 1 INPUT
+  00B4          +1   101     T0       BIT   0B4H  ;P3.4 - TIMER 0 COUNT INPUT
+  00B5          +1   102     T1       BIT   0B5H  ;P3.5 - TIMER 1 COUNT INPUT
+  00B6          +1   103     WR       BIT   0B6H  ;P3.6 - WRITE CONTROL FOR EXT. MEMORY
+  00B7          +1   104     RD       BIT   0B7H  ;P3.7 - READ CONTROL FOR EXT. MEMORY
+  00B8          +1   105     PX0      BIT   0B8H  ;IP.0 - EXTERNAL INTERRUPT 0 PRIORITY
+  00B9          +1   106     PT0      BIT   0B9H  ;IP.1 - TIMER 0 PRIORITY
+  00BA          +1   107     PX1      BIT   0BAH  ;IP.2 - EXTERNAL INTERRUPT 1 PRIORITY
+  00BB          +1   108     PT1      BIT   0BBH  ;IP.3 - TIMER 1 PRIORITY
+  00BC          +1   109     PS       BIT   0BCH  ;IP.4 - SERIAL PORT PRIORITY
+  00BD          +1   110     PT2      BIT   0BDH  ;IP.5 - TIMER 2 PRIORITY
+  00BE          +1   111     PADC     BIT   0BEH  ;IP.6 - ADC PRIORITY
+  00BF          +1   112     PSI      BIT   0BFH  ;IP.7 - SPI OR 2-WIRE SERIAL INTERFACE PRIORITY
+  00C0          +1   113     WDWR     BIT   0C0H  ;WDCON.0 - WATCHDOG WRITE ENABLE BIT
+  00C1          +1   114     WDE      BIT   0C1H  ;WDCON.1 - WATCHDOG ENABLE CONTROL
+  00C2          +1   115     WDS      BIT   0C2H  ;WDCON.2 - WATCHDOG STATUS FLAG
+  00C3          +1   116     WDIR     BIT   0C3H  ;WDCON.3 - WATCHDOG INTERRUPT RESPONSE BIT
+  00C4          +1   117     PRE0     BIT   0C4H  ;WDCON.4 - WATCHDOG TIMEOUT SELECTION BIT0
+  00C5          +1   118     PRE1     BIT   0C5H  ;WDCON.5 - WATCHDOG TIMEOUT SELECTION BIT1
+  00C6          +1   119     PRE2     BIT   0C6H  ;WDCON.6 - WATCHDOG TIMEOUT SELECTION BIT2
+  00C7          +1   120     PRE3     BIT   0C7H  ;WDCON.7 - WATCHDOG TIMEOUT SELECTION BIT3
+  00C8          +1   121     CAP2     BIT   0C8H  ;T2CON.0 - CAPTURE OR RELOAD SELECT
+  00C9          +1   122     CNT2     BIT   0C9H  ;T2CON.1 - TIMER OR COUNTER SELECT
+  00CA          +1   123     TR2      BIT   0CAH  ;T2CON.2 - TIMER 2 ON/OFF CONTROL
+  00CB          +1   124     EXEN2    BIT   0CBH  ;T2CON.3 - TIMER 2 EXTERNAL ENABLE FLAG
+A51 MACRO ASSEMBLER  MEAS_XY                                                              07/14/2009 14:26:55 PAGE     3
+
+  00CC          +1   125     TCLK     BIT   0CCH  ;T2CON.4 - TRANSMIT CLOCK SELECT
+  00CD          +1   126     RCLK     BIT   0CDH  ;T2CON.5 - RECEIVE CLOCK SELECTT
+  00CE          +1   127     EXF2     BIT   0CEH  ;T2CON.6 - EXTERNAL TRANSITION FLAG
+  00CF          +1   128     TF2      BIT   0CFH  ;T2CON.7 - TIMER 2 OVERFLOW FLAG
+  00D0          +1   129     P        BIT   0D0H  ;PSW.0 - ACCUMULATOR PARITY FLAG
+  00D1          +1   130     F1       BIT   0D1H  ;PSW.1 - FLAG 0
+  00D2          +1   131     OV       BIT   0D2H  ;PSW.2 - OVERFLOW FLAG
+  00D3          +1   132     RS0      BIT   0D3H  ;PSW.3 - REGISTER BANK SELECT 0
+  00D4          +1   133     RS1      BIT   0D4H  ;PSW.4 - REGISTER BANK SELECT 1
+  00D5          +1   134     F0       BIT   0D5H  ;PSW.5 - FLAG 0
+  00D6          +1   135     AC       BIT   0D6H  ;PSW.6 - AUXILIARY CARRY FLAG
+  00D7          +1   136     CY       BIT   0D7H  ;PSW.7 - CARRY FLAG
+  00D8          +1   137     CS0      BIT   0D8H  ;ADCCON2.0 - ADC INPUT CHANNEL SELECT BIT0
+  00D9          +1   138     CS1      BIT   0D9H  ;ADCCON2.1 - ADC INPUT CHANNEL SELECT BIT1
+  00DA          +1   139     CS2      BIT   0DAH  ;ADCCON2.2 - ADC INPUT CHANNEL SELECT BIT2
+  00DB          +1   140     CS3      BIT   0DBH  ;ADCCON2.3 - ADC INPUT CHANNEL SELECT BIT3
+  00DC          +1   141     SCONV    BIT   0DCH  ;ADCCON2.4 - SINGLE CONVERSION ENABLE
+  00DD          +1   142     CCONV    BIT   0DDH  ;ADCCON2.5 - CONTINUOUS CONVERSION ENABLE
+  00DE          +1   143     ADCSPI   BIT   0DEH  ;ADCCON2.6 - SERIAL MODE ENABLE
+  00DF          +1   144     ADCI     BIT   0DFH  ;ADCCON2.7 - ADC INTURRUPT FLAG
+  00E8          +1   145     I2CI     BIT   0E8H  ;I2CCON.0 - I2C INTURRUPT FLAG
+  00E9          +1   146     I2CTX    BIT   0E9H  ;I2CCON.1 - I2C TRANSMIT SELECT
+  00EA          +1   147     I2CRS    BIT   0EAH  ;I2CCON.2 - I2C RESET
+  00EB          +1   148     I2CM     BIT   0EBH  ;I2CCON.3 - I2C MASTER MODE SELECT
+  00EC          +1   149     MDI      BIT   0ECH  ;I2CCON.4 - I2C MASTER MODE SDATA INPUT
+  00ED          +1   150     MCO      BIT   0EDH  ;I2CCON.5 - I2C MASTER MODE SCLOCK OUTPUT
+  00EE          +1   151     MDE      BIT   0EEH  ;I2CCON.6 - I2C MASTER MODE SDATA ENABLE
+  00EF          +1   152     MDO      BIT   0EFH  ;I2CCON.7 - I2C MASTER MODE SDATA OUTPUT
+  00EB          +1   153     D0EN     BIT   0EBH  ;DCON.3 - D0 ENABLE
+  00ED          +1   154     D0       BIT   0EDH  ;DCON.5 - D0 OUTPUT BIT
+  00EE          +1   155     D1EN     BIT   0EEH  ;DCON.6 - D1 ENABLE
+  00EF          +1   156     D1       BIT   0EFH  ;DCON.7 - D1 OUTPUT BIT
+  00F8          +1   157     SPR0     BIT   0F8H  ;SPICON.0 - SPI BITRATE SELECT BIT0
+  00F9          +1   158     SPR1     BIT   0F9H  ;SPICON.1 - SPI BITRATE SELECT BIT1
+  00FA          +1   159     CPHA     BIT   0FAH  ;SPICON.2 - SPI CLOCK PHASE SELECT
+  00FB          +1   160     CPOL     BIT   0FBH  ;SPICON.3 - SPI CLOCK POLARITY SELECT
+  00FC          +1   161     SPIM     BIT   0FCH  ;SPICON.4 - SPI MASTER/SLAVE MODE SELECT
+  00FD          +1   162     SPE      BIT   0FDH  ;SPICON.5 - SPI INTERFACE ENABLE
+  00FE          +1   163     WCOL     BIT   0FEH  ;SPICON.6 - SPI WRITE COLLISION ERROR FLAG
+  00FF          +1   164     ISPI     BIT   0FFH  ;SPICON.7 - SPI END OF TRANSFER FLAG
+                     165     
+                     166     
+                     167     NAME    MEAS_XY
+                     168     
+                     169     
+                     170     ?PR?_meas_xy?MEAS_XY  SEGMENT CODE
+                     171     ?DT?_meas_xy?MEAS_XY  SEGMENT DATA OVERLAYABLE
+                     172     
+                     173             PUBLIC  meas_xy
+                     174     
+                     175     
+----                 176             RSEG    ?DT?_meas_xy?MEAS_XY
+                     177     
+0000                 178     ?_meas_xy?BYTE:
+0000                 179             buff?040:   DS   8
+                     180     
+  0090               181     XOUT    EQU     P1.0
+  0091               182     YOUT    EQU     P1.1
+                     183     
+                     184     ; =============================================================================
+                     185     ; =  Получение 1-го замера 'X&Y' с 'ADXL202'                                  =
+                     186     ; = ------------------------------------------------------------------------- =
+                     187     ; =  Вход:  Ничего                                                            =
+                     188     ; =  Выход: R7 - адрес заполненного буфера данными замера                     =
+                     189     ; =============================================================================
+                     190     ; char idata* meas_xy(void) {
+A51 MACRO ASSEMBLER  MEAS_XY                                                              07/14/2009 14:26:55 PAGE     4
+
+                     191     
+                     192     
+                     193     
+----                 194             RSEG    ?PR?_meas_xy?MEAS_XY
+                     195             USING   0
+                     196     
+0000                 197     meas_xy:
+                     198     
+0000 758C00          199             MOV     TH0,#0          ; сброс T0 
+0003 758A00          200             MOV     TL0,#0
+                     201     
+                     202     ; измерение длительности и периода импульсов с выходов Xout и Yout
+                     203     
+0006 2090FD          204     X_K1:   JB      XOUT,X_K1       ; корректировка расчета длительности импульсов с выхода Xou
+                             t
+                     205     
+0009 3090FD          206     X_F:    JNB     XOUT,X_F        ; ожидание фронта 1-го импульса с выхода Xout           
+000C D28C            207                 SETB    TR0             ; запуск T0
+                     208                     
+000E 2090FD          209     X_S:    JB      XOUT,X_S        ; ожидание спада 1-го импульса с выхода Xout
+0011 C28C            210                     CLR     TR0             ; останов T0                  
+                     211     
+0013 E58A            212             MOV     A,TL0           ; в R1R0 - значение длительности импульсов с выхода Xout
+0015 F8              213             MOV     R0,A
+0016 E58C            214             MOV     A,TH0
+0018 F9              215             MOV     R1,A
+                     216     
+0019 758C00          217             MOV     TH0,#0          ; сброс T0
+001C 758A00          218             MOV     TL0,#0
+                     219     
+001F 3090FD          220     X_F2:   JNB     XOUT,X_F2       ; ожидание фронта 2-го импульса с выхода Xout
+0022 D28C            221                 SETB    TR0             ; запуск T0
+                     222     
+0024 2090FD          223     X_S2:   JB      XOUT,X_S2       ; ожидание спада 2-го импульса с выхода Xout
+0027 3090FD          224     X_F3:   JNB     XOUT,X_F3       ; ожидание фронта 3-го импульса с выхода Xout
+002A C28C            225                     CLR     TR0             ; останов T0
+                     226     
+002C E58A            227             MOV     A,TL0           ; в R3R2 - значение периода импульсов с выхода Xout
+002E FA              228             MOV     R2,A
+002F E58C            229             MOV     A,TH0
+0031 FB              230             MOV     R3,A
+                     231                   
+0032 758C00          232             MOV     TH0,#0          ; сброс T0
+0035 758A00          233             MOV     TL0,#0
+                     234     
+0038 2091FD          235     Y_K2:   JB      YOUT,Y_K2       ; корректировка расчета длительности импульсов с выхода You
+                             t 
+                     236     
+003B 3091FD          237     Y_F:    JNB     YOUT,Y_F        ; ожидание фронта 1-го импульса с выхода Yout           
+003E D28C            238                 SETB    TR0             ; запуск T0
+                     239                     
+0040 2091FD          240     Y_S:    JB      YOUT,Y_S        ; ожидание спада 1-го импульса с выхода Yout
+0043 C28C            241             CLR     TR0             ; останов T0                  
+                     242     
+0045 E58A            243             MOV     A,TL0           ; в R5R4 - значение длительности импульсов с выхода Yout
+0047 FC              244             MOV     R4,A
+0048 E58C            245             MOV     A,TH0
+004A FD              246             MOV     R5,A
+                     247     
+004B 758C00          248             MOV     TH0,#0          ; сброс T0
+004E 758A00          249             MOV     TL0,#0
+                     250     
+0051 3091FD          251     Y_F2:   JNB     YOUT,Y_F2       ; ожидание фронта 2-го импульса с выхода Yout
+0054 D28C            252                 SETB    TR0             ; запуск T0
+                     253     
+0056 2091FD          254     Y_S2:   JB      YOUT,Y_S2       ; ожидание спада 2-го импульса с выхода Yout
+A51 MACRO ASSEMBLER  MEAS_XY                                                              07/14/2009 14:26:55 PAGE     5
+
+0059 3091FD          255     Y_F3:   JNB     YOUT,Y_F3       ; ожидание фронта 3-го импульса с выхода Yout
+005C C28C            256             CLR     TR0             ; останов T0
+                     257     
+005E E58A            258             MOV     A,TL0           ; в R7R6 - значение периода импульсов с выхода Yout
+0060 FE              259             MOV     R6,A
+0061 E58C            260             MOV     A,TH0
+0063 FF              261             MOV     R7,A
+                     262     
+                     263     ; сохранем замер в буфере
+0064 E8              264             MOV     A,R0
+0065 F58A            265             MOV     TL0,A
+0067 E9              266             MOV     A,R1
+0068 F58C            267             MOV     TH0,A           ; сохраним 'R0|R1'
+006A 7800     F      268             MOV     R0,#buff?040
+                     269     ; начинаем освобождать 'R0-R7', размеща в буфере
+006C E58A            270             MOV     A,TL0
+006E F6              271             MOV     @R0,A           ; 'R0'
+006F 08              272             INC     R0
+0070 E58C            273             MOV     A,TH0
+0072 F6              274             MOV     @R0,A           ; 'R1'
+0073 08              275             INC     R0
+0074 EA              276             MOV     A,R2
+0075 F6              277             MOV     @R0,A           ; 'R2'
+0076 08              278             INC     R0
+0077 EB              279             MOV     A,R3
+0078 F6              280             MOV     @R0,A           ; 'R3'
+0079 08              281             INC     R0
+007A EC              282             MOV     A,R4
+007B F6              283             MOV     @R0,A           ; 'R4'
+007C 08              284             INC     R0
+007D ED              285             MOV     A,R5
+007E F6              286             MOV     @R0,A           ; 'R5'
+007F 08              287             INC     R0
+0080 EE              288             MOV     A,R6
+0081 F6              289             MOV     @R0,A           ; 'R6'
+0082 08              290             INC     R0
+0083 EF              291             MOV     A,R7
+0084 F6              292             MOV     @R0,A           ; 'R7'
+                     293     
+0085 7F00     F      294             MOV     R7,#buff?040
+                     295     
+                     296     ; }
+0087 22              297             RET
+                     298     
+                     299             END
+                             
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

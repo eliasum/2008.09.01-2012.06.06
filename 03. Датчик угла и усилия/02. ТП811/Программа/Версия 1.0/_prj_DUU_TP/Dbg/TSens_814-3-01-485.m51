@@ -1,0 +1,372 @@
+BL51 BANKED LINKER/LOCATER V5.12                                                        03/03/2011  10:22:19  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.12, INVOKED BY:
+D:\WORK\KEIL51\C51\BIN\BL51.EXE .\Dbg\ts_main.obj, .\Dbg\STARTUP.obj TO .\Dbg\TSens_814-3-01-485 PRINT (.\Dbg\TSens_814-
+>> 3-01-485.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Dbg\ts_main.obj (TS_MAIN)
+  .\Dbg\STARTUP.obj (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Dbg\TSens_814-3-01-485 (TS_MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0013H     UNIT         ?DT?TS_MAIN
+                    001BH     0005H                  *** GAP ***
+            BIT     0020H.0   0000H.5   UNIT         ?BI?TS_MAIN
+                    0020H.5   0000H.3                *** GAP ***
+            DATA    0021H     0007H     UNIT         _DATA_GROUP_
+            IDATA   0028H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0006H     UNIT         ?C_C51STARTUP
+                    0009H     0002H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     0011H     UNIT         ?PR?TIMER0?TS_MAIN
+            CODE    001FH     0010H     UNIT         ?PR?END_ADC?TS_MAIN
+                    002FH     0004H                  *** GAP ***
+            CODE    0033H     0003H     ABSOLUTE     
+            CODE    0036H     009AH     UNIT         ?PR?MAIN?TS_MAIN
+            CODE    00D0H     0063H     UNIT         ?PR?_ADC_SW?TS_MAIN
+            CODE    0133H     005CH     UNIT         ?PR?ADD_SUM?TS_MAIN
+            CODE    018FH     004FH     UNIT         ?PR?_GO_ADC?TS_MAIN
+            CODE    01DEH     002CH     UNIT         ?PR?ADC_INI?TS_MAIN
+            CODE    020AH     002BH     UNIT         ?PR?_OUT_DATA?TS_MAIN
+            CODE    0235H     000BH     UNIT         ?PR?REFR?TS_MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\Dbg\TSens_814-3-01-485 (TS_MAIN)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?TS_MAIN
+
+?PR?MAIN?TS_MAIN               -----    -----
+  +--> ?PR?ADC_INI?TS_MAIN
+BL51 BANKED LINKER/LOCATER V5.12                                                      03/03/2011  10:22:19  PAGE 2
+
+
+  +--> ?PR?REFR?TS_MAIN
+  +--> ?PR?_OUT_DATA?TS_MAIN
+
+?PR?ADC_INI?TS_MAIN            0021H    0001H
+  +--> ?PR?_ADC_SW?TS_MAIN
+  +--> ?PR?ADD_SUM?TS_MAIN
+
+?PR?_ADC_SW?TS_MAIN            0023H    0001H
+  +--> ?PR?_GO_ADC?TS_MAIN
+
+?PR?_GO_ADC?TS_MAIN            0024H    0004H
+
+?PR?REFR?TS_MAIN               -----    -----
+  +--> ?PR?_ADC_SW?TS_MAIN
+  +--> ?PR?ADD_SUM?TS_MAIN
+
+?PR?_OUT_DATA?TS_MAIN          0021H    0002H
+  +--> ?PR?_ADC_SW?TS_MAIN
+  +--> ?PR?ADD_SUM?TS_MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Dbg\TSens_814-3-01-485 (TS_MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        TS_MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  B:00A8H.6       PUBLIC        EADC
+  D:00A8H         PUBLIC        IE
+  C:0235H         PUBLIC        Refr
+  C:020AH         PUBLIC        _Out_data
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:018FH         PUBLIC        _Go_adc
+  D:00E8H         PUBLIC        I2CCON
+  D:00CBH         PUBLIC        RCAP2H
+  D:00E8H         PUBLIC        DCON
+  D:00CAH         PUBLIC        RCAP2L
+  C:0036H         PUBLIC        main
+  D:00FDH         PUBLIC        DACCON
+  C:01DEH         PUBLIC        Adc_ini
+  D:00DAH         PUBLIC        ADCDATAH
+  D:00D9H         PUBLIC        ADCDATAL
+  D:0099H         PUBLIC        SBUF
+  D:0008H         PUBLIC        rcom
+  C:00D0H         PUBLIC        _Adc_sw
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:0009H         PUBLIC        CORR
+  B:00B0H.5       PUBLIC        P35
+  B:00B0H.6       PUBLIC        P36
+BL51 BANKED LINKER/LOCATER V5.12                                                      03/03/2011  10:22:19  PAGE 3
+
+
+  D:000BH         PUBLIC        COUNT_BOD
+  C:0133H         PUBLIC        Add_sum
+  D:00FAH         PUBLIC        DAC0H
+  C:001FH         SYMBOL        end_adc
+  D:00FCH         PUBLIC        DAC1H
+  D:000CH         PUBLIC        AIN0_DAT
+  B:00C0H.0       PUBLIC        WDWR
+  D:00F9H         PUBLIC        DAC0L
+  D:00FBH         PUBLIC        DAC1L
+  D:000EH         PUBLIC        ADC
+  B:00A8H.1       PUBLIC        ET0
+  D:00D7H         PUBLIC        PLLCON
+  B:0098H.2       PUBLIC        RB8
+  D:008CH         PUBLIC        TH0
+  D:008DH         PUBLIC        TH1
+  B:0098H.3       PUBLIC        TB8
+  D:00CDH         PUBLIC        TH2
+  D:008AH         PUBLIC        TL0
+  D:00CCH         PUBLIC        TL2
+  C:000EH         SYMBOL        timer0
+  B:0088H.4       PUBLIC        TR0
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  D:00EFH         PUBLIC        ADCCON1
+  D:00D8H         PUBLIC        ADCCON2
+  D:0010H         PUBLIC        byte_ndv
+  B:00C0H.1       PUBLIC        WDE
+  B:0020H.0       PUBLIC        fl_swca
+  B:0098H.4       PUBLIC        REN
+  B:0020H.1       PUBLIC        fl_sign
+  B:0020H.2       PUBLIC        fl_cmd
+  D:0011H         PUBLIC        VAR
+  D:0013H         PUBLIC        Badc
+  B:00B0H.0       PUBLIC        RXD
+  B:0020H.3       PUBLIC        fl_dev
+  B:0020H.4       PUBLIC        fl_ad
+  D:00C0H         PUBLIC        WDCON
+  -------         PROC          MAIN
+  C:0036H         LINE#         31
+  C:0036H         LINE#         32
+  C:0036H         LINE#         42
+  C:0039H         LINE#         47
+  C:003BH         LINE#         48
+  C:003EH         LINE#         52
+  C:0041H         LINE#         53
+  C:0043H         LINE#         62
+  C:0046H         LINE#         66
+  C:0048H         LINE#         67
+  C:004BH         LINE#         68
+  C:004EH         LINE#         69
+  C:0051H         LINE#         70
+  C:0054H         LINE#         71
+  C:0057H         LINE#         72
+  C:005AH         LINE#         77
+  C:005DH         LINE#         81
+  C:0060H         LINE#         82
+  C:0063H         LINE#         83
+BL51 BANKED LINKER/LOCATER V5.12                                                      03/03/2011  10:22:19  PAGE 4
+
+
+  C:0066H         LINE#         85
+  C:0069H         LINE#         86
+  C:0071H         LINE#         87
+  C:0074H         LINE#         88
+  C:007AH         LINE#         92
+  C:007CH         LINE#         93
+  C:007EH         LINE#         94
+  C:0080H         LINE#         95
+  C:0082H         LINE#         97
+  C:0085H         LINE#         103
+  C:0085H         LINE#         104
+  C:0085H         LINE#         105
+  C:0087H         LINE#         106
+  C:008AH         LINE#         107
+  C:008CH         LINE#         109
+  C:008CH         LINE#         110
+  C:0092H         LINE#         111
+  C:0096H         LINE#         113
+  C:0098H         LINE#         114
+  C:009AH         LINE#         115
+  C:009DH         LINE#         116
+  C:009FH         LINE#         119
+  C:00A2H         LINE#         120
+  C:00A4H         LINE#         121
+  C:00A8H         LINE#         123
+  C:00ABH         LINE#         124
+  C:00ABH         LINE#         125
+  C:00ADH         LINE#         126
+  C:00AFH         LINE#         127
+  C:00B5H         LINE#         128
+  C:00B8H         LINE#         129
+  C:00BEH         LINE#         130
+  C:00BEH         LINE#         132
+  C:00C4H         LINE#         133
+  C:00CCH         LINE#         134
+  C:00CEH         LINE#         135
+  -------         ENDPROC       MAIN
+  -------         PROC          _OUT_DATA
+  D:0007H         SYMBOL        chnl
+  -------         DO            
+  D:0021H         SYMBOL        o_dat
+  -------         ENDDO         
+  C:020AH         LINE#         144
+  C:020AH         LINE#         146
+  C:020CH         LINE#         147
+  C:0215H         LINE#         148
+  C:021FH         LINE#         149
+  C:0229H         LINE#         150
+  C:022CH         LINE#         151
+  C:0232H         LINE#         152
+  C:0234H         LINE#         153
+  -------         ENDPROC       _OUT_DATA
+  -------         PROC          ADD_SUM
+  -------         DO            
+  D:0007H         SYMBOL        count
+  -------         ENDDO         
+  C:0133H         LINE#         160
+BL51 BANKED LINKER/LOCATER V5.12                                                      03/03/2011  10:22:19  PAGE 5
+
+
+  C:0133H         LINE#         162
+  C:0136H         LINE#         163
+  C:0136H         LINE#         164
+  C:0138H         LINE#         165
+  C:0152H         LINE#         166
+  C:0158H         LINE#         167
+  C:015DH         LINE#         168
+  C:015EH         LINE#         169
+  C:0175H         LINE#         170
+  C:018EH         LINE#         171
+  C:018EH         LINE#         172
+  -------         ENDPROC       ADD_SUM
+  -------         PROC          REFR
+  C:0235H         LINE#         179
+  C:0235H         LINE#         180
+  C:023AH         LINE#         181
+  C:023DH         LINE#         182
+  C:023FH         LINE#         183
+  -------         ENDPROC       REFR
+  -------         PROC          ADC_INI
+  -------         DO            
+  D:0021H         SYMBOL        count
+  -------         ENDDO         
+  C:01DEH         LINE#         190
+  C:01DEH         LINE#         192
+  C:01E1H         LINE#         193
+  C:01E3H         LINE#         194
+  C:01E5H         LINE#         195
+  C:01E8H         LINE#         196
+  C:01E8H         LINE#         197
+  C:01EDH         LINE#         198
+  C:01F2H         LINE#         199
+  C:01FEH         LINE#         200
+  C:0207H         LINE#         201
+  -------         ENDPROC       ADC_INI
+  -------         PROC          _ADC_SW
+  D:0023H         SYMBOL        chanell
+  C:00D0H         LINE#         209
+  C:00D2H         LINE#         211
+  C:00D5H         LINE#         212
+  C:00D9H         LINE#         213
+  C:00D9H         LINE#         214
+  C:00DCH         LINE#         215
+  C:00DCH         LINE#         216
+  C:00DFH         LINE#         217
+  C:00E2H         LINE#         218
+  C:00E4H         LINE#         219
+  C:00EFH         LINE#         220
+  C:00EFH         LINE#         221
+  C:00FBH         LINE#         222
+  C:00FDH         LINE#         223
+  C:00FEH         LINE#         225
+  C:00FEH         LINE#         226
+  C:010BH         LINE#         227
+  C:010DH         LINE#         228
+  C:010DH         LINE#         229
+  C:010EH         LINE#         231
+BL51 BANKED LINKER/LOCATER V5.12                                                      03/03/2011  10:22:19  PAGE 6
+
+
+  C:010EH         LINE#         232
+  C:0111H         LINE#         233
+  C:0113H         LINE#         234
+  C:0115H         LINE#         235
+  C:0126H         LINE#         236
+  C:0132H         LINE#         237
+  C:0132H         LINE#         238
+  C:0132H         LINE#         239
+  -------         ENDPROC       _ADC_SW
+  -------         PROC          _GO_ADC
+  D:0007H         SYMBOL        chanell
+  -------         DO            
+  D:0024H         SYMBOL        sum
+  D:0003H         SYMBOL        count
+  -------         ENDDO         
+  C:018FH         LINE#         246
+  C:018FH         LINE#         248
+  C:0191H         LINE#         250
+  C:0193H         LINE#         251
+  C:019BH         LINE#         252
+  C:019EH         LINE#         253
+  C:01A1H         LINE#         254
+  C:01A3H         LINE#         255
+  C:01A5H         LINE#         256
+  C:01A7H         LINE#         257
+  C:01A7H         LINE#         258
+  C:01AAH         LINE#         259
+  C:01C5H         LINE#         260
+  C:01C6H         LINE#         261
+  C:01C8H         LINE#         262
+  C:01CBH         LINE#         263
+  C:01CDH         LINE#         264
+  C:01CFH         LINE#         265
+  C:01D2H         LINE#         266
+  C:01D5H         LINE#         267
+  C:01DDH         LINE#         268
+  -------         ENDPROC       _GO_ADC
+  -------         PROC          TIMER0
+  C:000EH         LINE#         272
+  C:0010H         LINE#         274
+  C:0016H         LINE#         275
+  C:001CH         LINE#         276
+  -------         ENDPROC       TIMER0
+  -------         PROC          END_ADC
+  C:001FH         LINE#         280
+  C:0021H         LINE#         282
+  C:0027H         LINE#         283
+  C:002AH         LINE#         284
+  C:002CH         LINE#         285
+  -------         ENDPROC       END_ADC
+  -------         ENDMOD        TS_MAIN
+
+  -------         MODULE        ?C_STARTUP
+  C:0003H         SEGMENT       ?C_C51STARTUP
+  I:0028H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:0081H         SYMBOL        SP
+BL51 BANKED LINKER/LOCATER V5.12                                                      03/03/2011  10:22:19  PAGE 7
+
+
+  C:0003H         SYMBOL        STARTUP1
+  C:0000H         LINE#         19
+  C:0003H         LINE#         24
+  C:0006H         LINE#         25
+  -------         ENDMOD        ?C_STARTUP
+
+Program Size: data=35.5 xdata=0 code=570
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

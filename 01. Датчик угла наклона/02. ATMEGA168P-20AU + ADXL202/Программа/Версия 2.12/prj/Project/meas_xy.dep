@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>2574320624</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$TOOLKIT_DIR$\inc\clib\math.h</file>
+      <file>$PROJ_DIR$\MEAS_XY_Debug\Obj\onewire.pbi</file>
+      <file>$PROJ_DIR$\MEAS_XY_Debug\Obj\main.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\clib\stdlib.h</file>
+      <file>$PROJ_DIR$\MEAS_XY_Debug\Obj\main.r90</file>
+      <file>$PROJ_DIR$\MEAS_XY_Debug\meas_xy.d90</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$TOOLKIT_DIR$\inc\clib\sysmac.h</file>
+      <file>$TOOLKIT_DIR$\src\template\cfg3s.xcl</file>
+      <file>$TOOLKIT_DIR$\lib\clib\cl3s-ec_mul.r90</file>
+      <file>$TOOLKIT_DIR$\inc\iom128.h</file>
+      <file>$TOOLKIT_DIR$\inc\ioavr.h</file>
+      <file>$PROJ_DIR$\MEAS_XY_Debug\Obj\meas_xy.pbd</file>
+      <file>$PROJ_DIR$\MEAS_XY_Debug\Obj\ds18x20.r90</file>
+      <file>$TOOLKIT_DIR$\inc\iomacro.h</file>
+      <file>$TOOLKIT_DIR$\src\template\cfgm128.xcl</file>
+      <file>$PROJ_DIR$\MEAS_XY_Debug\Obj\onewire.r90</file>
+      <file>$PROJ_DIR$\..\common.h</file>
+      <file>$PROJ_DIR$\..\crc8.h</file>
+      <file>$PROJ_DIR$\..\ds18x20.h</file>
+      <file>$PROJ_DIR$\MEAS_XY_Debug\Obj\crc8.r90</file>
+      <file>$PROJ_DIR$\MEAS_XY_Debug\Obj\crc8.pbi</file>
+      <file>$PROJ_DIR$\MEAS_XY_Debug\Obj\ds18x20.pbi</file>
+      <file>$PROJ_DIR$\..\main.h</file>
+      <file>$PROJ_DIR$\..\onewire.h</file>
+      <file>$PROJ_DIR$\..\crc8.c</file>
+      <file>$PROJ_DIR$\..\ds18x20.c</file>
+      <file>$PROJ_DIR$\..\main.c</file>
+      <file>$PROJ_DIR$\..\onewire.c</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\MEAS_XY_Debug\meas_xy.d90</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 15 8 20 13 4 16 9</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\MEAS_XY_Debug\Obj\meas_xy.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 21 22 2 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 5</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\crc8.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 20</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 21</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\ds18x20.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 13</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 22</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 17 11 10 14 6 19 3 7 24 18</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 17 11 10 14 6 19 3 7 24 18</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 4</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 2</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 23 17 11 10 14 6 24 19 3 7 0</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 23 17 11 10 14 6 24 19 3 7 0</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\onewire.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 16</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 1</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 17 11 10 14 6 24</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 17 11 10 14 6 24</file>
+        </tool>
+      </inputs>
+    </file>
+    <forcedrebuild>
+      <name>[REBUILD_ALL]</name>
+    </forcedrebuild>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs>
+      <file>$TOOLKIT_DIR$\inc\clib\math.h</file>
+      <file>$TOOLKIT_DIR$\inc\clib\stdlib.h</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\meas_xy.hex</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\Obj\ds18x20.r90</file>
+      <file>$TOOLKIT_DIR$\inc\iom168p.h</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\Obj\main.r90</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$TOOLKIT_DIR$\inc\clib\sysmac.h</file>
+      <file>$TOOLKIT_DIR$\inc\ioavr.h</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\Obj\main.pbi</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\meas_xy_eeprom.hex</file>
+      <file>$TOOLKIT_DIR$\inc\iomacro.h</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\Obj\ds18x20.pbi</file>
+      <file>$TOOLKIT_DIR$\lib\clib\cl3s-ec_mul-sf.r90</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\Obj\onewire.r90</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\Obj\meas_xy.pbd</file>
+      <file>$TOOLKIT_DIR$\src\template\cfg3soim.xcl</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\Obj\crc8.pbi</file>
+      <file>$PROJ_DIR$\..\common.h</file>
+      <file>$PROJ_DIR$\..\crc8.h</file>
+      <file>$PROJ_DIR$\..\ds18x20.h</file>
+      <file>$TOOLKIT_DIR$\src\template\cfgm168p.xcl</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\Obj\onewire.pbi</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\meas_xy_data.hex</file>
+      <file>$PROJ_DIR$\MEAS_XY_Release\Obj\crc8.r90</file>
+      <file>$PROJ_DIR$\..\main.h</file>
+      <file>$PROJ_DIR$\..\onewire.h</file>
+      <file>$PROJ_DIR$\..\crc8.c</file>
+      <file>$PROJ_DIR$\..\ds18x20.c</file>
+      <file>$PROJ_DIR$\..\main.c</file>
+      <file>$PROJ_DIR$\..\onewire.c</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\MEAS_XY_Release\meas_xy.hex</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 23 10</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 21 16 24 3 5 14 13</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\MEAS_XY_Release\Obj\meas_xy.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 17 12 9 22</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 23 10 2</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\crc8.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 24</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 17</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\ds18x20.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 3</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 12</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 18 8 4 11 6 20 1 7 26 19</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 18 8 4 11 6 20 1 7 26 19</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 5</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 9</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 25 18 8 4 11 6 26 20 1 7 0</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 25 18 8 4 11 6 26 20 1 7 0</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\onewire.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 14</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 22</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 18 8 4 11 6 26</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 18 8 4 11 6 26</file>
+        </tool>
+      </inputs>
+    </file>
+  </configuration>
+</project>
+
+

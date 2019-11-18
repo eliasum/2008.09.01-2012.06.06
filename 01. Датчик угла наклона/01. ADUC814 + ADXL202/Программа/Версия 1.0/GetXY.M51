@@ -1,0 +1,232 @@
+BL51 BANKED LINKER/LOCATER V5.12                                                        07/27/2009  13:39:50  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.12, INVOKED BY:
+D:\WORK\KEIL51\C51\BIN\BL51.EXE Main.obj, StartUp.obj, .\MeasXY_LIB\MeasXY.LIB TO GetXY IXREF RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  Main.obj (MAIN)
+  StartUp.obj (?C_STARTUP)
+  .\MeasXY_LIB\MeasXY.LIB (MEAS_XY)
+  D:\WORK\KEIL51\C51\LIB\C51S.LIB (?C?COPY)
+  D:\WORK\KEIL51\C51\LIB\C51S.LIB (?C?CLDPTR)
+  D:\WORK\KEIL51\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  D:\WORK\KEIL51\C51\LIB\C51S.LIB (?C?ULSHR)
+
+
+LINK MAP OF MODULE:  GetXY (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000DH     UNIT         _DATA_GROUP_
+            IDATA   0015H     001BH     UNIT         _IDATA_GROUP_
+            IDATA   0030H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     02C3H     UNIT         ?PR?MAIN?MAIN
+            CODE    02C6H     014FH     UNIT         ?C?LIB_CODE
+            CODE    0415H     0088H     UNIT         ?PR?_MEAS_XY?MEAS_XY
+            CODE    049DH     0048H     UNIT         ?PR?_TX_MEANS?MAIN
+            CODE    04E5H     0013H     UNIT         ?PR?_TX_BYTE?MAIN
+            CODE    04F8H     0006H     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   GetXY (MAIN)
+
+
+SEGMENT                          DATA_GROUP          IDATA_GROUP
+  +--> CALLED SEGMENT          START    LENGTH     START    LENGTH
+------------------------------------------------------------------
+?C_C51STARTUP                  -----    -----      -----    -----
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN                  0008H    0005H      0015H    001BH
+  +--> ?PR?_MEAS_XY?MEAS_XY
+  +--> ?PR?_TX_MEANS?MAIN
+
+?PR?_MEAS_XY?MEAS_XY           000DH    0008H      -----    -----
+
+?PR?_TX_MEANS?MAIN             000DH    0006H      -----    -----
+  +--> ?PR?_TX_BYTE?MAIN
+
+BL51 BANKED LINKER/LOCATER V5.12                                                      07/27/2009  13:39:50  PAGE 2
+
+
+
+
+SYMBOL TABLE OF MODULE:  GetXY (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  B:0098H.1       PUBLIC        TI
+  D:00E8H         PUBLIC        I2CCON
+  D:00CBH         PUBLIC        RCAP2H
+  C:049DH         PUBLIC        _Tx_means
+  D:00E8H         PUBLIC        DCON
+  D:00CAH         PUBLIC        RCAP2L
+  C:0003H         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  C:04F0H         PUBLIC        _Tx_byte
+  B:00C0H.0       PUBLIC        WDWR
+  D:00D7H         PUBLIC        PLLCON
+  D:00CDH         PUBLIC        TH2
+  D:00CCH         PUBLIC        TL2
+  B:00C8H.2       PUBLIC        TR2
+  B:00C0H.1       PUBLIC        WDE
+  D:00C8H         PUBLIC        T2CON
+  D:00C0H         PUBLIC        WDCON
+  -------         PROC          MAIN
+  -------         DO            
+  I:0015H         SYMBOL        get_one
+  I:0018H         SYMBOL        Buff
+  I:0028H         SYMBOL        one
+  D:0008H         SYMBOL        s
+  D:000CH         SYMBOL        i
+  -------         ENDDO         
+  C:0003H         LINE#         17
+  C:0003H         LINE#         18
+  C:0003H         LINE#         32
+  C:0006H         LINE#         35
+  C:0009H         LINE#         38
+  C:000BH         LINE#         39
+  C:000EH         LINE#         42
+  C:0011H         LINE#         45
+  C:0014H         LINE#         48
+  C:0017H         LINE#         49
+  C:001AH         LINE#         50
+  C:001DH         LINE#         51
+  C:0020H         LINE#         52
+  C:0023H         LINE#         53
+  C:0025H         LINE#         55
+  C:0025H         LINE#         56
+  C:0025H         LINE#         57
+  C:0034H         LINE#         59
+  C:0051H         LINE#         60
+BL51 BANKED LINKER/LOCATER V5.12                                                      07/27/2009  13:39:50  PAGE 3
+
+
+  C:0070H         LINE#         61
+  C:008DH         LINE#         62
+  C:00ACH         LINE#         63
+  C:00C9H         LINE#         64
+  C:00E8H         LINE#         65
+  C:0105H         LINE#         66
+  C:0124H         LINE#         68
+  C:015DH         LINE#         70
+  C:0194H         LINE#         71
+  C:01B1H         LINE#         72
+  C:01E7H         LINE#         73
+  C:0204H         LINE#         74
+  C:023AH         LINE#         75
+  C:0257H         LINE#         76
+  C:028DH         LINE#         77
+  C:02AAH         LINE#         79
+  C:02B8H         LINE#         81
+  C:02BBH         LINE#         84
+  C:02BDH         LINE#         85
+  C:02BFH         LINE#         86
+  C:02C1H         LINE#         87
+  C:02C3H         LINE#         88
+  -------         ENDPROC       MAIN
+  -------         PROC          _TX_MEANS
+  D:000DH         SYMBOL        outmeans
+  -------         DO            
+  D:0010H         SYMBOL        d
+  D:0011H         SYMBOL        cc
+  D:0012H         SYMBOL        i
+  -------         ENDDO         
+  C:049DH         LINE#         91
+  C:04A3H         LINE#         92
+  C:04A3H         LINE#         95
+  C:04A9H         LINE#         96
+  C:04AEH         LINE#         97
+  C:04B8H         LINE#         98
+  C:04B8H         LINE#         99
+  C:04C8H         LINE#         100
+  C:04CBH         LINE#         101
+  C:04D7H         LINE#         102
+  C:04DAH         LINE#         103
+  C:04E0H         LINE#         104
+  -------         ENDPROC       _TX_MEANS
+  -------         PROC          L?0034
+  -------         ENDPROC       L?0034
+  -------         PROC          _TX_BYTE
+  D:0007H         SYMBOL        outbyte
+  C:04F0H         LINE#         107
+  C:04F0H         LINE#         108
+  C:04F0H         LINE#         109
+  C:04F2H         LINE#         110
+  C:04F5H         LINE#         111
+  C:04F7H         LINE#         112
+  -------         ENDPROC       _TX_BYTE
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        ?C_STARTUP
+BL51 BANKED LINKER/LOCATER V5.12                                                      07/27/2009  13:39:50  PAGE 4
+
+
+  C:04F8H         SEGMENT       ?C_C51STARTUP
+  I:0030H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:0081H         SYMBOL        SP
+  C:04F8H         SYMBOL        STARTUP1
+  C:0000H         LINE#         19
+  C:04F8H         LINE#         24
+  C:04FBH         LINE#         25
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        ?C?COPY
+  C:0396H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
+  -------         MODULE        ?C?CLDPTR
+  C:03BCH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:03D5H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?ULSHR
+  C:0402H         PUBLIC        ?C?ULSHR
+  -------         ENDMOD        ?C?ULSHR
+
+
+
+INTER-MODULE CROSS-REFERENCE LISTING
+------------------------------------
+
+
+NAME . . . . USAGE    MODULE NAMES
+----------------------------------
+
+?C?CLDOPTR . CODE;    ?C?CLDOPTR  MAIN  
+?C?CLDPTR. . CODE;    ?C?CLDPTR  MAIN  
+?C?COPY. . . CODE;    ?C?COPY  MAIN  
+?C?ULSHR . . CODE;    ?C?ULSHR  MAIN  
+?C_START . . CODE;    ** L51 GENERATED **  ?C_STARTUP  
+?C_STARTUP . CODE;    ?C_STARTUP  MAIN  
+MAIN . . . . CODE;    MAIN  
+MEAS_XY. . . CODE;    MEAS_XY  MAIN  
+_TX_BYTE . . CODE;    MAIN  
+_TX_MEANS. . CODE;    MAIN  
+
+Program Size: data=49.0 xdata=0 code=1278
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

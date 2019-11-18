@@ -1,0 +1,267 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V5.50.0.50277/W32 for Atmel AVR    02/Dec/2010  09:36:23 #
+# Copyright (C) 1996-2010 IAR Systems AB.                                     #
+#                                                                             #
+#    Source file  =  D:\Work\XXX.XX.XX.XX\02. Датчик                          #
+#                    положения\Программа\Версия\main.c                        #
+#    Command line =  "D:\Work\XXX.XX.XX.XX\02. Датчик                         #
+#                    положения\Программа\Версия\main.c" --cpu=m168p -ms -o    #
+#                    "D:\Work\XXX.XX.XX.XX\02. Датчик                         #
+#                    положения\Программа\Версия\Project\KMA200_Release\Obj\"  #
+#                    -D NDEBUG -lCN "D:\Work\XXX.XX.XX.XX\02. Датчик          #
+#                    положения\Программа\Версия\Project\KMA200_Release\List\" #
+#                     --initializers_in_flash -s2 --no_cse --no_inline        #
+#                    --no_code_motion --no_cross_call --no_clustering         #
+#                    --no_tbaa -e -I "C:\Program Files\IAR Systems\Embedded   #
+#                    Workbench 5.4\avr\INC\" -I "C:\Program Files\IAR         #
+#                    Systems\Embedded Workbench 5.4\avr\INC\CLIB\"            #
+#                    --eeprom_size 512                                        #
+#    List file    =  D:\Work\XXX.XX.XX.XX\02. Датчик                          #
+#                    положения\Программа\Версия\Project\KMA200_Release\List\m #
+#                    ain.lst                                                  #
+#    Object file  =  D:\Work\XXX.XX.XX.XX\02. Датчик                          #
+#                    положения\Программа\Версия\Project\KMA200_Release\Obj\ma #
+#                    in.r90                                                   #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\Work\XXX.XX.XX.XX\02. Датчик положения\Программа\Версия\main.c
+      1          /********************************************************************************/
+      2          /*                                                                              */
+      3          /*               Управляющая программа для 'ATMEGA168P' + 'KMA200'              */
+      4          /*                       Версия 1.0 (01 сентября 2010 г)                        */
+      5          /*                                                                              */
+      6          /********************************************************************************/
+      7          #include "main.h"
+      8          #include <math.h>
+      9          
+     10          /*==============================================================================*/
+     11          /*                      Глобальные переменные программы.                        */
+     12          /*==============================================================================*/
+     13          union u_int angle, tick;
+     14          union u_sint angle_180, tick_180;
+     15          union u_sint temp, tock;
+     16          
+     17          unsigned char const __flash Title[] = "KMA200 - Programmable angle sensor";
+     18          
+     19          volatile unsigned char rr_cnt;              // интервал до перезапуска 'WDT'
+     20          volatile unsigned char rr_flg;              // флаг перезапуска 'WDT'
+     21          volatile unsigned char count_bod;           // счетчик БОД
+     22          
+     23          unsigned char fl_set;                       // признак установки режима работы
+     24          
+     25          /*==============================================================================*/
+     26          /*                                                                              */
+     27          /*                         Главная функция программы.                           */
+     28          /*                                                                              */
+     29          /*==============================================================================*/
+     30          int main(void)
+     31          {
+     32          /*  
+     33            Разряд DDxn регистра DDx определяет направление передачи данных
+     34          через контакт ввода/вывода. Если этот разряд установлен в «1», то n-й вывод
+     35          порта является выходом, если же сброшен в «0» — входом.
+     36            Разряд PORTxn регистра PORTx выполняет двойную функцию. Если
+     37          вывод функционирует как выход (DDxn = «1»), этот разряд определяет состояние 
+     38          вывода порта. Если разряд установлен в «1», на выводе устанавливается 
+     39          напряжение ВЫСОКОГО уровня. Если разряд сброшен в «0», на выводе 
+     40          устанавливается напряжение НИЗКОГО уровня. Если же вывод функционирует как 
+     41          вход (DDxn = «0»), разряд PORTxn определяет состояние внутреннего 
+     42          подтягивающего резистора для данного вывода. При установке разряда PORTxn в «1»
+     43          подтягивающий резистор подключается между выводом микроконтроллера 
+     44          и проводом питания.
+     45            Состояние вывода микроконтроллера (независимо от установок разряда DDxn) 
+     46           может быть получено путем чтения разряда PINxn регистра PINx.
+     47          */
+     48            PORTD = (1<<RXD)|(1<<TXD)|(1<<STR)|(1<<SET_)|(1<<KLINE);
+     49            DDRD  = (1<<TXD)|(1<<STR)|(1<<VDD)|(1<<VPRG)|(1<<KLINE)|(1<<RS485);
+     50          
+     51            PORTB = (1<<LED)|(1<<CS)|(1<<MOSI)|(1<<MISO);
+     52            DDRB  = (1<<LED)|(1<<DIR)|(1<<CS)|(1<<MOSI)|(1<<SCK);
+     53            
+     54            #define VDD_ON       PORTD &= ~(1<<VDD)
+     55            #define VDD_OFF      PORTD |=  (1<<VDD)
+     56            #define VPRG_ON      PORTD |=  (1<<VPRG)
+     57            #define VPRG_OFF     PORTD &= ~(1<<VPRG)
+     58            #define SCK_SET      PORTB |=  (1<<SCK)
+     59            #define SCK_RES      PORTB &= ~(1<<SCK)
+     60            #define CS_SET       PORTB |=  (1<<CS)
+     61            #define CS_RES       PORTB &= ~(1<<CS)
+     62            #define MOSI_TO_IN   DDRB  &= ~(1<<MOSI)
+     63            #define LED_TOGGLE   cpl(PORTB, LED)
+     64            #define RWDT         cpl(PORTD, STR)
+     65            
+     66            // выбор режима работы датчика:
+     67            if (PIND & (1<<SET_)) fl_set = 1; else fl_set = 0; 
+     68          
+     69            TCCR0B = 0x00;                            // останов Т/С0
+     70            TCNT0  = 0xB8;                            // нач. знач-е
+     71            TCCR0A = 0x00;
+     72            TCCR0B = 0x04;                            // таймер запускаем
+     73            TIMSK0 = 0x01;                            // Т/С0 <- источник прерываний
+     74          
+     75            rr_flg  = 0;                              // только "простой" сторожевой таймер
+     76            count_bod = 1;                            // минимум 1 прерывание
+     77            
+     78            RWDT;                                     // 1-й "простой" cброс сторожевого таймера
+     79            
+     80            __enable_interrupt();                     // прерывания разрешаем
+     81          
+     82            // инициализация USART (9600):
+     83            UCSR0B = 0x00;                            // UCSRnB – USART Control and Status Register n B
+     84            UCSR0A = 0x00;                            // UCSRnA – USART Control and Status Register n A
+     85            // ^=> запрет на время установки скорости передачи настроек USART0
+     86          
+     87            UCSR0C = 0x06;                            // UCSRnC – USART Control and Status Register n C *1)
+     88            // ^=> размер слова данных 8 бит
+     89            UBRR0L = (unsigned char)UBBR_9K6;         // задание скорости 9600; пример в datasheet
+     90            UBRR0H = (unsigned char)(UBBR_9K6>>8);
+     91            UCSR0B = 0x08;                            // разрешение передачи *2)
+     92                 
+     93            SPI_MasterInit();                         // инициализация SPI в режиме Master
+     94               
+     95            // вывод строки из ПЗУ, uart_putc(0x0a); - перевод на след. строку  
+     96            uart_puts_p(Title);                                 uart_putc(0x0d); uart_putc(0x0a);                        
+     97            uart_puts("------------------------------------");  uart_putc(0x0d); uart_putc(0x0a);
+     98            
+     99            for (;;)
+    100            {      
+    101              while(count_bod);                       // ждать как
+    102              count_bod = 1;                          // минимум 1 прерывание 
+    103                
+    104              unsigned char byte;
+    105                
+    106              if (!fl_set)                           // выбор режима работы Command mode
+    107              {       
+    108                LED_TOGGLE;                          // светодиод меняет состояние на противоположное
+    109                VDD_OFF;                             // выключение питания "ведомого"
+    110                   
+    111                CS_SET;                              // активация режима работы Command mode        
+    112                SCK_RES;
+    113                VDD_ON;
+    114                delay_ms(6);                         // t_init_cmd1 
+    115                SCK_SET;
+    116                delay_ms(5);                         // t_init_cmd2
+    117                   
+    118                CS_RES;                              // активация ведомого
+    119                byte = CTRL1;                        // адрес управляющего слова 1 в EEPROM "ведомого"
+    120                SPI_WriteRead(byte);                 // передача
+    121                   
+    122                tick.du_i = 0x4006;                  // выбор режима вывода данных - SPI
+    123                byte = tick.du_c[1];
+    124                SPI_WriteRead(byte);                 // запись команды в ОЗУ
+    125                byte = tick.du_c[0];
+    126                SPI_WriteRead(byte);               
+    127                   
+    128                byte = CTRL2;                        // адрес управляющего слова 2 в EEPROM "ведомого"
+    129                SPI_WriteRead(byte);                 // передача
+    130             
+    131                tick.du_i = 0x504;                   // отключение автоматического возвращения в Normal operation mode
+    132                byte = tick.du_c[1];
+    133                SPI_WriteRead(byte);                 // запись команды в ОЗУ
+    134                byte = tick.du_c[0];
+    135                SPI_WriteRead(byte); 
+    136                                    
+    137                byte = 0x30;                         // команда программирования EEPROM
+    138                SPI_WriteRead(byte);                 // передача
+    139                CS_SET;                              // деактивация ведомого
+    140                delay_ms(1);                         // t_cmd1
+    141                VPRG_ON;                             // включение напряжения питания программирования EEPROM        
+    142                delay_ms(500);                       // t_prog
+    143                VPRG_OFF;                            // выключение напряжения питания программирования EEPROM
+    144                CS_RES;
+    145                delay_ms(1);                         // t_ics
+    146                 
+    147                LED_TOGGLE;                          // светодиод меняет состояние на противоположное
+    148                CS_SET;                              // деактивация ведомого
+    149              } 
+    150              else                                   // выбор режима работы Normal operation mode
+    151              {
+    152                MOSI_TO_IN;                          // конфигурирование вывода MOSI как вход
+    153                
+    154                CS_RES;                              // активация ведомого     
+    155                byte = 0x01;                         // байт произволных данных    
+    156                SPI_WriteRead(byte);                 // передача байта произволных данных
+    157               
+    158                uart_puts("Tick/Angle = 0x");        // вывод надписи Tick/Angle = 0x
+    159                
+    160                CS_SET;                              // деактивация ведомого
+    161                LED_TOGGLE;                          // светодиод меняет состояние на противоположное
+    162                delay_ms(300);
+    163              }
+    164              RWDT;                                  // "простой" cброс сторожевого таймера
+    165            }
+    166          }
+    167          
+    168          /*==============================================================================*/
+    169          /*                                                                              */
+    170          /*                                Подпрограммы.                                 */
+    171          /*                                                                              */
+    172          /*==============================================================================*/
+    173          #pragma vector=TIMER0_OVF_vect
+    174          __interrupt void timer0_ovf_isr(void)
+    175          {
+    176            //TIMER0 has overflowed
+    177            TCNT0 = RELOAD;                          // reload counter value
+    178          
+    179            if (count_bod)  count_bod--;
+    180          
+    181            if (rr_flg & 0x0f)
+    182            {
+    183              if (rr_cnt) rr_cnt--;
+    184              else
+    185              {
+    186                rr_flg--;
+    187                rr_cnt = RR_CONST;
+    188                RWDT;                                // "простой" cброс сторожевого таймера
+    189              }
+    190            }
+    191          }
+    192          
+    193          // Подпрограмма инициализации SPI в режиме Master
+    194          void SPI_MasterInit(void)
+    195          {
+    196          /* - Разрешение SPI в режиме мастера;
+    197             - CPOL = 1 - генерируются тактовые импульсы отрицательной полярности;
+    198             - CPHA = 1 - обработка данных производится по заднему фронту импульсов сигнала SCK;
+    199             - установка скорости обмена fck/128. */
+    200            SPCR = (1<<SPE)|(1<<MSTR)|(1<<CPOL)|(1<<CPHA)|(1<<SPR1)|(1<<SPR0);
+    201          }
+    202          
+    203          // Подпрограмма записи/чтения через SPI
+    204          unsigned char SPI_WriteRead(unsigned char dataout)
+    205          {
+    206            // Запись байта в регист данных ведущего (инициализация передачи)
+    207            SPDR = dataout;
+    208            // Ожидание завершения передачи (пока бит SPIF не установлен)
+    209            while(!(SPSR & (1<<SPIF)));
+    210            // Чтение принятых данных и выход из процедуры
+    211            return SPDR;
+    212          }
+    213          /* *1)
+    214          Bit    7         6        5       4       3       2        1        0
+    215              UMSELn1 | UMSELn0 | UPMn1 | UPMn0 | USBSn | UCSZn1 | UCSZn0 | UCPOLn | UCSRnC
+    216                 0    |    0    |       |       |       |        |        |        | Asynchronous USART
+    217                      |         |   0   |   0   |       |        |        |        | Parity Mode disabled
+    218                      |         |       |       |   0   |        |        |        | Stop Bit(s) - 1-bit
+    219                      |         |       |       |       |   1    |   1    |        | Character Size - 8-bit
+    220                      |         |       |       |       |        |        |   0    | zero when asynchronous mode is used
+    221          размер слова данных 8 бит => 0b00000110 = 0x06
+    222             *2)
+    223          Bit    7         6        5       4       3       2        1       0
+    224               RXCIEn | TXCIEn | UDRIEn | RXENn | TXENn | UCSZn2 | RXB8n | TXB8n | UCSRnB
+    225                 0    |        |        |       |       |        |       |       | RX Complete Interrupt Enable n
+    226                      |    0   |        |       |       |        |       |       | TX Complete Interrupt Enable n
+    227                      |        |    0   |       |       |        |       |       | USART Data Register Empty Interrupt Enable n
+    228                      |        |        |   0   |       |        |       |       | Receiver Enable n
+    229                      |        |        |       |   1   |        |       |       | Transmitter Enable n
+    230                      |        |        |       |       |   0    |       |       | Character Size - 8-bit
+    231                      |        |        |       |       |        |   0   |       | Receive Data Bit 8 n
+    232                      |        |        |       |       |        |       |   0   | Transmit Data Bit 8 n
+    233          разрешение передачи => 0b00001000 = 0x08
+    234          */
+
+Errors: 21
+Warnings: none

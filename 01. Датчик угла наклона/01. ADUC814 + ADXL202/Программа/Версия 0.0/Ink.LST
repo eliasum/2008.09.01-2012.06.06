@@ -1,0 +1,421 @@
+A51 MACRO ASSEMBLER  INK                                                                  10/16/2009 14:00:47 PAGE     1
+
+
+MACRO ASSEMBLER A51 V7.10
+OBJECT MODULE PLACED IN Ink.OBJ
+ASSEMBLER INVOKED BY: D:\Work\Keil51\C51\BIN\A51.EXE Ink.a51 NOMOD51 SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;********************************************************************************
+                       2     ;*                                                                              *
+                       3     ;*                       Управлюща программа дл 'ADUC814'                    *
+                       4     ;*                           Верси 0.0 (7 июн 2009 г)                         *
+                       5     ;*                                                                              *
+                       6     ;********************************************************************************
+                       7     
+                     173     $list                            ; включение последующего текста в файл листинга
+                     174     
+  0090               175     XOUT    EQU     P1.0
+  0091               176     YOUT    EQU     P1.1
+                     177     
+0000                 178             ORG     0               ; нижеследующа команда с адреса 0
+                     179     
+0000 020100          180             LJMP    START           ; на команду метки START
+                     181     
+0100                 182             ORG     100H            ; нижеследующа команда с адреса 100Н
+                     183     
+0100                 184     START:                          ; программа
+                     185     
+0100 75A800          186             MOV     IE,#0           ; все прерывани запрещены
+                     187     
+                     188     ; настройка синтезатора (datasheet ADuC814)
+                     189     
+0103 75D701          190             MOV     PLLCON,#01H     ; синтезатор рабочей частоты дра
+                     191                                     ; Core Clk = XTALL*256 = 32768*256 = 8388608 герц
+                     192     
+                     193     ; настройка сторожевого таймера (datasheet ADuC814)
+                     194     
+0106 D2C0            195             SETB    WDWR            ; разрешение записи в 'WDCON'
+0108 75C072          196             MOV     WDCON,#72H;     ; запуск WDT с временным интервалом 2с
+                     197     
+                     198     ; настройка UART
+                     199     
+010B 759840          200             MOV     SCON,#40h       ; настройка последовательного порта на 
+                     201                                     ; асинхронный 8-битовый режим                              
+                                                  
+                     202     ; настройка Т/С0
+                     203     
+010E 758901          204             MOV     TMOD,#01h       ; T/C0 - таймер
+                     205                                                                                                
+                     206     ; настройка Т/С2
+                     207     
+0111 75CBFF          208             MOV     RCAP2H,#0FFh    ; задание скорости 9600 бод 
+0114 75CAE5          209             MOV     RCAP2L,#0E5h    ; (814code_asm)
+0117 75CDFF          210             MOV     TH2,#0FFh        
+011A 75CCE5          211             MOV     TL2,#0E5h  
+011D 75C830          212             MOV     T2CON,#30h      ; установка Т/С2 в качестве генератора скорости UART
+0120 D2CA            213             SETB    TR2             ; запуск генератора скорости 'UART'
+                     214     
+0122                 215     MAIN:                           ; главный цикл программы             
+                     216     
+0122 758C00          217             MOV     TH0,#0          ; сброс T0 
+0125 758A00          218             MOV     TL0,#0
+                     219     
+                     220     ; измерение длительности и периода импульсов с выходов Xout и Yout
+                     221     
+0128 2090FD          222     X_K1:   JB      XOUT,X_K1       ; корректировка расчета длительности импульсов с выхода Xou
+A51 MACRO ASSEMBLER  INK                                                                  10/16/2009 14:00:47 PAGE     2
+
+                             t
+                     223     
+012B 3090FD          224     X_F:    JNB     XOUT,X_F        ; ожидание фронта 1-го импульса с выхода Xout           
+012E D28C            225                 SETB    TR0             ; запуск T0
+                     226                     
+0130 2090FD          227     X_S:    JB      XOUT,X_S        ; ожидание спада 1-го импульса с выхода Xout
+0133 C28C            228                     CLR     TR0             ; останов T0                  
+                     229     
+0135 E58A            230             MOV     A,TL0           ; в R1R0 - значение длительности импульсов с выхода Xout
+0137 F8              231             MOV     R0,A
+0138 E58C            232             MOV     A,TH0
+013A F9              233             MOV     R1,A
+                     234     
+013B 758C00          235             MOV     TH0,#0          ; сброс T0
+013E 758A00          236             MOV     TL0,#0
+                     237     
+0141 2090FD          238     X_K2:   JB      XOUT,X_K2       ; корректировка расчета периода импульсов с выхода Xout
+                     239     
+0144 3090FD          240     X_F2:   JNB     XOUT,X_F2       ; ожидание фронта 2-го импульса с выхода Xout
+0147 D28C            241                 SETB    TR0             ; запуск T0
+                     242     
+0149 2090FD          243     X_S2:   JB      XOUT,X_S2       ; ожидание спада 2-го импульса с выхода Xout
+014C 3090FD          244     X_F3:   JNB     XOUT,X_F3       ; ожидание фронта 3-го импульса с выхода Xout
+014F C28C            245                     CLR     TR0             ; останов T0
+                     246     
+0151 E58A            247             MOV     A,TL0           ; в R3R2 - значение периода импульсов с выхода Xout
+0153 FA              248             MOV     R2,A
+0154 E58C            249             MOV     A,TH0
+0156 FB              250             MOV     R3,A
+                     251                   
+0157 758C00          252             MOV     TH0,#0          ; сброс T0
+015A 758A00          253             MOV     TL0,#0
+                     254     
+015D 2091FD          255     Y_K3:   JB      YOUT,Y_K3       ; корректировка расчета длительности импульсов с выхода You
+                             t 
+                     256     
+0160 3091FD          257     Y_F:    JNB     YOUT,Y_F        ; ожидание фронта 1-го импульса с выхода Yout           
+0163 D28C            258                 SETB    TR0             ; запуск T0
+                     259                     
+0165 2091FD          260     Y_S:    JB      YOUT,Y_S        ; ожидание спада 1-го импульса с выхода Yout
+0168 C28C            261             CLR     TR0             ; останов T0                  
+                     262     
+016A E58A            263             MOV     A,TL0           ; в R5R4 - значение длительности импульсов с выхода Yout
+016C FC              264             MOV     R4,A
+016D E58C            265             MOV     A,TH0
+016F FD              266             MOV     R5,A
+                     267     
+0170 758C00          268             MOV     TH0,#0          ; сброс T0
+0173 758A00          269             MOV     TL0,#0
+                     270     
+0176 2090FD          271     Y_K4:   JB      XOUT,Y_K4       ; корректировка расчета периода импульсов с выхода Yout
+                     272     
+0179 3091FD          273     Y_F2:   JNB     YOUT,Y_F2       ; ожидание фронта 2-го импульса с выхода Yout
+017C D28C            274                 SETB    TR0             ; запуск T0
+                     275     
+017E 2091FD          276     Y_S2:   JB      YOUT,Y_S2       ; ожидание спада 2-го импульса с выхода Yout
+0181 3091FD          277     Y_F3:   JNB     YOUT,Y_F3       ; ожидание фронта 3-го импульса с выхода Yout
+0184 C28C            278             CLR     TR0             ; останов T0
+                     279     
+0186 E58A            280             MOV     A,TL0           ; в R7R6 - значение периода импульсов с выхода Yout
+0188 FE              281             MOV     R6,A
+0189 E58C            282             MOV     A,TH0
+018B FF              283             MOV     R7,A
+                     284     
+                     285     ; посылка результатов замеров:
+                     286     
+A51 MACRO ASSEMBLER  INK                                                                  10/16/2009 14:00:47 PAGE     3
+
+018C 745A            287             MOV     A,#5Ah          ; метка начала блока данных
+018E F5F0            288             MOV     B,A             ; начальное значение контрольной суммы
+                     289     
+0190 31B9            290             CALL    TX_BYTE         ; передача начального значени контрольной суммы
+                     291     
+0192 E8              292             MOV     A,R0  
+0193 31C1            293             CALL    TX_SUM          ; передача содержимого регистра R0
+                     294              
+0195 E9              295             MOV     A,R1  
+0196 31C1            296             CALL    TX_SUM          ; передача содержимого регистра R1
+                     297              
+0198 EA              298             MOV     A,R2  
+0199 31C1            299             CALL    TX_SUM          ; передача содержимого регистра R2
+                     300               
+019B EB              301             MOV     A,R3  
+019C 31C1            302             CALL    TX_SUM          ; передача содержимого регистра R3
+                     303              
+019E EC              304             MOV     A,R4  
+019F 31C1            305             CALL    TX_SUM          ; передача содержимого регистра R4
+                     306               
+01A1 ED              307             MOV     A,R5  
+01A2 31C1            308             CALL    TX_SUM          ; передача содержимого регистра R5
+                     309               
+01A4 EE              310             MOV     A,R6  
+01A5 31C1            311             CALL    TX_SUM          ; передача содержимого регистра R6
+                     312              
+01A7 EF              313             MOV     A,R7  
+01A8 31B9            314             CALL    TX_BYTE         ; передача содержимого регистра R7
+01AA 25F0            315             ADD     A,B      
+                     316             
+01AC 31B9            317             CALL    TX_BYTE         ; передача конечного значени контрольной суммы
+                     318                
+                     319     ; сброс сторожевого таймера (814code_asm)
+                     320     
+01AE C2AF            321             CLR     EA
+01B0 D2C0            322             SETB    WDWR
+01B2 D2C1            323             SETB    WDE
+01B4 D2AF            324             SETB    EA
+                     325     
+01B6 020122          326             LJMP    MAIN            ; на следущее измерение
+                     327     
+                     328     ;---------------Подпрограммы---------------
+                     329     
+                     330     ; передача байта через 'UART'
+                     331     
+01B9                 332     TX_BYTE:
+01B9 F599            333             MOV     SBUF,A          ; начать передачу байта   
+01BB 3099FD          334             JNB     TI,$            ; ожидание передачи байта
+01BE C299            335             CLR     TI              ; бит должен быть очищен перед следующей передачей
+01C0 22              336             RET
+                     337     
+                     338     ; передача байта и коррекци контрольной суммы
+                     339     
+01C1                 340     TX_SUM:      
+01C1 31B9            341             CALL    TX_BYTE
+01C3 25F0            342             ADD     A,B      
+01C5 F5F0            343             MOV     B,A
+01C7 22              344             RET
+                     345     
+                     346             END
+                             
+                             ; ----------------------------------------------------------
+                             ; Baud Rate = 9600
+                             ; Baud Rate = (Core Clk)/(32*[65535-(RCAP2H, RCAP2L)])
+                             ; RCAP2H, RCAP2L = 65536-(Core Clk/(32*Baud Rate)) = #0FFE5h
+                             ; ----------------------------------------------------------
+A51 MACRO ASSEMBLER  INK                                                                  10/16/2009 14:00:47 PAGE     4
+
+                             ; Таймер-0: исп-с дл замера временных интервалов
+                             ; Таймер-2: исп-с дл установки скорости 'UART'
+                             ; ----------------------------------------------------------
+                             
+                             ; -------------------------------------
+                             ; Регистр    SCON     TMOD      T2CON     
+                             ; -------    -----    ------    ------
+                             ;  Бит-7     SM0-0    GAT1-0     TF2-0
+                             ;  Бит-6     SM1-1    C/T1-0    EXF2-0
+                             ;  Бит-5     SM2-0    M1.1-0    RCLK-1
+                             ;  Бит-4     REN-0    M0.1-0    TCLK-1
+                             
+                             ;  Бит-3     TB8-0    GAT0-0   EXEN2-0
+                             ;  Бит-2     RB8-0    C/T0-0     TR2-0
+                             ;  Бит-1      TI-0    M1.0-0    CNT2-0
+                             ;  Бит-0      RI-0    M0.0-1    CAP2-0
+                             ; ------------------------------------
+                             
+A51 MACRO ASSEMBLER  INK                                                                  10/16/2009 14:00:47 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AC . . . . . . . .  B ADDR   00D0H.6 A   
+ACC. . . . . . . .  D ADDR   00E0H   A   
+ADCCON1. . . . . .  D ADDR   00EFH   A   
+ADCCON2. . . . . .  D ADDR   00D8H   A   
+ADCCON3. . . . . .  D ADDR   00F5H   A   
+ADCDATAH . . . . .  D ADDR   00DAH   A   
+ADCDATAL . . . . .  D ADDR   00D9H   A   
+ADCGAINH . . . . .  D ADDR   00F4H   A   
+ADCGAINL . . . . .  D ADDR   00F3H   A   
+ADCI . . . . . . .  B ADDR   00D8H.7 A   
+ADCOFSH. . . . . .  D ADDR   00F2H   A   
+ADCOFSL. . . . . .  D ADDR   00F1H   A   
+ADCSPI . . . . . .  B ADDR   00D8H.6 A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+CAP2 . . . . . . .  B ADDR   00C8H.0 A   
+CCONV. . . . . . .  B ADDR   00D8H.5 A   
+CFG814 . . . . . .  D ADDR   009CH   A   
+CHIPID . . . . . .  D ADDR   00C2H   A   
+CNT2 . . . . . . .  B ADDR   00C8H.1 A   
+CPHA . . . . . . .  B ADDR   00F8H.2 A   
+CPOL . . . . . . .  B ADDR   00F8H.3 A   
+CS0. . . . . . . .  B ADDR   00D8H.0 A   
+CS1. . . . . . . .  B ADDR   00D8H.1 A   
+CS2. . . . . . . .  B ADDR   00D8H.2 A   
+CS3. . . . . . . .  B ADDR   00D8H.3 A   
+CY . . . . . . . .  B ADDR   00D0H.7 A   
+D0 . . . . . . . .  B ADDR   00E8H.5 A   
+D0EN . . . . . . .  B ADDR   00E8H.3 A   
+D1 . . . . . . . .  B ADDR   00E8H.7 A   
+D1EN . . . . . . .  B ADDR   00E8H.6 A   
+DAC0H. . . . . . .  D ADDR   00FAH   A   
+DAC0L. . . . . . .  D ADDR   00F9H   A   
+DAC1H. . . . . . .  D ADDR   00FCH   A   
+DAC1L. . . . . . .  D ADDR   00FBH   A   
+DACCON . . . . . .  D ADDR   00FDH   A   
+DCON . . . . . . .  D ADDR   00E8H   A   
+DPH. . . . . . . .  D ADDR   0083H   A   
+DPL. . . . . . . .  D ADDR   0082H   A   
+EA . . . . . . . .  B ADDR   00A8H.7 A   
+EADC . . . . . . .  B ADDR   00A8H.6 A   
+EADRL. . . . . . .  D ADDR   00C6H   A   
+ECON . . . . . . .  D ADDR   00B9H   A   
+EDATA1 . . . . . .  D ADDR   00BCH   A   
+EDATA2 . . . . . .  D ADDR   00BDH   A   
+EDATA3 . . . . . .  D ADDR   00BEH   A   
+EDATA4 . . . . . .  D ADDR   00BFH   A   
+ES . . . . . . . .  B ADDR   00A8H.4 A   
+ET0. . . . . . . .  B ADDR   00A8H.1 A   
+ET1. . . . . . . .  B ADDR   00A8H.3 A   
+ET2. . . . . . . .  B ADDR   00A8H.5 A   
+ETIM1. . . . . . .  D ADDR   00BAH   A   
+ETIM2. . . . . . .  D ADDR   00BBH   A   
+EX0. . . . . . . .  B ADDR   00A8H.0 A   
+EX1. . . . . . . .  B ADDR   00A8H.2 A   
+EXEN2. . . . . . .  B ADDR   00C8H.3 A   
+EXF2 . . . . . . .  B ADDR   00C8H.6 A   
+F0 . . . . . . . .  B ADDR   00D0H.5 A   
+F1 . . . . . . . .  B ADDR   00D0H.1 A   
+HOUR . . . . . . .  D ADDR   00A5H   A   
+HTHSEC . . . . . .  D ADDR   00A2H   A   
+A51 MACRO ASSEMBLER  INK                                                                  10/16/2009 14:00:47 PAGE     6
+
+I2CADD . . . . . .  D ADDR   009BH   A   
+I2CCON . . . . . .  D ADDR   00E8H   A   
+I2CDAT . . . . . .  D ADDR   009AH   A   
+I2CI . . . . . . .  B ADDR   00E8H.0 A   
+I2CM . . . . . . .  B ADDR   00E8H.3 A   
+I2CRS. . . . . . .  B ADDR   00E8H.2 A   
+I2CTX. . . . . . .  B ADDR   00E8H.1 A   
+IE . . . . . . . .  D ADDR   00A8H   A   
+IE0. . . . . . . .  B ADDR   0088H.1 A   
+IE1. . . . . . . .  B ADDR   0088H.3 A   
+IEIP2. . . . . . .  D ADDR   00A9H   A   
+INT0 . . . . . . .  B ADDR   00B0H.2 A   
+INT1 . . . . . . .  B ADDR   00B0H.3 A   
+INTVAL . . . . . .  D ADDR   00A6H   A   
+IP . . . . . . . .  D ADDR   00B8H   A   
+ISPI . . . . . . .  B ADDR   00F8H.7 A   
+IT0. . . . . . . .  B ADDR   0088H.0 A   
+IT1. . . . . . . .  B ADDR   0088H.2 A   
+MAIN . . . . . . .  C ADDR   0122H   A   
+MCO. . . . . . . .  B ADDR   00E8H.5 A   
+MDE. . . . . . . .  B ADDR   00E8H.6 A   
+MDI. . . . . . . .  B ADDR   00E8H.4 A   
+MDO. . . . . . . .  B ADDR   00E8H.7 A   
+MIN. . . . . . . .  D ADDR   00A4H   A   
+OV . . . . . . . .  B ADDR   00D0H.2 A   
+P. . . . . . . . .  B ADDR   00D0H.0 A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+PADC . . . . . . .  B ADDR   00B8H.6 A   
+PCON . . . . . . .  D ADDR   0087H   A   
+PLLCON . . . . . .  D ADDR   00D7H   A   
+PRE0 . . . . . . .  B ADDR   00C0H.4 A   
+PRE1 . . . . . . .  B ADDR   00C0H.5 A   
+PRE2 . . . . . . .  B ADDR   00C0H.6 A   
+PRE3 . . . . . . .  B ADDR   00C0H.7 A   
+PS . . . . . . . .  B ADDR   00B8H.4 A   
+PSI. . . . . . . .  B ADDR   00B8H.7 A   
+PSMCON . . . . . .  D ADDR   00DFH   A   
+PSW. . . . . . . .  D ADDR   00D0H   A   
+PT0. . . . . . . .  B ADDR   00B8H.1 A   
+PT1. . . . . . . .  B ADDR   00B8H.3 A   
+PT2. . . . . . . .  B ADDR   00B8H.5 A   
+PX0. . . . . . . .  B ADDR   00B8H.0 A   
+PX1. . . . . . . .  B ADDR   00B8H.2 A   
+RB8. . . . . . . .  B ADDR   0098H.2 A   
+RCAP2H . . . . . .  D ADDR   00CBH   A   
+RCAP2L . . . . . .  D ADDR   00CAH   A   
+RCLK . . . . . . .  B ADDR   00C8H.5 A   
+RD . . . . . . . .  B ADDR   00B0H.7 A   
+REN. . . . . . . .  B ADDR   0098H.4 A   
+RI . . . . . . . .  B ADDR   0098H.0 A   
+RS0. . . . . . . .  B ADDR   00D0H.3 A   
+RS1. . . . . . . .  B ADDR   00D0H.4 A   
+RXD. . . . . . . .  B ADDR   00B0H.0 A   
+SBUF . . . . . . .  D ADDR   0099H   A   
+SCON . . . . . . .  D ADDR   0098H   A   
+SCONV. . . . . . .  B ADDR   00D8H.4 A   
+SEC. . . . . . . .  D ADDR   00A3H   A   
+SM0. . . . . . . .  B ADDR   0098H.7 A   
+SM1. . . . . . . .  B ADDR   0098H.6 A   
+SM2. . . . . . . .  B ADDR   0098H.5 A   
+SP . . . . . . . .  D ADDR   0081H   A   
+SPE. . . . . . . .  B ADDR   00F8H.5 A   
+SPICON . . . . . .  D ADDR   00F8H   A   
+A51 MACRO ASSEMBLER  INK                                                                  10/16/2009 14:00:47 PAGE     7
+
+SPIDAT . . . . . .  D ADDR   00F7H   A   
+SPIM . . . . . . .  B ADDR   00F8H.4 A   
+SPR0 . . . . . . .  B ADDR   00F8H.0 A   
+SPR1 . . . . . . .  B ADDR   00F8H.1 A   
+START. . . . . . .  C ADDR   0100H   A   
+T0 . . . . . . . .  B ADDR   00B0H.4 A   
+T1 . . . . . . . .  B ADDR   00B0H.5 A   
+T2 . . . . . . . .  B ADDR   0090H.0 A   
+T2CON. . . . . . .  D ADDR   00C8H   A   
+T2EX . . . . . . .  B ADDR   0090H.1 A   
+TB8. . . . . . . .  B ADDR   0098H.3 A   
+TCLK . . . . . . .  B ADDR   00C8H.4 A   
+TCON . . . . . . .  D ADDR   0088H   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TF1. . . . . . . .  B ADDR   0088H.7 A   
+TF2. . . . . . . .  B ADDR   00C8H.7 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TH2. . . . . . . .  D ADDR   00CDH   A   
+TI . . . . . . . .  B ADDR   0098H.1 A   
+TIMECON. . . . . .  D ADDR   00A1H   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TL1. . . . . . . .  D ADDR   008BH   A   
+TL2. . . . . . . .  D ADDR   00CCH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+TR2. . . . . . . .  B ADDR   00C8H.2 A   
+TXD. . . . . . . .  B ADDR   00B0H.1 A   
+TX_BYTE. . . . . .  C ADDR   01B9H   A   
+TX_SUM . . . . . .  C ADDR   01C1H   A   
+WCOL . . . . . . .  B ADDR   00F8H.6 A   
+WDCON. . . . . . .  D ADDR   00C0H   A   
+WDE. . . . . . . .  B ADDR   00C0H.1 A   
+WDIR . . . . . . .  B ADDR   00C0H.3 A   
+WDS. . . . . . . .  B ADDR   00C0H.2 A   
+WDWR . . . . . . .  B ADDR   00C0H.0 A   
+WR . . . . . . . .  B ADDR   00B0H.6 A   
+XOUT . . . . . . .  B ADDR   0090H.0 A   
+X_F. . . . . . . .  C ADDR   012BH   A   
+X_F2 . . . . . . .  C ADDR   0144H   A   
+X_F3 . . . . . . .  C ADDR   014CH   A   
+X_K1 . . . . . . .  C ADDR   0128H   A   
+X_K2 . . . . . . .  C ADDR   0141H   A   
+X_S. . . . . . . .  C ADDR   0130H   A   
+X_S2 . . . . . . .  C ADDR   0149H   A   
+YOUT . . . . . . .  B ADDR   0090H.1 A   
+Y_F. . . . . . . .  C ADDR   0160H   A   
+Y_F2 . . . . . . .  C ADDR   0179H   A   
+Y_F3 . . . . . . .  C ADDR   0181H   A   
+Y_K3 . . . . . . .  C ADDR   015DH   A   
+Y_K4 . . . . . . .  C ADDR   0176H   A   
+Y_S. . . . . . . .  C ADDR   0165H   A   
+Y_S2 . . . . . . .  C ADDR   017EH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

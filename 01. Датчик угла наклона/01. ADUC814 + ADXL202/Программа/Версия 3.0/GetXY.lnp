@@ -1,0 +1,5 @@
+"Main.obj",
+"StartUp.obj" 
+TO "GetXY" 
+IXREF 
+RAMSIZE(256) 
